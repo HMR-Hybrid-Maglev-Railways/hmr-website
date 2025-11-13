@@ -1,0 +1,482 @@
+/*
+  HMR Website — extracted styles (migrated from inline <style> in index.html)
+  Date: 2025-11-13
+*/
+
+:root {
+    /* Surfaces */
+    --primary-bg: #0B0C10; /* Deeper near-black for stronger contrast */
+    --secondary-bg: #17181F; /* Card/section surface */
+
+    /* Accent system */
+    --accent-color: #7B68EE; /* Primary accent (violet) */
+    --accent-alt: #00D0A1;   /* Companion accent (teal) */
+    --accent-hover: #9B8CFF; /* Hover state for buttons/links */
+    --accent-glow: rgba(123, 104, 238, 0.55); /* Soft glow derived from accent */
+    --accent-gradient: linear-gradient(135deg, var(--accent-color) 0%, #9B8CFF 35%, #00D0A1 70%, #24D3EE 100%);
+
+    /* Text & borders */
+    --text-light: #E6E8EF;
+    --text-muted: #8B90A3;
+    --border-color: #2A2D3A;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Modern, clean for body text */
+    color: var(--text-light);
+    background-color: var(--primary-bg);
+    min-height: 100vh;
+    position: relative; /* anchor for background overlays */
+}
+
+/* Aurora background inspired by JetBrains product pages */
+body::before {
+    content: '';
+    position: fixed;
+    inset: -20vmax; /* overscan to avoid edges while animating */
+    z-index: -1;
+    pointer-events: none;
+    background:
+      /* soft diagonal energy bands */
+      radial-gradient(60vmax 40vmax at 10% 15%, rgba(123, 104, 238, 0.25), transparent 60%),
+      radial-gradient(50vmax 35vmax at 85% 10%, rgba(0, 208, 161, 0.20), transparent 60%),
+      radial-gradient(45vmax 30vmax at 20% 80%, rgba(36, 211, 238, 0.18), transparent 60%),
+      radial-gradient(55vmax 40vmax at 90% 75%, rgba(255, 61, 129, 0.10), transparent 60%),
+      conic-gradient(from 220deg at 50% 50%, rgba(123, 104, 238, 0.12), rgba(0,0,0,0) 25%, rgba(0, 208, 161, 0.12) 50%, rgba(0,0,0,0) 75%, rgba(123,104,238,0.12));
+    filter: blur(40px) saturate(120%);
+    opacity: 0.9;
+    animation: aurora-shift 24s ease-in-out infinite alternate;
+}
+
+/* Subtle grain for depth */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.15;
+}
+
+@keyframes aurora-shift {
+    0%   { transform: translate3d(0,0,0) scale(1.0) rotate(0deg); }
+    50%  { transform: translate3d(-2%, -1%, 0) scale(1.02) rotate(1deg); }
+    100% { transform: translate3d(2%, 1%, 0) scale(1.03) rotate(-1deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+}
+
+
+
+
+h1, h2, h3, h4 {
+    font-family: 'Roboto Mono', monospace; /* Techy, clean for headings */
+    color: var(--accent-color);
+}
+
+/* Hero title: two single-line phrases that always fit */
+.hero-title {
+    font-size: clamp(2rem, 7.5vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    /* Fallback color so text remains visible if gradient text isn't supported */
+    color: var(--text-light);
+}
+
+.hero-line {
+    display: block;
+    /*white-space: nowrap;*/
+    /*text-wrap: nowrap;*/
+}
+
+/* Hero wrapper (image will be reworked in step 2); keep neutral for now */
+.hero-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75));
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.0), rgba(0,0,0,0.5) 70%); /* vignette for contrast */
+    pointer-events: none;
+}
+
+.animated-counter {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-shadow: 0 0 12px var(--accent-glow); /* Subtle glow */
+}
+
+.icon-char {
+    font-size: 3rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* SVG icon styles to match the purple accent + glow used for .icon-char */
+.icon-svg,
+.icon-svg-stroke {
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+    color: var(--accent-color); /* default icon color; can inherit via currentColor */
+    transition: transform 0.28s ease, filter 0.28s ease, color 0.28s ease;
+}
+
+.icon-svg { /* filled shapes */
+    fill: currentColor;
+}
+
+.icon-svg-stroke { /* stroked/outlined shapes */
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Accent utilities and helpers */
+.text-accent-color { color: var(--accent-color) !important; }
+.bg-accent-color { background-color: var(--accent-color) !important; }
+.border-accent-color { border-color: var(--accent-color) !important; }
+.accent-glow { box-shadow: 0 0 24px var(--accent-glow); }
+.text-gradient-accent {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Accent underline for headings/links */
+.accent-underline {
+    position: relative;
+}
+.accent-underline::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.35rem;
+    width: 0;
+    height: 3px;
+    background-image: var(--accent-gradient);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: width 400ms ease;
+}
+.accent-underline:hover::after,
+.accent-underline:focus-visible::after {
+    width: 60%;
+}
+
+/* Theme utilities for custom classes used in HTML */
+.text-text-light { color: var(--text-light) !important; }
+.text-text-muted { color: var(--text-muted) !important; }
+.bg-primary-bg { background-color: var(--primary-bg) !important; }
+.bg-secondary-bg { background-color: var(--secondary-bg) !important; }
+.border-border-color { border-color: var(--border-color) !important; }
+.text-shadow-lg { text-shadow: 0 0 18px rgba(0,0,0,0.5), 0 0 12px var(--accent-glow); }
+
+/* Hover utility shims for custom classes used alongside Tailwind */
+.hover\:text-accent-color:hover { color: var(--accent-color) !important; }
+.hover\:bg-border-color:hover { background-color: var(--border-color) !important; }
+
+/* Accessible focus styles */
+a:focus-visible,
+button:focus-visible,
+.glow-button:focus-visible,
+.btn-outline-accent:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 3px;
+}
+
+/* Fixed, blurred navbar */
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 50; /* ensure it stays above content */
+}
+
+.navbar-blur {
+    /* Semi‑transparent primary background with blur to show content underneath */
+    background-color: rgba(11, 12, 16, 0.66);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari/iOS */
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* On-load reveal animations */
+@keyframes reveal-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reveal-scale {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.reveal-up {
+    opacity: 0;
+    animation: reveal-up 700ms ease-out forwards;
+}
+
+.reveal-scale {
+    opacity: 0;
+    animation: reveal-scale 700ms ease-out forwards;
+}
+
+/* delay utilities (ms) */
+.delay-100 { animation-delay: 0.10s; }
+.delay-200 { animation-delay: 0.20s; }
+.delay-300 { animation-delay: 0.30s; }
+.delay-400 { animation-delay: 0.40s; }
+.delay-500 { animation-delay: 0.50s; }
+.delay-600 { animation-delay: 0.60s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-up,
+    .reveal-scale {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Glassy/neuromorphic card */
+.glass-card {
+    /* translucent glass over dark with slight tint */
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    /* soft neuromorphic shadows */
+    box-shadow:
+        10px 10px 24px rgba(0, 0, 0, 0.35),
+        -8px -8px 20px rgba(255, 255, 255, 0.015),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(123, 104, 238, 0.45); /* subtle accent ring */
+    box-shadow:
+        14px 14px 32px rgba(0, 0, 0, 0.45),
+        -10px -10px 24px rgba(255, 255, 255, 0.02),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 24px var(--accent-glow);
+}
+
+.ui-input {
+    background-color: #202020;
+    border: 1px solid #404040;
+    color: var(--text-light);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+}
+
+.ui-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.glow-button {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease-out;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.glow-button:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+/* Outline style secondary button */
+.btn-outline-accent {
+    display: inline-block;
+    padding: 0.7rem 1.25rem;
+    border-radius: 4px;
+    border: 2px solid var(--accent-color);
+    color: var(--text-light);
+    background: transparent;
+    transition: border-color 0.25s, color 0.25s, transform 0.25s;
+}
+.btn-outline-accent:hover {
+    color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* Scroll cue animation */
+.scroll-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    transition: color 0.25s;
+}
+.scroll-cue:hover { color: var(--accent-color); }
+.scroll-cue svg { opacity: 0.85; }
+@keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+.floatY { animation: floatY 2.2s ease-in-out infinite; }
+
+.chart-container {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr; /* title + canvas */
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    height: clamp(260px, 45vw, 460px);
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-title {
+    text-align: center;
+    font-weight: 800;
+    color: var(--text-light);
+    text-shadow: 0 0 12px rgba(0,0,0,0.35);
+    font-size: clamp(1rem, 2.8vw, 1.25rem);
+}
+
+/* Center all Tailwind `.grid` containers by default
+   - `justify-content: center` centers the grid tracks within the container (useful for last row with fewer items)
+   - `justify-items: center` centers the content inside each grid cell
+   Use `.grid-no-center` on a specific grid to opt out. */
+.grid {
+    justify-content: center;
+    justify-items: center;
+}
+
+.grid-no-center {
+    justify-content: initial;
+    justify-items: initial;
+}
+
+/* Social links hover transitions */
+.social-link {
+    transition: transform 0.28s ease, background-color 0.28s ease, border-color 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
+    will-change: transform;
+}
+.social-link:hover {
+    transform: translateY(-2px) translateX(4px);
+    color: var(--accent-hover);
+    border-color: rgba(123, 104, 238, 0.45);
+    box-shadow: 0 0 24px var(--accent-glow);
+}
+.social-link:hover .icon-svg,
+.social-link:hover .icon-svg-stroke {
+    transform: translateX(4px) scale(1.06);
+    filter: drop-shadow(0 0 14px var(--accent-glow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .social-link,
+    .social-link:hover { transform: none !important; }
+    .social-link .icon-svg,
+    .social-link .icon-svg-stroke { transform: none !important; }
+}
+
+/* Reveal cards (for .glass-card tiles, team cards, news, socials) */
+.reveal-card {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    filter: blur(2px);
+    transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.reveal-card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: none;
+}
+
+/* Stagger utility for child elements */
+.stagger-children > * { transition-delay: calc(var(--stagger-i, 0) * 80ms); }
+.stagger-children > *:nth-child(1) { --stagger-i: 0; }
+.stagger-children > *:nth-child(2) { --stagger-i: 1; }
+.stagger-children > *:nth-child(3) { --stagger-i: 2; }
+.stagger-children > *:nth-child(4) { --stagger-i: 3; }
+.stagger-children > *:nth-child(5) { --stagger-i: 4; }
+.stagger-children > *:nth-child(6) { --stagger-i: 5; }
+.stagger-children > *:nth-child(7) { --stagger-i: 6; }
+.stagger-children > *:nth-child(8) { --stagger-i: 7; }
+
+/* Ensure anchor targets aren't hidden under the fixed navbar */
+section {
+    scroll-margin-top: 6rem; /* default offset for ~h-16/h-20 header */
+}
+
+@media (min-width: 768px) {
+    section { scroll-margin-top: 7rem; }
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--accent-color);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #202020; }
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }

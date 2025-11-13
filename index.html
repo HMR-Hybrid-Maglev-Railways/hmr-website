@@ -1,4 +1,3 @@
-<!-- JetBrains Inspired Style: Monochromatic dark palette, subtle gradients, muted accents, geometric structure, subtle depth. --><!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -7,155 +6,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-bg: #1A1A1A; /* Very dark gray, almost black */
-            --secondary-bg: #2B2B2B; /* Slightly lighter dark gray for sections/cards */
-            --accent-color: #7B68EE; /* Muted vibrant purple (similar to some IDE themes) */
-            --text-light: #E0E0E0; /* Light gray for main text */
-            --text-muted: #808080; /* Muted gray for secondary text */
-            --border-color: #3A3A3A; /* Darker border for subtle separation */
-        }
-
-        body {
-            font-family: 'Inter', sans-serif; /* Modern, clean for body text */
-            background-color: var(--primary-bg);
-            color: var(--text-light);
-            background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%232b2b2b" fill-opacity="0.2"%3E%3Cpath fill-rule="evenodd" d="M0 0h30v10h-10v10h-10v10h-10v-30zm30 0h30v30h-30v-30zm0 30h30v30h-30v-30z"/%3E%3C/g%3E%3C/svg%3E'); /* Subtle geometric pattern */
-            background-attachment: fixed;
-        }
-        h1, h2, h3, h4 {
-            font-family: 'Roboto Mono', monospace; /* Techy, clean for headings */
-            color: var(--accent-color);
-        }
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url('https://placehold.co/1920x1080/1A1A1A/7B68EE?text=Future+Rail+Network');
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(123, 104, 238, 0.08) 0%, transparent 70%); /* Muted accent glow */
-            pointer-events: none;
-        }
-        .animated-counter {
-            font-size: 5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-shadow: 0 0 12px rgba(123, 104, 238, 0.6); /* Subtle glow */
-        }
-        .icon-char {
-            font-size: 3rem;
-            color: var(--accent-color);
-            text-shadow: 0 0 8px rgba(123, 104, 238, 0.5);
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .jetbrains-card {
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s ease-in-out;
-        }
-        .jetbrains-card:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 16px rgba(123, 104, 238, 0.2);
-        }
-        .jetbrains-input {
-            background-color: #202020;
-            border: 1px solid #404040;
-            color: var(--text-light);
-            padding: 0.75rem 1rem;
-            border-radius: 4px;
-            transition: border-color 0.2s;
-        }
-        .jetbrains-input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.3);
-        }
-        .glow-button {
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            font-weight: 700;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            transition: all 0.3s ease-out;
-            box-shadow: 0 0 10px rgba(123, 104, 238, 0.5);
-        }
-        .glow-button:hover {
-            background-color: #9370DB; /* Lighter purple on hover */
-            box-shadow: 0 0 20px rgba(123, 104, 238, 0.8);
-            transform: translateY(-2px);
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 3px solid var(--accent-color);
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
-        @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        /* Custom scrollbar for dark theme */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #202020;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #9370DB;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body class="overflow-x-hidden">
-
-    <header class="bg-primary-bg text-white p-4 sticky top-0 z-50 shadow-lg border-b border-border-color">
-        <div class="container mx-auto flex justify-between items-center px-4">
+    <header class="navbar-fixed navbar-blur text-white shadow-lg h-16 md:h-20">
+        <div class="container mx-auto h-full flex justify-between items-center px-4">
             <h1 class="text-3xl font-bold text-accent-color">Team HMR<span class="text-xl text-text-muted">_</span></h1>
-            <nav class="hidden md:flex space-x-6 text-lg">
+            <nav class="hidden md:flex items-center space-x-6 text-lg">
                 <a href="#problem" class="hover:text-accent-color transition-colors duration-200">The Problem</a>
                 <a href="#solution" class="hover:text-accent-color transition-colors duration-200">Our Solution</a>
                 <a href="#team" class="hover:text-accent-color transition-colors duration-200">The Team</a>
@@ -164,7 +22,7 @@
             </nav>
             <button id="mobile-menu-btn" class="md:hidden text-3xl text-accent-color">☰</button>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-4 mt-4 px-4 bg-secondary-bg rounded-b-lg border border-border-color">
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-4 mt-4 px-4 bg-secondary-bg rounded-b-lg">
             <a href="#problem" class="block py-2 hover:text-accent-color transition-colors duration-200">The Problem</a>
             <a href="#solution" class="block py-2 hover:text-accent-color transition-colors duration-200">Our Solution</a>
             <a href="#team" class="block py-2 hover:text-accent-color transition-colors duration-200">The Team</a>
@@ -173,16 +31,33 @@
         </div>
     </header>
 
-    <main>
-        <section class="hero-bg h-screen flex items-center justify-center text-white text-center p-4">
-            <div class="fade-in visible relative z-10">
-                <h2 class="text-6xl md:text-8xl font-black mb-4 text-white text-shadow-lg leading-tight">Rethinking <br class="md:hidden">Railways<span class="text-accent-color">.</span></h2>
-                <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-text-light">We are Team HMR, building a 500 km/h Hybrid Maglev system for Europe's existing tracks. The future of transport, defined.</p>
-                <a href="#problem" class="glow-button">Explore Our Vision</a>
+    <main class="pt-16 md:pt-20">
+        <!-- Redesigned Hero -->
+        <section class="h-[92vh] md:h-screen flex items-center justify-center text-center p-6">
+            <div class="relative z-10 max-w-5xl">
+                <h2 class="hero-title font-extrabold mb-5 leading-tight mx-auto max-w-[92vw] md:max-w-5xl">
+                    <span class="hero-line text-gradient-accent reveal-up delay-100">Plane‑level speed.</span>
+                    <span class="hero-line text-gradient-accent reveal-up delay-200">Train‑level simplicity.</span>
+                </h2>
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-text-light reveal-up delay-300">
+                    HMR upgrades Europe’s existing rail to reach ~500 km/h on selected corridors—without stopping the continent and with full backward compatibility.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10 reveal-scale delay-400">
+                    <a href="#problem" class="glow-button">Explore Our Vision</a>
+                    <a href="#contact" class="btn-outline-accent">Connect with Us</a>
+                </div>
+                <div class="mt-10">
+                    <a href="#solution" class="scroll-cue inline-flex items-center reveal-up delay-500">
+                        <svg class="floatY" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="img">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <span class="sr-only">Scroll to solution</span>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section id="problem" class="py-20 bg-secondary-bg border-b border-border-color">
+        <section id="problem" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-6 text-center">The European Travel Compromise</h2>
                 <p class="text-xl text-text-light leading-relaxed mb-20 text-center max-w-3xl mx-auto">
@@ -192,11 +67,11 @@
                 <!-- Chapter 1: Speed -->
                 <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
                     <div class="text-center lg:text-left fade-in">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">Chapter 1: The Speed Trap</h3>
+                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Speed Trap</h3>
                         <p class="text-lg text-text-muted mb-6">We're offered a false choice: fly at a blistering 839 km/h, or crawl on a conventional train at 150 km/h. While 70% of people prefer trains, the speed is simply not competitive for international travel, forcing a compromise before the journey even begins.</p>
                     </div>
-                    <div class="chart-container fade-in jetbrains-card p-4">
-                        <p class="text-center text-text-muted mb-4">Average Speed (km/h)</p>
+                    <div class="chart-container fade-in glass-card p-6">
+                        <div class="chart-title">Average Speed (km/h)</div>
                         <canvas id="speedProblemChart"></canvas>
                     </div>
                 </div>
@@ -204,11 +79,11 @@
                 <!-- Chapter 2: CO2 Emissions -->
                 <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
                     <div class="text-center lg:text-left fade-in lg:order-last">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">Chapter 2: The Carbon Cost</h3>
+                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Carbon Cost</h3>
                         <p class="text-lg text-text-muted mb-6">The "fast" option comes at a massive environmental price. Flying produces an enormous amount of CO2 per kilometer, completely undermining European sustainability goals. The train is incredibly clean, but it's too slow. We are forced to choose between our planet and our time.</p>
                     </div>
-                    <div class="chart-container fade-in jetbrains-card p-4">
-                        <p class="text-center text-text-muted mb-4">CO2 Emissions (g/km per passenger)</p>
+                    <div class="chart-container fade-in glass-card p-6">
+                        <div class="chart-title">CO2 Emissions (g/km per passenger)</div>
                         <canvas id="co2ProblemChart"></canvas>
                     </div>
                 </div>
@@ -216,11 +91,11 @@
                 <!-- Chapter 3: Access Time -->
                 <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
                     <div class="text-center lg:text-left fade-in">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">Chapter 3: The Waiting Game</h3>
+                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Waiting Game</h3>
                         <p class="text-lg text-text-muted mb-6">A plane's "speed" is misleading. The data shows a staggering 120 minutes of "access time"—the hassle of check-in, security, and boarding. This high-friction experience wastes time before you ever leave the ground. Train and bus travel are simple and efficient to board, but they lose all that time on the journey itself.</p>
                     </div>
-                    <div class="chart-container fade-in jetbrains-card p-4">
-                        <p class="text-center text-text-muted mb-4">Average Access Time (Minutes)</p>
+                    <div class="chart-container fade-in glass-card p-6">
+                        <div class="chart-title">Average Access Time (Minutes)</div>
                         <canvas id="timeProblemChart"></canvas>
                     </div>
                 </div>
@@ -231,8 +106,8 @@
                         <h3 class="text-3xl font-bold text-accent-color mb-4">Chapter 4: The Capacity Constraint</h3>
                         <p class="text-lg text-text-muted mb-6">Even if we accept their flaws, buses and planes simply can't move enough people. With a capacity of only 40 and 180 passengers, they are inefficient solutions for a connected Europe. The train system is the only one built for mass transit, with a capacity of 800, but it lacks the speed to make it the default choice.</p>
                     </div>
-                    <div class="chart-container fade-in jetbrains-card p-4">
-                        <p class="text-center text-text-muted mb-4">Passenger Capacity</p>
+                    <div class="chart-container fade-in glass-card p-6">
+                        <div class="chart-title">Passenger Capacity</div>
                         <canvas id="capacityProblemChart"></canvas>
                     </div>
                 </div>
@@ -242,16 +117,16 @@
                 <p class="text-xl text-text-light leading-relaxed mb-12 text-center max-w-3xl mx-auto">
                     We are forced to choose between our time and our values. This is the compromise we reject.
                 </p>
-                <div class="grid md:grid-cols-3 gap-8 text-left">
-                    <div class="jetbrains-card p-6">
+                <div class="grid md:grid-cols-3 gap-8 text-left stagger-children">
+                    <div class="glass-card p-6 reveal-card">
                         <h3 class="text-2xl font-bold text-white mb-3">The Plane: <span class="text-red-400">Fast & Flawed</span></h3>
                         <p class="text-text-muted">You get speed (839 km/h) but you pay with your time (120 min access) and your conscience (154g CO2/km).</p>
                     </div>
-                    <div class="jetbrains-card p-6">
+                    <div class="glass-card p-6 reveal-card">
                         <h3 class="text-2xl font-bold text-white mb-3">The Train: <span class="text-green-400">Green & Slow</span></h3>
                         <p class="text-text-muted">You get sustainability (3g CO2/km) and capacity (800) but you sacrifice your time (150 km/h avg speed).</p>
                     </div>
-                    <div class="jetbrains-card p-6">
+                    <div class="glass-card p-6 reveal-card">
                         <h3 class="text-2xl font-bold text-white mb-3">The Bus: <span class="text-yellow-400">The Long Haul</span></h3>
                         <p class="text-text-muted">You get simplicity (20 min access) but lose on every other metric: speed (80 km/h) and capacity (40).</p>
                     </div>
@@ -259,76 +134,130 @@
             </div>
         </section>
 
-        <section id="solution" class="py-20 bg-primary-bg border-b border-border-color">
+        <section id="solution" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-12">The Solution: <span class="text-white">1 Track, 1 Train, 2 Systems</span></h2>
                 <p class="text-2xl leading-relaxed text-text-light max-w-4xl mx-auto mb-16">
-                    HMR ends the compromise. We are not building a new network; we are upgrading the one we already have. Our solution is built on two core principles:
+                    HMR ends the compromise by upgrading Europe’s existing rail network. Our solution is built on two core principles: roll out upgrades gradually without stopping Europe, and keep full backward compatibility so today’s conventional trains keep running.
                 </p>
-                <div class="grid md:grid-cols-3 gap-10 mb-12 text-left">
-                    <div class="jetbrains-card p-6">
-                        <span class="icon-char">⚡</span>
+                <div class="grid md:grid-cols-3 gap-10 mb-12 text-left stagger-children">
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: Lightning bolt -->
+                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M13 2L3 14h6l-2 8 10-12h-6z"/>
+                        </svg>
+                        <span class="sr-only">Retrofitted Train</span>
                         <h3 class="text-2xl font-bold text-accent-color mb-3">The Retrofitted Train</h3>
-                        <p class="text-text-muted">A high-speed train that operates normally at low speeds, then supports maglev levitation upon reaching over 200 km/h, achieving 500 km/h on upgraded tracks.</p>
+                        <p class="text-text-muted">A high-speed train that behaves like a standard wheel‑on‑rail vehicle at low speeds, and levitates above ~200 km/h on upgraded segments — targeting 500 km/h — while remaining fully compatible with existing operations.</p>
                     </div>
-                    <div class="jetbrains-card p-6">
+                    <div class="glass-card p-6 reveal-card">
                         <span class="icon-char">⛮</span>
                         <h3 class="text-2xl font-bold text-accent-color mb-3">The "Plug-and-Play" Track</h3>
-                        <p class="text-text-muted">A modular upgrade for existing tracks. This module supports our maglev trains while still allowing all conventional trains to pass over it without issue.</p>
+                        <p class="text-text-muted">A modular insert for existing rails that enables maglev propulsion/levitation on select corridors yet allows conventional trains to pass normally — ensuring backward compatibility by design.</p>
                     </div>
-                    <div class="jetbrains-card p-6">
+                    <div class="glass-card p-6 reveal-card">
                         <span class="icon-char">↔</span>
                         <h3 class="text-2xl font-bold text-accent-color mb-3">A True Hybrid System</h3>
-                        <p class="text-text-muted">Old trains and new trains on the same track. This is the key to a realistic, cost-effective, and scalable rollout across all of Europe.</p>
+                        <p class="text-text-muted">New and existing fleets share the same infrastructure. Corridors can be upgraded step‑by‑step without network shutdowns — keeping Europe moving while performance climbs.</p>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <h3 class="text-3xl font-bold text-accent-color mb-6">Why this Hybrid Wins</h3>
+                <div class="grid md:grid-cols-3 gap-8 mb-12 text-left stagger-children">
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: High capacity (stacked bars) -->
+                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <rect x="3" y="4" width="18" height="4" rx="1"/>
+                            <rect x="3" y="10" width="18" height="4" rx="1"/>
+                            <rect x="3" y="16" width="18" height="4" rx="1"/>
+                        </svg>
+                        <span class="sr-only">High capacity</span>
+                        <h4 class="text-xl font-bold text-white mb-2">High capacity</h4>
+                        <p class="text-text-muted">Train‑scale throughput for a connected Europe — move far more people per hour than planes or buses.</p>
+                    </div>
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: Plane-like speeds (double chevrons) -->
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M5 4l8 8-8 8"/>
+                            <path d="M11 4l8 8-8 8"/>
+                        </svg>
+                        <span class="sr-only">Plane‑like speeds</span>
+                        <h4 class="text-xl font-bold text-white mb-2">Plane‑like speeds</h4>
+                        <p class="text-text-muted">Target ~500 km/h on upgraded segments with train‑like boarding, delivering door‑to‑door times that rival flying.</p>
+                    </div>
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: Low emissions (leaf) -->
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M5 12c0-4.5 3.5-8 8-8 3.3 0 6 2.2 6 5 0 5-6 9-12 9 0 0 2-3 2-6z"/>
+                            <path d="M9 13c2 0 5-1 7-3"/>
+                        </svg>
+                        <span class="sr-only">Low emissions</span>
+                        <h4 class="text-xl font-bold text-white mb-2">Low emissions</h4>
+                        <p class="text-text-muted">Electric propulsion and efficient aerodynamics cut per‑passenger CO₂ versus short‑haul flights.</p>
+                    </div>
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: Gradual investment (stacked coins) -->
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <ellipse cx="12" cy="6" rx="6" ry="3"/>
+                            <path d="M6 6v6c0 1.7 2.7 3 6 3s6-1.3 6-3V6"/>
+                            <path d="M6 12v6c0 1.7 2.7 3 6 3s6-1.3 6-3v-6"/>
+                        </svg>
+                        <span class="sr-only">Gradual investment</span>
+                        <h4 class="text-xl font-bold text-white mb-2">Gradual investment</h4>
+                        <p class="text-text-muted">Upgrade the network in modules and corridors with the best ROI first — avoiding all‑at‑once mega‑projects.</p>
+                    </div>
+                    <div class="glass-card p-6 reveal-card">
+                        <!-- Replaced emoji with SVG: Keep Europe moving (circular arrows) -->
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M4 12a8 8 0 0 1 13.66-5.66"/>
+                            <path d="M16 3h4v4"/>
+                            <path d="M20 12a8 8 0 0 1-13.66 5.66"/>
+                            <path d="M8 21H4v-4"/>
+                        </svg>
+                        <span class="sr-only">Keep Europe moving</span>
+                        <h4 class="text-xl font-bold text-white mb-2">Keep Europe moving</h4>
+                        <p class="text-text-muted">Backward‑compatible by design: conventional trains keep running while hybrid service scales — no continent‑wide shutdowns.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="goal" class="py-24 bg-secondary-bg border-b border-border-color">
-            <div class="container mx-auto px-6 max-w-5xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-6">Our Mission: <span class="text-white">Connecting Europe</span>.</h2>
-                <p class="text-2xl leading-relaxed text-text-light">
-                    We aim to revolutionize intercountry travel, establishing high-speed, sustainable, and comfortable rail as the preferred mode of transport, ultimately uniting Europe through advanced mobility.
-                </p>
-            </div>
-        </section>
-
-        <section id="team" class="py-20 bg-secondary-bg border-b border-border-color">
+        <section id="team" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-12">Meet the <span class="text-white">Catalysts</span>.</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    <!-- Team members with futuristic profile cards --><div class="text-center jetbrains-card p-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 stagger-children">
+                    <!-- Team members with futuristic profile cards --><div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Lars+H." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Lars Hilkens</h4>
                         <p class="text-text-muted">Team Leader</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Alexandros+P." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Alexandros Peonidis</h4>
                         <p class="text-text-muted">Lead Engineer</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Kirill+C." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Kirill Chekmenev</h4>
                         <p class="text-text-muted">Lead Engineer</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Andreas+C." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Andreas Christoforou</h4>
                         <p class="text-text-muted">Team Member</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Paul+K." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Paul Kasten</h4>
                         <p class="text-text-muted">Team Member</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Annelies+vV." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Annelies van Vastenhoven</h4>
                         <p class="text-text-muted">Team Member</p>
                     </div>
-                    <div class="text-center jetbrains-card p-4">
+                    <div class="text-center glass-card p-4 reveal-card">
                         <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Jose+LM." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
                         <h4 class="text-xl font-bold text-white">Jose Ledesma Martin</h4>
                         <p class="text-text-muted">Team Member</p>
@@ -337,11 +266,11 @@
             </div>
         </section>
 
-        <section id="news" class="py-20 bg-primary-bg border-b border-border-color">
+        <section id="news" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span>.</h2>
-                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="jetbrains-card rounded-lg overflow-hidden flex flex-col">
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto stagger-children">
+                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
                         <img src="https://placehold.co/600x400/2B2B2B/7B68EE?text=TU/e+Contest+News" alt="News article" class="w-full h-48 object-cover border-b border-border-color">
                         <div class="p-6 flex-grow">
                             <h3 class="text-2xl font-bold text-white mb-3">TU/e Contest Participation</h3>
@@ -349,7 +278,7 @@
                         </div>
                         <a href="#" class="block bg-secondary-bg p-4 text-accent-color font-bold hover:bg-border-color transition-colors duration-200">Read More</a>
                     </div>
-                    <div class="jetbrains-card rounded-lg overflow-hidden flex flex-col">
+                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
                         <img src="https://placehold.co/600x400/2B2B2B/7B68EE?text=Prototype+Update" alt="News article" class="w-full h-48 object-cover border-b border-border-color">
                         <div class="p-6 flex-grow">
                             <h3 class="text-2xl font-bold text-white mb-3">Prototype Design Phase Complete</h3>
@@ -361,16 +290,76 @@
             </div>
         </section>
 
-        <section id="contact" class="py-24 bg-secondary-bg">
-            <div class="container mx-auto px-6 max-w-4xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-6">Connect with <span class="text-white">Our Future</span>.</h2>
+        <section id="contact" class="py-24">
+            <div class="container mx-auto px-6 max-w-5xl text-center fade-in">
+                <h2 class="text-4xl font-bold text-accent-color mb-4">Connect with <span class="text-white">Our Future</span>.</h2>
                 <p class="text-xl leading-relaxed mb-10 text-text-light">
-                    We're seeking innovative minds, strategic partners, and visionary sponsors to accelerate the future of mobility.
+                    Beam us a message, follow our journey, or ping us on your channel of choice.
                 </p>
-                <div class="flex justify-center space-x-8">
-                    <a href="mailto:board.hmr@gmail.com" class="text-5xl text-accent-color hover:text-#9370DB transition-colors duration-200 text-shadow-lg" title="Email">✉</a>
-                    <a href="https://www.linkedin.com/company/hybrid-maglev-railways" target="_blank" class="text-5xl text-accent-color hover:text-#9370DB transition-colors duration-200 text-shadow-lg" title="LinkedIn">🌐</a>
-                    <a href="https://www.instagram.com/hmr_hybridmaglev_railways" target="_blank" class="text-5xl text-accent-color hover:text-#9370DB transition-colors duration-200 text-shadow-lg" title="Instagram">📸</a>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 stagger-children">
+                    <!-- Email / Gmail -->
+                    <a href="mailto:board.hmr@gmail.com" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Email us" aria-label="Email: board.hmr@gmail.com">
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <rect x="3" y="5" width="18" height="14" rx="2"/>
+                            <path d="M4 7l8 6 8-6"/>
+                        </svg>
+                        <div>
+                            <div class="text-white font-bold">Email</div>
+                            <div class="text-text-muted text-sm">board.hmr@gmail.com</div>
+                        </div>
+                    </a>
+
+                    <!-- LinkedIn Posts -->
+                    <a href="https://www.linkedin.com/company/hybrid-maglev-railways/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="LinkedIn posts" aria-label="LinkedIn posts">
+                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <rect x="3" y="3" width="18" height="18" rx="3"/>
+                            <path d="M8 10v7" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="8" cy="7" r="1.2" fill="currentColor"/>
+                            <path d="M12 10v7m0-5.2c.2-1.5 1.4-2.6 3-2.6 1.8 0 3 1.2 3 3.2V17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <div>
+                            <div class="text-white font-bold">LinkedIn</div>
+                            <div class="text-text-muted text-sm">Company updates & posts</div>
+                        </div>
+                    </a>
+
+                    <!-- Brainport profile -->
+                    <a href="https://brainporteindhoven.com/en/discover-brainport/studying-and-developing/what-are-our-student-teams-working-on/team-hmr" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Brainport Eindhoven profile" aria-label="Brainport Eindhoven profile">
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M12 21s6-4.5 6-10a6 6 0 1 0-12 0c0 5.5 6 10 6 10z"/>
+                            <circle cx="12" cy="11" r="2.5"/>
+                        </svg>
+                        <div>
+                            <div class="text-white font-bold">Brainport Eindhoven</div>
+                            <div class="text-text-muted text-sm">Our team profile</div>
+                        </div>
+                    </a>
+
+                    <!-- Linktree -->
+                    <a href="https://linktr.ee/hybridmaglevrailways" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Linktree" aria-label="Linktree links">
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M12 3v18"/>
+                            <path d="M6 9l6-6 6 6"/>
+                            <path d="M7 21h10"/>
+                        </svg>
+                        <div>
+                            <div class="text-white font-bold">Linktree</div>
+                            <div class="text-text-muted text-sm">All our links in one place</div>
+                        </div>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/hmr_hybridmaglevrailways/" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Instagram" aria-label="Instagram: hmr_hybridmaglevrailways">
+                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <rect x="4" y="4" width="16" height="16" rx="4"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <circle cx="17" cy="7" r="1.5"/>
+                        </svg>
+                        <div>
+                            <div class="text-white font-bold">Instagram</div>
+                            <div class="text-text-muted text-sm">@hmr_hybridmaglevrailways</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -380,185 +369,5 @@
         <p>&copy; 2025 Team HMR - Hybrid Maglev Railways. A TU/e Student Team. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        
-                        if (entry.target.classList.contains('animated-counter')) {
-                            animateCounter(entry.target);
-                        }
-                        
-                        if (entry.target.id === 'speedProblemChart') {
-                            renderSpeedProblemChart();
-                        }
-                        if (entry.target.id === 'co2ProblemChart') {
-                            renderCO2ProblemChart();
-                        }
-                        if (entry.target.id === 'capacityProblemChart') {
-                            renderCapacityProblemChart();
-                        }
-                        if (entry.target.id === 'timeProblemChart') {
-                            renderTimeProblemChart();
-                        }
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('.fade-in, .animated-counter, #speedProblemChart, #co2ProblemChart, #capacityProblemChart, #timeProblemChart').forEach(el => {
-                observer.observe(el);
-            });
-
-            function animateCounter(el) {
-                const target = parseInt(el.dataset.target, 10);
-                let current = 0;
-                const duration = 2000;
-                const stepTime = 20;
-                const steps = duration / stepTime;
-                const increment = target / steps;
-                
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        clearInterval(timer);
-                        el.textContent = target;
-                    } else {
-                        el.textContent = Math.round(current);
-                    }
-                }, stepTime);
-            }
-
-            function createBarChart(canvasId, labels, data, axisLabel, dataLabel) {
-                const ctx = document.getElementById(canvasId).getContext('2d');
-                const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-light').trim();
-                const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
-                
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: dataLabel,
-                            data: data,
-                    backgroundColor: [
-                                'rgba(239, 68, 68, 0.7)',  // red-500
-                                'rgba(250, 204, 21, 0.7)', // yellow-400
-                                'rgba(52, 211, 153, 0.7)', // green-400
-                            ],
-                            borderColor: [
-                                'rgba(239, 68, 68, 1)',
-                                'rgba(250, 204, 21, 1)',
-                                'rgba(52, 211, 153, 1)',
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'x',
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: axisLabel,
-                                    color: textColor,
-                                    font: { size: 16, weight: 'bold' }
-                                },
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: textColor,
-                                    font: { size: 14 }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                },
-                                ticks: {
-                                    color: textColor,
-                                    font: { size: 14 }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-
-            function renderSpeedProblemChart() {
-                createBarChart(
-                    'speedProblemChart',
-                    ['Plane', 'Bus', 'Train'],
-                    [839, 80, 150],
-                    'Speed (km/h)',
-                    'Average Speed'
-                );
-            }
-
-            function renderCO2ProblemChart() {
-                createBarChart(
-                    'co2ProblemChart',
-                    ['Plane', 'Bus', 'Train'],
-                    [154, 30, 3],
-                    'CO2 (g/km per passenger)',
-                    'CO2 Emissions'
-                );
-            }
-
-            function renderCapacityProblemChart() {
-                createBarChart(
-                    'capacityProblemChart',
-                    ['Plane', 'Bus', 'Train'],
-                    [180, 40, 800],
-                    'Passenger Capacity',
-                    'Max Passengers'
-                );
-            }
-
-            function renderTimeProblemChart() {
-                createBarChart(
-                    'timeProblemChart',
-                    ['Plane', 'Bus', 'Train'],
-                    [120, 20, 20],
-                    'Access Time (Minutes)',
-                    'Average Access Time'
-                );
-            }
-
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            document.querySelectorAll('#mobile-menu a, nav a').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    if (link.hash !== "") {
-                        if(mobileMenu.contains(link)) {
-                            mobileMenu.classList.add('hidden');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
