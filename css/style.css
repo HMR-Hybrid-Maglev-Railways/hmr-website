@@ -22,7 +22,8 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif; /* Modern, clean for body text */
+    /* System stack for fully offline usage (no webfonts required) */
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
     color: var(--text-light);
     background-color: var(--primary-bg);
     min-height: 100vh;
@@ -74,7 +75,8 @@ body::after {
 
 
 h1, h2, h3, h4 {
-    font-family: 'Roboto Mono', monospace; /* Techy, clean for headings */
+    /* Monospace system stack for headings (offline) */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     color: var(--accent-color);
 }
 
@@ -94,29 +96,9 @@ h1, h2, h3, h4 {
 }
 
 /* Hero wrapper (image will be reworked in step 2); keep neutral for now */
-.hero-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75));
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 1px solid var(--border-color);
-}
+/* (removed old .hero-bg wrapper; the aurora background handles contrast) */
 
-.hero-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0.0), rgba(0,0,0,0.5) 70%); /* vignette for contrast */
-    pointer-events: none;
-}
-
-.animated-counter {
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--accent-color);
-    text-shadow: 0 0 12px var(--accent-glow); /* Subtle glow */
-}
+/* (removed unused .animated-counter styles) */
 
 .icon-char {
     font-size: 3rem;
@@ -212,12 +194,50 @@ button:focus-visible,
     z-index: 50; /* ensure it stays above content */
 }
 
+/* Deprecated: .navbar-blur kept for backward compatibility (no longer used) */
 .navbar-blur {
-    /* Semi‑transparent primary background with blur to show content underneath */
     background-color: rgba(11, 12, 16, 0.66);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Safari/iOS */
+    -webkit-backdrop-filter: blur(12px);
 }
+
+/* Glassy navbar variant to match .glass-card */
+.glass-navbar {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Navbar link utilities for larger hit areas */
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 0.875rem; /* ~14px left/right */
+    border-radius: 8px;
+    transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link-mobile {
+    display: block;
+    padding: 0.75rem 0.75rem; /* ≥48px tap target height */
+    border-radius: 8px;
+}
+
+/* Smooth scrolling helper (applied on <html> via class) */
+.scroll-smooth { scroll-behavior: smooth; }
+
+/* Helpers for previously arbitrary Tailwind classes now replaced */
+.h-92vh { height: 92vh; }
+.max-w-92vw { max-width: 92vw; }
 
 .fade-in {
     opacity: 0;
@@ -294,20 +314,7 @@ button:focus-visible,
         0 0 24px var(--accent-glow);
 }
 
-.ui-input {
-    background-color: #202020;
-    border: 1px solid #404040;
-    color: var(--text-light);
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
-    transition: border-color 0.2s;
-}
-
-.ui-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px var(--accent-glow);
-}
+/* (removed unused .ui-input styles) */
 
 .glow-button {
     position: relative;
@@ -399,6 +406,94 @@ button:focus-visible,
     justify-items: initial;
 }
 
+/* Subteam browser layout */
+.subteam-layout {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (min-width: 768px) {
+    .subteam-layout {
+        grid-template-columns: minmax(260px, 340px) 1fr;
+    }
+}
+
+@media (min-width: 1280px) {
+    .subteam-layout {
+        /* Give the tab list a bit more breathing room on wide screens */
+        grid-template-columns: minmax(280px, 420px) 1fr;
+    }
+}
+
+.subteam-tabs {
+    position: sticky;
+    top: calc(4rem + 12px); /* account for fixed navbar + small offset */
+}
+
+/* Mobile: horizontal, scrollable tabs */
+@media (max-width: 767.98px) {
+    .subteam-tabs {
+        position: static; /* disable sticky on small screens */
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+    .subteam-tabs::-webkit-scrollbar { height: 8px; }
+    .subteam-tabs::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.12); border-radius: 8px; }
+}
+
+.subteam-tile {
+    width: 100%;
+    text-align: left;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, background-color 0.25s ease;
+}
+
+.subteam-tile:hover {
+    transform: translateY(-2px);
+}
+
+.subteam-tile.is-active {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 0 22px var(--accent-glow);
+}
+
+/* Ensure comfortable touch targets and snapping on mobile */
+@media (max-width: 767.98px) {
+    .subteam-tile {
+        min-height: 3.25rem; /* ≥52px tap target */
+        flex: 0 0 auto;
+        min-width: 220px;
+        scroll-snap-align: start;
+    }
+}
+
+.subteam-panels {
+    width: 100%;
+}
+
+.subteam-detail {
+    overflow: hidden;
+}
+
+.subteam-photo {
+    width: 100%;
+    height: clamp(220px, 32vw, 380px);
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--border-color);
+}
+
+@media (min-width: 1024px) {
+    .subteam-photo { height: clamp(300px, 28vw, 420px); }
+}
+
 /* Social links hover transitions */
 .social-link {
     transition: transform 0.28s ease, background-color 0.28s ease, border-color 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
@@ -409,11 +504,6 @@ button:focus-visible,
     color: var(--accent-hover);
     border-color: rgba(123, 104, 238, 0.45);
     box-shadow: 0 0 24px var(--accent-glow);
-}
-.social-link:hover .icon-svg,
-.social-link:hover .icon-svg-stroke {
-    transform: translateX(4px) scale(1.06);
-    filter: drop-shadow(0 0 14px var(--accent-glow));
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,41 +3,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team HMR - Hybrid Maglev Railways</title>
+    <!-- Tailwind CSS via CDN (as requested) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
 </head>
 <body class="overflow-x-hidden">
-    <header class="navbar-fixed navbar-blur text-white shadow-lg h-16 md:h-20">
+    <header class="navbar-fixed glass-navbar text-white shadow-lg h-16 md:h-20">
         <div class="container mx-auto h-full flex justify-between items-center px-4">
             <h1 class="text-3xl font-bold text-accent-color">Team HMR<span class="text-xl text-text-muted">_</span></h1>
-            <nav class="hidden md:flex items-center space-x-6 text-lg">
-                <a href="#problem" class="hover:text-accent-color transition-colors duration-200">The Problem</a>
-                <a href="#solution" class="hover:text-accent-color transition-colors duration-200">Our Solution</a>
-                <a href="#team" class="hover:text-accent-color transition-colors duration-200">The Team</a>
-                <a href="#news" class="hover:text-accent-color transition-colors duration-200">News</a>
-                <a href="#contact" class="glow-button">Connect</a>
+            <nav class="hidden md:flex items-center space-x-8 text-lg">
+                <a href="#problem" class="nav-link hover:text-accent-color transition-colors duration-200">The Problem</a>
+                <a href="#solution" class="nav-link hover:text-accent-color transition-colors duration-200">Our Solution</a>
+                <a href="#team" class="nav-link hover:text-accent-color transition-colors duration-200">The Team</a>
+                <a href="#news" class="nav-link hover:text-accent-color transition-colors duration-200">News</a>
+                <a href="#contact" class="glow-button nav-link">Connect</a>
             </nav>
             <button id="mobile-menu-btn" class="md:hidden text-3xl text-accent-color">☰</button>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-4 mt-4 px-4 bg-secondary-bg rounded-b-lg">
-            <a href="#problem" class="block py-2 hover:text-accent-color transition-colors duration-200">The Problem</a>
-            <a href="#solution" class="block py-2 hover:text-accent-color transition-colors duration-200">Our Solution</a>
-            <a href="#team" class="block py-2 hover:text-accent-color transition-colors duration-200">The Team</a>
-            <a href="#news" class="block py-2 hover:text-accent-color transition-colors duration-200">News</a>
-            <a href="#contact" class="block glow-button text-center">Connect</a>
+        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4 px-4 glass-card border border-border-color rounded-b-lg pb-3">
+            <a href="#problem" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">The Problem</a>
+            <a href="#solution" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">Our Solution</a>
+            <a href="#team" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">The Team</a>
+            <a href="#news" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">News</a>
+            <a href="#contact" class="nav-link-mobile text-center">
+                <span class="glow-button inline-block">Connect</span>
+            </a>
         </div>
     </header>
 
     <main class="pt-16 md:pt-20">
         <!-- Redesigned Hero -->
-        <section class="h-[92vh] md:h-screen flex items-center justify-center text-center p-6">
+        <section class="h-92vh md:h-screen flex items-center justify-center text-center p-6">
             <div class="relative z-10 max-w-5xl">
-                <h2 class="hero-title font-extrabold mb-5 leading-tight mx-auto max-w-[92vw] md:max-w-5xl">
-                    <span class="hero-line text-gradient-accent reveal-up delay-100">Plane‑level speed.</span>
-                    <span class="hero-line text-gradient-accent reveal-up delay-200">Train‑level simplicity.</span>
+                <h2 class="hero-title font-extrabold mb-5 leading-tight mx-auto max-w-92vw md:max-w-5xl">
+                    <span class="hero-line text-gradient-accent reveal-up delay-100">Plane‑level speed,</span>
+                    <span class="hero-line text-gradient-accent reveal-up delay-200">Train‑level simplicity</span>
                 </h2>
                 <p class="text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-text-light reveal-up delay-300">
                     HMR upgrades Europe’s existing rail to reach ~500 km/h on selected corridors—without stopping the continent and with full backward compatibility.
@@ -178,9 +179,12 @@
                     </div>
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: Plane-like speeds (double chevrons) -->
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M5 4l8 8-8 8"/>
-                            <path d="M11 4l8 8-8 8"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">
+                            <g id="🔍-Product-Icons" stroke="none" fill-rule="evenodd">
+                                <g id="ic_fluent_top_speed_24_filled" fill-rule="nonzero">
+                                    <path d="M10.0492532,15.4208574 L16.3060077,6.94493547 C16.5131405,6.66433611 16.8962754,6.58091825 17.2013158,6.75000494 C17.4758699,6.90219275 17.61052,7.21639422 17.5413028,7.51420559 L17.510592,7.61262428 L13.6405266,17.4116224 C13.2205308,18.475051 12.0179777,18.9966563 10.9545491,18.5766605 C10.8710782,18.543694 10.7898393,18.5053348 10.7113465,18.4618255 C9.71108052,17.9073691 9.34968053,16.6470175 9.904137,15.6467516 L9.97303013,15.5314501 L9.97303013,15.5314501 L10.0492532,15.4208574 L16.3060077,6.94493547 L10.0492532,15.4208574 Z M18.6095174,7.41397033 C19.364068,8.02528183 20.0469718,8.75083284 20.6317275,9.58595046 C21.1562296,10.3350171 21.6612578,11.2420254 21.9517027,11.9842912 C22.1026388,12.3700259 21.9122969,12.8050834 21.5265623,12.9560194 C21.1408277,13.1069554 20.7057702,12.9166136 20.5548341,12.530879 C20.4575421,12.2822379 20.3277108,12.0046594 20.1775548,11.7190679 L18.1280514,12.9023464 C17.769332,13.1094531 17.3106392,12.9865468 17.1035324,12.6278273 C16.9136845,12.2990011 17.0011393,11.8861696 17.2933389,11.6601229 L17.3780514,11.6033083 L19.3963044,10.4364308 L19.1658779,10.1227204 C18.8419948,9.70016342 18.4876665,9.31329453 18.1081562,8.96304177 L18.4883177,7.99876394 C18.5262055,7.90283222 18.5550318,7.80534515 18.5751558,7.70730436 L18.5988599,7.55995309 L18.6095174,7.41397033 Z M15.9809484,5.85271523 C15.8318986,5.9392755 15.694531,6.04936208 15.5743759,6.18134222 L15.4601633,6.32055973 L14.919203,7.05349635 C14.2174399,6.80955942 13.4886764,6.6517272 12.7502416,6.58305531 L12.75,9.25589923 C12.75,9.6701128 12.4142136,10.0058992 12,10.0058992 C11.6203042,10.0058992 11.306509,9.72374535 11.2568466,9.35766979 L11.25,9.25589923 L11.2496135,6.56662077 C9.65294084,6.68015443 8.06551588,7.21425939 6.65889532,8.19918572 C5.84294582,8.77051971 5.13152818,9.52142873 4.54015984,10.4038879 L6.62237477,11.6059717 C6.98109424,11.8130785 7.1040006,12.2717713 6.89689382,12.6304908 C6.70704594,12.959317 6.30579591,13.0899946 5.96393397,12.9499658 L5.87237477,12.9050099 L3.79818254,11.7080227 C3.6704134,11.9742424 3.55177265,12.248307 3.44255853,12.5292935 C3.29249811,12.9153696 2.8578736,13.1066981 2.47179751,12.9566377 C2.08572142,12.8065773 1.89439292,12.3719528 2.04445335,11.9858767 C2.85090303,9.91103954 4.12374054,8.14315832 5.79853067,6.97045765 C8.8904309,4.8054858 12.7328827,4.5119546 15.9809484,5.85271523 Z" id="🎨-Color"></path>
+                                </g>
+                            </g>
                         </svg>
                         <span class="sr-only">Plane‑like speeds</span>
                         <h4 class="text-xl font-bold text-white mb-2">Plane‑like speeds</h4>
@@ -188,20 +192,16 @@
                     </div>
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: Low emissions (leaf) -->
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M5 12c0-4.5 3.5-8 8-8 3.3 0 6 2.2 6 5 0 5-6 9-12 9 0 0 2-3 2-6z"/>
-                            <path d="M9 13c2 0 5-1 7-3"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5 5C15.7761 5 16 5.22386 16 5.5V7.5H18V5.5C18 5.22386 18.2239 5 18.5 5C18.7761 5 19 5.22386 19 5.5V7.5H20C20.2761 7.5 20.5 7.72386 20.5 8V12C20.5 12.2761 20.2761 12.5 20 12.5H17.5V18C17.5 18.8284 16.8284 19.5 16 19.5H9C8.17157 19.5 7.5 18.8284 7.5 18V15.8319C7.40693 15.7938 7.32199 15.7519 7.24657 15.7084C7.12496 15.6382 6.99469 15.5444 6.86659 15.4275C6.62159 15.5544 6.32309 15.637 5.99134 15.6314C5.46911 15.6226 4.91279 15.3965 4.39107 14.8748C3.27885 13.7626 3.39283 12.2154 3.57726 11.5802C3.625 11.4157 3.75358 11.2871 3.91802 11.2394C4.38956 11.1025 5.58615 11.0007 6.73266 11.6356C7.85052 9.9772 9.68984 9.518 10.5317 9.49662C10.7193 9.49186 10.8939 9.59262 10.9836 9.75753C11.4079 10.5375 11.9652 12.5215 10.8747 14.4103C10.3247 15.3628 9.61858 15.825 8.91773 15.966C8.77516 15.9947 8.63538 16.0096 8.5 16.0132V18C8.5 18.2761 8.72386 18.5 9 18.5H16C16.2761 18.5 16.5 18.2761 16.5 18V12.5H14C13.7239 12.5 13.5 12.2761 13.5 12V8C13.5 7.72386 13.7239 7.5 14 7.5H15V5.5C15 5.22386 15.2239 5 15.5 5ZM14.5 8.5V11.5H19.5V8.5H14.5ZM6.26775 14.5957C6.23858 14.5296 6.21181 14.461 6.18785 14.3899C6.00909 13.8595 5.99925 13.2278 6.26736 12.5214C5.59503 12.1432 4.89422 12.1081 4.47932 12.15C4.4099 12.6882 4.47952 13.549 5.09818 14.1677C5.46389 14.5334 5.78163 14.6277 6.00821 14.6315C6.10284 14.6331 6.19015 14.6191 6.26775 14.5957ZM7.42273 12.4173C8.16647 11.1291 9.46715 10.6451 10.2382 10.5267C10.5212 11.2536 10.7524 12.6221 10.0086 13.9103C9.58328 14.647 9.10453 14.9084 8.7205 14.9857C8.3141 15.0674 7.94465 14.9567 7.74657 14.8424C7.54848 14.728 7.26787 14.4634 7.13548 14.0706C7.01038 13.6994 6.99739 13.154 7.42273 12.4173Z"/>
                         </svg>
                         <span class="sr-only">Low emissions</span>
                         <h4 class="text-xl font-bold text-white mb-2">Low emissions</h4>
                         <p class="text-text-muted">Electric propulsion and efficient aerodynamics cut per‑passenger CO₂ versus short‑haul flights.</p>
                     </div>
                     <div class="glass-card p-6 reveal-card">
-                        <!-- Replaced emoji with SVG: Gradual investment (stacked coins) -->
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <ellipse cx="12" cy="6" rx="6" ry="3"/>
-                            <path d="M6 6v6c0 1.7 2.7 3 6 3s6-1.3 6-3V6"/>
-                            <path d="M6 12v6c0 1.7 2.7 3 6 3s6-1.3 6-3v-6"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg"  width="800px" height="800px" viewBox="0 0 256 213" xml:space="preserve">
+                            <path d="M228.849,40H163V16.275C163,7.513,155.222,2,145.649,2c0,0-36.497,0-36.298,0C99.978,2,92,7.513,92,16.275V41H27.165  C14.138,41,2,52.056,2,66.666c0,0.395,0,117.569,0,117.569C2,200.523,14.171,211,27,211h201.948c12.772,0,25.052-9.589,25.052-26.07  c0,0,0-118.461,0-118.961C253.902,51.187,241.818,40,228.849,40z M105,16h45v25h-45V16z M127.922,177.35  c-28.891,0-52.345-23.454-52.345-52.345c0-29.046,23.299-52.655,52.345-52.655s52.5,23.454,52.5,52.5  C180.422,153.896,156.813,177.35,127.922,177.35z M147.493,136.603c0,8.232-5.022,14.497-15.636,16.879v8.232h-7.249v-7.973  c-6.265,0-12.581-1.657-15.636-3.365l2.64-10.614c3.365,1.657,8.646,3.624,14.238,3.624c6.006,0,8.957-2.641,8.957-6.265  s-2.848-5.126-9.785-7.818c-9.63-3.365-15.636-8.232-15.636-16.879c0-7.973,5.281-14.238,14.963-16.206v-8.646h7.249v8.232  c6.006,0,10.355,1.243,13.565,2.951l-2.951,10.355c-2.382-0.984-6.265-2.641-11.598-2.641c-5.333,0-8.232,2.641-8.232,5.281  c0,3.624,3.365,5.022,10.614,7.973C142.885,123.349,147.493,128.371,147.493,136.603z"/>
                         </svg>
                         <span class="sr-only">Gradual investment</span>
                         <h4 class="text-xl font-bold text-white mb-2">Gradual investment</h4>
@@ -209,11 +209,8 @@
                     </div>
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: Keep Europe moving (circular arrows) -->
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M4 12a8 8 0 0 1 13.66-5.66"/>
-                            <path d="M16 3h4v4"/>
-                            <path d="M20 12a8 8 0 0 1-13.66 5.66"/>
-                            <path d="M8 21H4v-4"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 32 32">
+                            <path d="M27 21.75c-0.795 0.004-1.538 0.229-2.169 0.616l0.018-0.010-2.694-2.449c0.724-1.105 1.154-2.459 1.154-3.913 0-1.572-0.503-3.027-1.358-4.212l0.015 0.021 3.062-3.062c0.57 0.316 1.249 0.503 1.971 0.508h0.002c2.347 0 4.25-1.903 4.25-4.25s-1.903-4.25-4.25-4.25c-2.347 0-4.25 1.903-4.25 4.25v0c0.005 0.724 0.193 1.403 0.519 1.995l-0.011-0.022-3.062 3.062c-1.147-0.84-2.587-1.344-4.144-1.344-0.868 0-1.699 0.157-2.467 0.443l0.049-0.016-0.644-1.17c0.726-0.757 1.173-1.787 1.173-2.921 0-2.332-1.891-4.223-4.223-4.223s-4.223 1.891-4.223 4.223c0 2.332 1.891 4.223 4.223 4.223 0.306 0 0.605-0.033 0.893-0.095l-0.028 0.005 0.642 1.166c-1.685 1.315-2.758 3.345-2.758 5.627 0 0.605 0.076 1.193 0.218 1.754l-0.011-0.049-0.667 0.283c-0.78-0.904-1.927-1.474-3.207-1.474-2.334 0-4.226 1.892-4.226 4.226s1.892 4.226 4.226 4.226c2.334 0 4.226-1.892 4.226-4.226 0-0.008-0-0.017-0-0.025v0.001c-0.008-0.159-0.023-0.307-0.046-0.451l0.003 0.024 0.667-0.283c1.303 2.026 3.547 3.349 6.1 3.349 1.703 0 3.268-0.589 4.503-1.574l-0.015 0.011 2.702 2.455c-0.258 0.526-0.41 1.144-0.414 1.797v0.001c0 2.347 1.903 4.25 4.25 4.25s4.25-1.903 4.25-4.25c0-2.347-1.903-4.25-4.25-4.25v0zM8.19 5c0-0.966 0.784-1.75 1.75-1.75s1.75 0.784 1.75 1.75c0 0.966-0.784 1.75-1.75 1.75v0c-0.966-0.001-1.749-0.784-1.75-1.75v-0zM5 22.42c-0.966-0.001-1.748-0.783-1.748-1.749s0.783-1.749 1.749-1.749c0.966 0 1.748 0.782 1.749 1.748v0c-0.001 0.966-0.784 1.749-1.75 1.75h-0zM27 3.25c0.966 0 1.75 0.784 1.75 1.75s-0.784 1.75-1.75 1.75c-0.966 0-1.75-0.784-1.75-1.75v0c0.001-0.966 0.784-1.749 1.75-1.75h0zM11.19 16c0-0.001 0-0.002 0-0.003 0-2.655 2.152-4.807 4.807-4.807 1.328 0 2.53 0.539 3.4 1.409l0.001 0.001 0.001 0.001c0.87 0.87 1.407 2.072 1.407 3.399 0 2.656-2.153 4.808-4.808 4.808s-4.808-2.153-4.808-4.808c0-0 0-0 0-0v0zM27 27.75c-0.966 0-1.75-0.784-1.75-1.75s0.784-1.75 1.75-1.75c0.966 0 1.75 0.784 1.75 1.75v0c-0.001 0.966-0.784 1.749-1.75 1.75h-0z"/>
                         </svg>
                         <span class="sr-only">Keep Europe moving</span>
                         <h4 class="text-xl font-bold text-white mb-2">Keep Europe moving</h4>
@@ -224,43 +221,76 @@
         </section>
 
         <section id="team" class="py-20">
-            <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-12">Meet the <span class="text-white">Catalysts</span>.</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 stagger-children">
-                    <!-- Team members with futuristic profile cards --><div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Lars+H." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Lars Hilkens</h4>
-                        <p class="text-text-muted">Team Leader</p>
+            <div class="container mx-auto px-6 max-w-6xl fade-in">
+                <h2 class="text-4xl font-bold text-accent-color mb-8 text-center">Meet the <span class="text-white">Catalysts</span></h2>
+
+                <!-- Subteam browser: left tile list, right detail panel -->
+                <div class="subteam-layout">
+                    <!-- Left: tablist of subteams -->
+                    <div id="subteam-tabs" role="tablist" aria-label="HMR Subteams" class="subteam-tabs grid gap-4 stagger-children">
+                        <button id="tab-management" class="subteam-tile glass-card reveal-card is-active" role="tab" aria-selected="true" aria-controls="panel-management" tabindex="0" data-target="management">
+                            <div class="font-bold text-white text-lg">Management</div>
+                            <div class="text-text-muted text-sm">Strategy, coordination, delivery.</div>
+                        </button>
+                        <button id="tab-external" class="subteam-tile glass-card reveal-card" role="tab" aria-selected="false" aria-controls="panel-external" tabindex="-1" data-target="external">
+                            <div class="font-bold text-white text-lg">External & Public Relations</div>
+                            <div class="text-text-muted text-sm">Partners, outreach, communications.</div>
+                        </button>
+                        <button id="tab-propulsion" class="subteam-tile glass-card reveal-card" role="tab" aria-selected="false" aria-controls="panel-propulsion" tabindex="-1" data-target="propulsion">
+                            <div class="font-bold text-white text-lg">Propulsion</div>
+                            <div class="text-text-muted text-sm">Drive systems and power electronics.</div>
+                        </button>
+                        <button id="tab-levitation" class="subteam-tile glass-card reveal-card" role="tab" aria-selected="false" aria-controls="panel-levitation" tabindex="-1" data-target="levitation">
+                            <div class="font-bold text-white text-lg">Levitation</div>
+                            <div class="text-text-muted text-sm">Lift, stability and dynamics.</div>
+                        </button>
+                        <button id="tab-rail" class="subteam-tile glass-card reveal-card" role="tab" aria-selected="false" aria-controls="panel-rail" tabindex="-1" data-target="rail">
+                            <div class="font-bold text-white text-lg">Rail Network Analysis</div>
+                            <div class="text-text-muted text-sm">Corridor selection and capacity.</div>
+                        </button>
                     </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Alexandros+P." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Alexandros Peonidis</h4>
-                        <p class="text-text-muted">Lead Engineer</p>
-                    </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Kirill+C." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Kirill Chekmenev</h4>
-                        <p class="text-text-muted">Lead Engineer</p>
-                    </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Andreas+C." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Andreas Christoforou</h4>
-                        <p class="text-text-muted">Team Member</p>
-                    </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Paul+K." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Paul Kasten</h4>
-                        <p class="text-text-muted">Team Member</p>
-                    </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Annelies+vV." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Annelies van Vastenhoven</h4>
-                        <p class="text-text-muted">Team Member</p>
-                    </div>
-                    <div class="text-center glass-card p-4 reveal-card">
-                        <img src="https://placehold.co/300x300/2B2B2B/7B68EE?text=Jose+LM." alt="Team Member" class="w-40 h-40 rounded-full mx-auto mb-4 border-2 border-accent-color shadow-md object-cover">
-                        <h4 class="text-xl font-bold text-white">Jose Ledesma Martin</h4>
-                        <p class="text-text-muted">Team Member</p>
+
+                    <!-- Right: detail panels -->
+                    <div id="subteam-panels" class="subteam-panels">
+                        <div id="panel-management" class="subteam-detail glass-card reveal-card is-active" role="tabpanel" aria-labelledby="tab-management">
+                            <img class="subteam-photo" src="images/placeholder-management.svg" alt="Management subteam placeholder image" loading="lazy" decoding="async" width="960" height="640">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2">Management</h3>
+                                <p class="text-text-muted">The Management subteam steers objectives, scope, and delivery across HMR. It aligns engineering and outreach, runs planning and budgeting, and ensures we scale from concept to pilot without stopping Europe.</p>
+                            </div>
+                        </div>
+
+                        <div id="panel-external" class="subteam-detail glass-card reveal-card" role="tabpanel" aria-labelledby="tab-external" hidden>
+                            <img class="subteam-photo" src="images/placeholder-external.svg" alt="External and Public Relations subteam placeholder image" loading="lazy" decoding="async" width="960" height="640">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2">External & Public Relations</h3>
+                                <p class="text-text-muted">This team builds partnerships, manages sponsors and stakeholders, and communicates our mission to the public. From events and media to policy liaisons, they keep Europe informed and engaged.</p>
+                            </div>
+                        </div>
+
+                        <div id="panel-propulsion" class="subteam-detail glass-card reveal-card" role="tabpanel" aria-labelledby="tab-propulsion" hidden>
+                            <img class="subteam-photo" src="images/placeholder-propulsion.svg" alt="Propulsion subteam placeholder image" loading="lazy" decoding="async" width="960" height="640">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2">Propulsion</h3>
+                                <p class="text-text-muted">Responsible for the vehicle’s thrust and power electronics, the Propulsion team integrates efficient linear motors, converters, and control to hit plane‑like speeds on upgraded corridors.</p>
+                            </div>
+                        </div>
+
+                        <div id="panel-levitation" class="subteam-detail glass-card reveal-card" role="tabpanel" aria-labelledby="tab-levitation" hidden>
+                            <img class="subteam-photo" src="images/placeholder-levitation.svg" alt="Levitation subteam placeholder image" loading="lazy" decoding="async" width="960" height="640">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2">Levitation</h3>
+                                <p class="text-text-muted">The Levitation team designs the maglev lift hardware and control. They focus on stability, ride comfort, and a safe transition from wheel‑on‑rail to levitation above ~200 km/h.</p>
+                            </div>
+                        </div>
+
+                        <div id="panel-rail" class="subteam-detail glass-card reveal-card" role="tabpanel" aria-labelledby="tab-rail" hidden>
+                            <img class="subteam-photo" src="images/placeholder-rail.svg" alt="Rail network analysis subteam placeholder image" loading="lazy" decoding="async" width="960" height="640">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2">Rail Network Analysis</h3>
+                                <p class="text-text-muted">This team maps Europe’s rail to find the best upgrade corridors, modeling capacity, access time, and ROI to prioritize step‑by‑step implementation with maximum impact.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,23 +298,21 @@
 
         <section id="news" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span>.</h2>
+                <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span></h2>
                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto stagger-children">
                     <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
-                        <img src="https://placehold.co/600x400/2B2B2B/7B68EE?text=TU/e+Contest+News" alt="News article" class="w-full h-48 object-cover border-b border-border-color">
+                        <img src="images/news-tue-contest.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">
                         <div class="p-6 flex-grow">
                             <h3 class="text-2xl font-bold text-white mb-3">TU/e Contest Participation</h3>
                             <p class="text-text-muted mb-4">We're thrilled to be part of the TU/e Contest, showcasing our vision for future rail. Join us!</p>
                         </div>
-                        <a href="#" class="block bg-secondary-bg p-4 text-accent-color font-bold hover:bg-border-color transition-colors duration-200">Read More</a>
                     </div>
                     <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
-                        <img src="https://placehold.co/600x400/2B2B2B/7B68EE?text=Prototype+Update" alt="News article" class="w-full h-48 object-cover border-b border-border-color">
+                        <img src="images/news-prototype.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">
                         <div class="p-6 flex-grow">
                             <h3 class="text-2xl font-bold text-white mb-3">Prototype Design Phase Complete</h3>
                             <p class="text-text-muted mb-4">Our engineering team has finalized the initial prototype designs, moving us closer to physical manifestation.</p>
                         </div>
-                        <a href="#" class="block bg-secondary-bg p-4 text-accent-color font-bold hover:bg-border-color transition-colors duration-200">Read More</a>
                     </div>
                 </div>
             </div>
@@ -292,17 +320,17 @@
 
         <section id="contact" class="py-24">
             <div class="container mx-auto px-6 max-w-5xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-4">Connect with <span class="text-white">Our Future</span>.</h2>
+                <h2 class="text-4xl font-bold text-accent-color mb-4">Connect with <span class="text-white">Our Future</span></h2>
                 <p class="text-xl leading-relaxed mb-10 text-text-light">
                     Beam us a message, follow our journey, or ping us on your channel of choice.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 stagger-children">
                     <!-- Email / Gmail -->
                     <a href="mailto:board.hmr@gmail.com" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Email us" aria-label="Email: board.hmr@gmail.com">
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <rect x="3" y="5" width="18" height="14" rx="2"/>
-                            <path d="M4 7l8 6 8-6"/>
-                        </svg>
+                    <svg class="icon-svg-stroke" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">
+                        <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                         <div>
                             <div class="text-white font-bold">Email</div>
                             <div class="text-text-muted text-sm">board.hmr@gmail.com</div>
@@ -311,11 +339,8 @@
 
                     <!-- LinkedIn Posts -->
                     <a href="https://www.linkedin.com/company/hybrid-maglev-railways/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="LinkedIn posts" aria-label="LinkedIn posts">
-                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <rect x="3" y="3" width="18" height="18" rx="3"/>
-                            <path d="M8 10v7" fill="none" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="8" cy="7" r="1.2" fill="currentColor"/>
-                            <path d="M12 10v7m0-5.2c.2-1.5 1.4-2.6 3-2.6 1.8 0 3 1.2 3 3.2V17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" height="800px" width="800px" id="Layer_1" viewBox="0 0 382 382" xml:space="preserve">
+                            <path d="M347.445,0H34.555C15.471,0,0,15.471,0,34.555v312.889C0,366.529,15.471,382,34.555,382h312.889  C366.529,382,382,366.529,382,347.444V34.555C382,15.471,366.529,0,347.445,0z M118.207,329.844c0,5.554-4.502,10.056-10.056,10.056  H65.345c-5.554,0-10.056-4.502-10.056-10.056V150.403c0-5.554,4.502-10.056,10.056-10.056h42.806  c5.554,0,10.056,4.502,10.056,10.056V329.844z M86.748,123.432c-22.459,0-40.666-18.207-40.666-40.666S64.289,42.1,86.748,42.1  s40.666,18.207,40.666,40.666S109.208,123.432,86.748,123.432z M341.91,330.654c0,5.106-4.14,9.246-9.246,9.246H286.73  c-5.106,0-9.246-4.14-9.246-9.246v-84.168c0-12.556,3.683-55.021-32.813-55.021c-28.309,0-34.051,29.066-35.204,42.11v97.079  c0,5.106-4.139,9.246-9.246,9.246h-44.426c-5.106,0-9.246-4.14-9.246-9.246V149.593c0-5.106,4.14-9.246,9.246-9.246h44.426  c5.106,0,9.246,4.14,9.246,9.246v15.655c10.497-15.753,26.097-27.912,59.312-27.912c73.552,0,73.131,68.716,73.131,106.472  L341.91,330.654L341.91,330.654z"/>
                         </svg>
                         <div>
                             <div class="text-white font-bold">LinkedIn</div>
@@ -325,9 +350,9 @@
 
                     <!-- Brainport profile -->
                     <a href="https://brainporteindhoven.com/en/discover-brainport/studying-and-developing/what-are-our-student-teams-working-on/team-hmr" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Brainport Eindhoven profile" aria-label="Brainport Eindhoven profile">
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M12 21s6-4.5 6-10a6 6 0 1 0-12 0c0 5.5 6 10 6 10z"/>
-                            <circle cx="12" cy="11" r="2.5"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0901 22.5958C11.2059 22.6753 11.2981 22.7366 11.3626 22.7788L11.4687 22.8472C11.7933 23.0504 12.2061 23.0508 12.5307 22.8476L12.6375 22.7788C12.7019 22.7366 12.7941 22.6753 12.9099 22.5958C13.1415 22.4367 13.4685 22.2041 13.8591 21.9041C14.6386 21.3054 15.6801 20.4322 16.7247 19.3336C18.7857 17.1661 21 13.9725 21 10.1818C21 7.75381 20.0571 5.42084 18.3719 3.69728C16.6859 1.97296 14.3943 1 12 1C9.60571 1 7.31415 1.97296 5.62814 3.69728C3.94288 5.42084 3 7.75381 3 10.1818C3 13.9725 5.21434 17.1661 7.27531 19.3336C8.31993 20.4322 9.36136 21.3054 10.1409 21.9041C10.5315 22.2041 10.8585 22.4367 11.0901 22.5958ZM12 3C10.1508 3 8.37273 3.75107 7.05815 5.09552C5.74283 6.44073 5 8.26992 5 10.1818C5 13.2007 6.78566 15.9162 8.72469 17.9554C9.68007 18.9602 10.6386 19.7646 11.3591 20.3179C11.6046 20.5065 11.8215 20.6651 12 20.7918C12.1785 20.6651 12.3954 20.5065 12.6409 20.3179C13.3614 19.7646 14.3199 18.9602 15.2753 17.9554C17.2143 15.9162 19 13.2007 19 10.1818C19 8.26992 18.2572 6.44073 16.9418 5.09552C15.6273 3.75107 13.8492 3 12 3Z"/>
                         </svg>
                         <div>
                             <div class="text-white font-bold">Brainport Eindhoven</div>
@@ -337,11 +362,9 @@
 
                     <!-- Linktree -->
                     <a href="https://linktr.ee/hybridmaglevrailways" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Linktree" aria-label="Linktree links">
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M12 3v18"/>
-                            <path d="M6 9l6-6 6 6"/>
-                            <path d="M7 21h10"/>
-                        </svg>
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" role="img">
+                        <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486-.404.89-.89.89H6.577a.898.898 0 0 1-.889-.891v-4.774H.992c-.728 0-1.214-.729-.89-1.377l6.96-12.627a1.065 1.065 0 0 1 1.863 0l2.913 5.585-3.885 7.042zm15.945 0-6.96-12.627a1.065 1.065 0 0 0-1.862 0l-2.995 5.586 3.885 7.04c.081.164.081.326.081.487-.08.517-.529.897-1.052.89h-1.296v4.776c.005.49.4.887.89.89h2.914a.9.9 0 0 0 .892-.89v-4.775h4.612c.73 0 1.214-.729.89-1.377z"/>
+                    </svg>
                         <div>
                             <div class="text-white font-bold">Linktree</div>
                             <div class="text-text-muted text-sm">All our links in one place</div>
@@ -350,15 +373,16 @@
 
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/hmr_hybridmaglevrailways/" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Instagram" aria-label="Instagram: hmr_hybridmaglevrailways">
-                        <svg class="icon-svg-stroke" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <rect x="4" y="4" width="16" height="16" rx="4"/>
-                            <circle cx="12" cy="12" r="4"/>
-                            <circle cx="17" cy="7" r="1.5"/>
+                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"/>
+                            <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z"/>
                         </svg>
                         <div>
                             <div class="text-white font-bold">Instagram</div>
                             <div class="text-text-muted text-sm">@hmr_hybridmaglevrailways</div>
                         </div>
+
                     </a>
                 </div>
             </div>
