@@ -12,15 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-
-        const id = entry.target.id;
-        const isChart = id === 'speedProblemChart' || id === 'co2ProblemChart' || id === 'capacityProblemChart' || id === 'timeProblemChart';
-        if (isChart) {
-          if (id === 'speedProblemChart') renderSpeedProblemChart();
-          else if (id === 'co2ProblemChart') renderCO2ProblemChart();
-          else if (id === 'capacityProblemChart') renderCapacityProblemChart();
-          else if (id === 'timeProblemChart') renderTimeProblemChart();
-        }
         observer.unobserve(entry.target);
       }
     });
@@ -28,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document
     .querySelectorAll(
-      '.fade-in, .reveal-card, #speedProblemChart, #co2ProblemChart, #capacityProblemChart, #timeProblemChart'
+      '.fade-in, .reveal-card'
     )
     .forEach((el) => {
       observer.observe(el);
@@ -180,22 +171,456 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+  // =============================
+  // Problem slider + Chart.js v4
+  // (lazy‑loaded libs + deferred init for performance)
+  // =============================
+  const problem = {
+    inited: false,
+  };
+
+  // Lightweight script loader (UMD bundles)
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      // If already present, resolve immediately
+      if (document.querySelector(`script[src="${src}"]`)) {
+        resolve();
+        return;
+      }
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.defer = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensureProblemLibs() {
+    const needsSwiper = typeof window.Swiper === 'undefined';
+    const needsChart = typeof window.Chart === 'undefined';
+    if (!needsSwiper && !needsChart) return;
+    const tasks = [];
+    if (needsSwiper) tasks.push(loadScript('https://unpkg.com/swiper@11/swiper-bundle.min.js'));
+    if (needsChart) tasks.push(loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'));
+    await Promise.all(tasks);
+  }
+
+  function initProblemSection() {
+    if (problem.inited) return;
+    const swiperContainer = document.querySelector('.problem-swiper');
+    if (!swiperContainer || typeof window.Chart === 'undefined' || typeof window.Swiper === 'undefined') {
+      return; // container or libs missing
+    }
+
+    // Helper to read themed colors
+    function getTheme() {
+      const styles = getComputedStyle(document.documentElement);
+      const text = styles.getPropertyValue('--text-light').trim() || '#E6E8EF';
+      const grid = 'rgba(255,255,255,0.12)';
+      const primary = styles.getPropertyValue('--accent-color').trim() || '#7B68EE';
+      const secondary = 'rgba(255,255,255,0.45)';
+      const secondaryBorder = 'rgba(255,255,255,0.65)';
+      return { text, grid, primary, secondary, secondaryBorder };
+    }
+
+    // Map values to green (good) → red (bad) colors
+    function valueColors(values, invert = false) {
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = Math.max(0.00001, max - min);
+      const bgs = [];
+      const borders = [];
+      for (const v of values) {
+        let norm = (v - min) / range; // 0..1, higher = larger value
+        if (invert) norm = 1 - norm;  // lower is better
+        // Hue 0 (red) → 120 (green)
+        const h = 120 * norm;
+        const bg = `hsla(${h.toFixed(1)}, 70%, 52%, 0.82)`;
+        const bd = `hsla(${h.toFixed(1)}, 85%, 60%, 1)`;
+        bgs.push(bg);
+        borders.push(bd);
+      }
+      return { backgrounds: bgs, borders };
+    }
+
+    function makeBarChart(canvasId, yTitle, values, unit, invert = false) {
+      const el = document.getElementById(canvasId);
+      if (!el) return null;
+      const { text, grid } = getTheme();
+      const labels = ['Plane', 'Bus', 'Train'];
+      const { backgrounds: bg, borders: border } = valueColors(values, invert);
+      return new Chart(el, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: yTitle,
+              data: values,
+              backgroundColor: bg,
+              borderColor: border,
+              borderWidth: 2,
+              borderRadius: 8,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const val = ctx.parsed.y;
+                  return `${ctx.label}: ${val}${unit ? ' ' + unit : ''}`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              ticks: { color: text },
+              grid: { display: false },
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { color: text },
+              grid: { color: grid },
+              title: { display: true, text: yTitle, color: text },
+            },
+          },
+          animation: {
+            duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 500,
+          },
+        },
+      });
+    }
+
+    const charts = { speed: null, co2: null, access: null, capacity: null };
+    const slideNames = ['speed', 'co2', 'access', 'capacity'];
+
+    function indexFromHash(hash) {
+      if (typeof hash !== 'string' || !hash) return null;
+      const match = hash.match(/^#problem(?:\/(\w+))?$/i);
+      if (!match || !match[1]) return null;
+      const name = match[1].toLowerCase();
+      const idx = slideNames.indexOf(name);
+      return idx >= 0 ? idx : null;
+    }
+
+    function setHashForIndex(idx) {
+      const name = slideNames[idx];
+      if (!name) return;
+      const newHash = `#problem/${name}`;
+      // Avoid scroll jump by using History API
+      try { history.replaceState(null, '', newHash); } catch (_) { /* no-op */ }
+    }
+    function initChartByIndex(idx) {
+      switch (idx) {
+        case 0:
+          if (!charts.speed) charts.speed = makeBarChart('speedChart', 'Average Speed (km/h)', [839, 80, 150], 'km/h', false);
+          break;
+        case 1:
+          if (!charts.co2) charts.co2 = makeBarChart('co2Chart', 'CO₂ (g/km per passenger)', [154, 68, 3], 'g/km', true);
+          break;
+        case 2:
+          if (!charts.access) charts.access = makeBarChart('accessChart', 'Access Time (minutes)', [120, 20, 20], 'min', true);
+          break;
+        case 3:
+          if (!charts.capacity) charts.capacity = makeBarChart('capacityChart', 'Passenger Capacity', [180, 40, 800], '', false);
+          break;
+      }
+    }
+
+    // Initialize Swiper with coverflow, keyboard, and rewind (wrap without clones)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const requestedInitialIndex = indexFromHash(location.hash);
+    const swiper = new Swiper(swiperContainer, {
+      loop: false, // avoid duplicated IDs in cloned slides (charts)
+      rewind: true, // wrap around without cloning
+      centeredSlides: true,
+      slidesPerView: 1,
+      breakpoints: {
+        1024: { slidesPerView: 1.1 },
+      },
+      spaceBetween: 24,
+      effect: 'coverflow',
+      coverflowEffect: {
+        rotate: 10,
+        stretch: 0,
+        depth: 120,
+        modifier: 1,
+        slideShadows: false,
+      },
+      speed: prefersReduced ? 0 : 300,
+      autoHeight: true,
+      keyboard: { enabled: true, onlyInViewport: true, pageUpDown: false },
+      a11y: { enabled: true },
     });
 
-    document.querySelectorAll('#mobile-menu a, nav a').forEach((link) => {
-      link.addEventListener('click', () => {
-        if (link.hash !== '') {
-          if (mobileMenu.contains(link)) {
-            mobileMenu.classList.add('hidden');
-          }
+    // If URL requested a specific slide, jump there immediately (no animation)
+    if (requestedInitialIndex !== null && requestedInitialIndex !== (swiper.realIndex || 0)) {
+      swiper.slideTo(requestedInitialIndex, 0);
+    }
+
+    // Disable mousewheel/trackpad control for the slider (let the page scroll instead)
+    if (swiper.mousewheel && typeof swiper.mousewheel.disable === 'function') {
+      try { swiper.mousewheel.disable(); } catch (_) { /* no-op */ }
+    }
+
+    // Click any non-active slide to make it active
+    const slideEls = Array.from(swiper.slides);
+    swiperContainer.addEventListener('click', (e) => {
+      const slideEl = e.target.closest('.swiper-slide');
+      if (!slideEl || !swiperContainer.contains(slideEl)) return;
+      if (slideEl.classList.contains('swiper-slide-active')) return; // already active
+      const idx = slideEls.indexOf(slideEl);
+      if (idx >= 0) {
+        swiper.slideTo(idx);
+      }
+    });
+
+    // Tiles wiring (tabs above the slider)
+    const tilesContainer = document.querySelector('.problem-tiles');
+    const tiles = tilesContainer ? Array.from(tilesContainer.querySelectorAll('.problem-tile')) : [];
+
+    const goTo = (i) => {
+      if (swiper.params.loop && typeof swiper.slideToLoop === 'function') {
+        swiper.slideToLoop(i);
+      } else {
+        swiper.slideTo(i);
+      }
+    };
+
+    function updateTiles(activeIndex, moveFocus = false) {
+      if (!tiles.length) return;
+      tiles.forEach((tile, i) => {
+        const isActive = i === activeIndex;
+        tile.classList.toggle('is-active', isActive);
+        tile.setAttribute('aria-selected', String(isActive));
+        tile.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+      if (moveFocus && tiles[activeIndex]) tiles[activeIndex].focus();
+    }
+
+    tiles.forEach((tile, i) => {
+      tile.addEventListener('click', () => {
+        goTo(i);
+      });
+      tile.addEventListener('keydown', (e) => {
+        const key = e.key;
+        if (key === 'Enter' || key === ' ') {
+          e.preventDefault();
+          goTo(i);
+        } else if (key === 'ArrowRight') {
+          e.preventDefault();
+          const ni = (i + 1) % tiles.length;
+          updateTiles(ni, true);
+          goTo(ni);
+        } else if (key === 'ArrowLeft') {
+          e.preventDefault();
+          const pi = (i - 1 + tiles.length) % tiles.length;
+          updateTiles(pi, true);
+          goTo(pi);
         }
       });
     });
+
+    // Init the first visible chart and lazy-init others on slide change
+    initChartByIndex(swiper.realIndex || 0);
+    if (swiper.params.autoHeight && typeof swiper.updateAutoHeight === 'function') {
+      swiper.updateAutoHeight(0);
+    }
+
+    // Announce active slide to assistive tech
+    const live = document.getElementById('problem-live');
+    const labels = ['Speed', 'CO₂', 'Access', 'Capacity'];
+    const announce = (idx) => {
+      if (!live) return;
+      const name = labels[idx] || `Slide ${idx + 1}`;
+      live.textContent = `Showing: ${name}`;
+    };
+    announce(swiper.realIndex || 0);
+
+    swiper.on('slideChange', () => {
+      const idx = swiper.realIndex || 0;
+      initChartByIndex(idx);
+      updateTiles(idx, false);
+      if (swiper.params.autoHeight && typeof swiper.updateAutoHeight === 'function') {
+        swiper.updateAutoHeight(prefersReduced ? 0 : 250);
+      }
+      announce(idx);
+      setHashForIndex(idx);
+    });
+
+    // (Removed data-table toggle listener; tables were removed from slides)
+
+    // React to URL changes (back/forward or external hash updates)
+    window.addEventListener('hashchange', () => {
+      const idx = indexFromHash(location.hash);
+      if (idx === null) return;
+      swiper.slideTo(idx);
+      const section = document.getElementById('problem');
+      if (section) {
+        try { section.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (_) { /* no-op */ }
+      }
+    });
+
+    problem.inited = true;
+  }
+
+  // Defer loading libs + init until the section approaches viewport
+  (function deferProblemInit() {
+    const container = document.querySelector('#problem');
+    if (!container) return;
+    const kickoff = async () => {
+      try {
+        await ensureProblemLibs();
+        initProblemSection();
+      } catch (err) {
+        // swallow; section will remain static content
+      }
+    };
+    // If URL deep-links to a specific Problem slide, initialize immediately and scroll into view
+    if (typeof location.hash === 'string' && /^#problem\//i.test(location.hash)) {
+      kickoff();
+      try { container.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (_) { /* no-op */ }
+      return;
+    }
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            io.disconnect();
+            kickoff();
+          }
+        });
+      }, { root: null, rootMargin: '200px', threshold: 0.01 });
+      io.observe(container);
+    } else {
+      // Fallback: init after DOM load
+      kickoff();
+    }
+  })();
+
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenuBtn && mobileMenu) {
+    const firstLink = () => mobileMenu.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
+    let closeTimeoutId = null;
+    // Track whether we applied scrollbar compensation
+    let sbApplied = false;
+
+    function isOpen() {
+      return mobileMenu.classList.contains('is-open');
+    }
+
+    function openMenu() {
+      if (isOpen()) return;
+      clearTimeout(closeTimeoutId);
+      // Compute scrollbar width and expose it via CSS var to prevent layout shift
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      if (sbw > 0) {
+        document.documentElement.style.setProperty('--sb-comp', `${sbw}px`);
+        sbApplied = true;
+      } else {
+        document.documentElement.style.removeProperty('--sb-comp');
+        sbApplied = false;
+      }
+      mobileMenu.classList.remove('hidden');
+      // Allow display to apply before animating (Safari stability)
+      requestAnimationFrame(() => {
+        mobileMenu.classList.add('is-open');
+      });
+      mobileMenuBtn.classList.add('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      mobileMenuBtn.setAttribute('aria-label', 'Close menu');
+      document.body.classList.add('menu-open');
+      const fl = firstLink();
+      if (fl && typeof fl.focus === 'function') {
+        setTimeout(() => fl.focus(), 10);
+      }
+    }
+
+    function closeMenu() {
+      if (!isOpen()) return;
+      mobileMenu.classList.remove('is-open');
+      mobileMenuBtn.classList.remove('is-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+      // After animation ends, hide element to remove from flow
+      const onTransitionEnd = (e) => {
+        if (e && e.target !== mobileMenu) return;
+        mobileMenu.classList.add('hidden');
+        // Now that the overlay is fully closed, unlock scroll and clear compensation
+        document.body.classList.remove('menu-open');
+        if (sbApplied) {
+          document.documentElement.style.removeProperty('--sb-comp');
+          sbApplied = false;
+        }
+        mobileMenu.removeEventListener('transitionend', onTransitionEnd);
+      };
+      mobileMenu.addEventListener('transitionend', onTransitionEnd);
+      // Fallback timeout in case transitionend doesn't fire
+      closeTimeoutId = setTimeout(() => {
+        if (!isOpen()) {
+          mobileMenu.classList.add('hidden');
+          document.body.classList.remove('menu-open');
+          if (sbApplied) {
+            document.documentElement.style.removeProperty('--sb-comp');
+            sbApplied = false;
+          }
+        }
+      }, 300);
+      // Return focus to the button for accessibility
+      setTimeout(() => mobileMenuBtn.focus(), 0);
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      if (isOpen()) closeMenu();
+      else openMenu();
+    });
+
+    // Close menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        e.preventDefault();
+        closeMenu();
+      }
+    });
+
+    // Close menu when any overlay link is clicked
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        // Allow default anchor navigation, then close
+        closeMenu();
+      });
+    });
+
+    // Ensure correct state on resize (closing overlay on md+)
+    const mql = window.matchMedia('(min-width: 768px)');
+    function handleResize(e) {
+      if (e.matches) {
+        // moving to desktop layout, force close
+        mobileMenu.classList.remove('is-open');
+        mobileMenu.classList.add('hidden');
+        mobileMenuBtn.classList.remove('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenuBtn.setAttribute('aria-label', 'Open menu');
+        document.body.classList.remove('menu-open');
+        document.documentElement.style.removeProperty('--sb-comp');
+        sbApplied = false;
+      }
+    }
+    if (typeof mql.addEventListener === 'function') {
+      mql.addEventListener('change', handleResize);
+    } else if (typeof mql.addListener === 'function') {
+      // Safari <14
+      mql.addListener(handleResize);
+    }
   }
 
   // Subteam browser (tabs) setup

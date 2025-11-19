@@ -3,13 +3,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team HMR - Hybrid Maglev Railways</title>
-    <!-- Tailwind CSS via CDN (as requested) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/output.css">
+    <!-- Swiper CSS (slider) -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
+    <!-- Load custom styles after Tailwind output so overrides take effect -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Performance: we'll lazy‑load Chart.js and Swiper from JS when the section approaches viewport -->
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <script src="js/main.js" defer></script>
 </head>
 <body class="overflow-x-hidden">
-    <header class="navbar-fixed glass-navbar text-white shadow-lg h-16 md:h-20">
+    <header class="navbar-fixed glass-navbar text-white h-16 md:h-20">
         <div class="container mx-auto h-full flex justify-between items-center px-4">
             <h1 class="text-3xl font-bold text-accent-color">Team HMR<span class="text-xl text-text-muted">_</span></h1>
             <nav class="hidden md:flex items-center space-x-8 text-lg">
@@ -17,20 +22,30 @@
                 <a href="#solution" class="nav-link hover:text-accent-color transition-colors duration-200">Our Solution</a>
                 <a href="#team" class="nav-link hover:text-accent-color transition-colors duration-200">The Team</a>
                 <a href="#news" class="nav-link hover:text-accent-color transition-colors duration-200">News</a>
-                <a href="#contact" class="glow-button nav-link">Connect</a>
+                <a href="#contact" class="nav-link hover:text-accent-color transition-colors duration-200">Connect</a>
             </nav>
-            <button id="mobile-menu-btn" class="md:hidden text-3xl text-accent-color">☰</button>
-        </div>
-        <div id="mobile-menu" class="md:hidden hidden flex-col space-y-2 mt-4 px-4 glass-card border border-border-color rounded-b-lg pb-3">
-            <a href="#problem" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">The Problem</a>
-            <a href="#solution" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">Our Solution</a>
-            <a href="#team" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">The Team</a>
-            <a href="#news" class="nav-link-mobile hover:text-accent-color transition-colors duration-200">News</a>
-            <a href="#contact" class="nav-link-mobile text-center">
-                <span class="glow-button inline-block">Connect</span>
-            </a>
+            <button
+              id="mobile-menu-btn"
+              class="md:hidden burger"
+              aria-label="Open menu"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="burger-line"></span>
+              <span class="burger-line"></span>
+              <span class="burger-line"></span>
+            </button>
         </div>
     </header>
+
+    <!-- Mobile full-screen menu moved outside header so backdrop-filter can blur page content -->
+    <div id="mobile-menu" class="md:hidden hidden">
+        <a href="#problem" class="nav-link hover:text-accent-color transition-colors duration-200">The Problem</a>
+        <a href="#solution" class="nav-link hover:text-accent-color transition-colors duration-200">Our Solution</a>
+        <a href="#team" class="nav-link hover:text-accent-color transition-colors duration-200">The Team</a>
+        <a href="#news" class="nav-link hover:text-accent-color transition-colors duration-200">News</a>
+        <a href="#contact" class="nav-link hover:text-accent-color transition-colors duration-200">Connect</a>
+    </div>
 
     <main class="pt-16 md:pt-20">
         <!-- Redesigned Hero -->
@@ -61,56 +76,89 @@
         <section id="problem" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-6 text-center">The European Travel Compromise</h2>
-                <p class="text-xl text-text-light leading-relaxed mb-20 text-center max-w-3xl mx-auto">
+                <p class="text-xl text-text-light leading-relaxed mb-5 text-center max-w-3xl mx-auto">
                     Every day, 55,000 people cross EU borders, and 75% are ready for sustainable options. But today's travel forces an impossible choice. We're told to pick one: speed, sustainability, or convenience. Why can't we have all three?
                 </p>
 
-                <!-- Chapter 1: Speed -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
-                    <div class="text-center lg:text-left fade-in">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Speed Trap</h3>
-                        <p class="text-lg text-text-muted mb-6">We're offered a false choice: fly at a blistering 839 km/h, or crawl on a conventional train at 150 km/h. While 70% of people prefer trains, the speed is simply not competitive for international travel, forcing a compromise before the journey even begins.</p>
-                    </div>
-                    <div class="chart-container fade-in glass-card p-6">
-                        <div class="chart-title">Average Speed (km/h)</div>
-                        <canvas id="speedProblemChart"></canvas>
-                    </div>
+                <!-- Problem section tiles (tabs) -->
+                <div class="problem-tiles mb-6" role="tablist" aria-label="Problem categories">
+                    <button class="problem-tile is-active" role="tab" aria-selected="true" tabindex="0" data-slide="0" aria-controls="problem-slide-speed">Speed</button>
+                    <button class="problem-tile" role="tab" aria-selected="false" tabindex="-1" data-slide="1" aria-controls="problem-slide-co2">CO₂</button>
+                    <button class="problem-tile" role="tab" aria-selected="false" tabindex="-1" data-slide="2" aria-controls="problem-slide-access">Access</button>
+                    <button class="problem-tile" role="tab" aria-selected="false" tabindex="-1" data-slide="3" aria-controls="problem-slide-capacity">Capacity</button>
                 </div>
 
-                <!-- Chapter 2: CO2 Emissions -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
-                    <div class="text-center lg:text-left fade-in lg:order-last">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Carbon Cost</h3>
-                        <p class="text-lg text-text-muted mb-6">The "fast" option comes at a massive environmental price. Flying produces an enormous amount of CO2 per kilometer, completely undermining European sustainability goals. The train is incredibly clean, but it's too slow. We are forced to choose between our planet and our time.</p>
-                    </div>
-                    <div class="chart-container fade-in glass-card p-6">
-                        <div class="chart-title">CO2 Emissions (g/km per passenger)</div>
-                        <canvas id="co2ProblemChart"></canvas>
-                    </div>
-                </div>
+                <!-- Live region for announcing active slide to assistive tech -->
+                <div id="problem-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-                <!-- Chapter 3: Access Time -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
-                    <div class="text-center lg:text-left fade-in">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Waiting Game</h3>
-                        <p class="text-lg text-text-muted mb-6">A plane's "speed" is misleading. The data shows a staggering 120 minutes of "access time"—the hassle of check-in, security, and boarding. This high-friction experience wastes time before you ever leave the ground. Train and bus travel are simple and efficient to board, but they lose all that time on the journey itself.</p>
-                    </div>
-                    <div class="chart-container fade-in glass-card p-6">
-                        <div class="chart-title">Average Access Time (Minutes)</div>
-                        <canvas id="timeProblemChart"></canvas>
-                    </div>
-                </div>
+                <!-- Problem slider (Swiper) -->
+                <div class="problem-swiper swiper fade-in">
+                    <div class="swiper-wrapper">
+                        <!-- Slide 1: Speed -->
+                        <div class="swiper-slide" id="problem-slide-speed">
+                            <div class="problem-panel glass-card p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-4 md:gap-6 items-center">
+                                    <div class="col p-4 md:p-6 text-center lg:text-left">
+                                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Speed Trap</h3>
+                                        <p class="text-lg text-text-muted mb-6">We're offered a false choice: fly at a blistering 839 km/h, or crawl on a conventional train at 150 km/h. While 70% of people prefer trains, the speed is simply not competitive for international travel, forcing a compromise before the journey even begins.</p>
+                                    </div>
+                                    <div class="col p-4 md:p-6">
+                                        <div class="chart-title mb-2">Average Speed (km/h)</div>
+                                        <div class="chart-box"><canvas id="speedChart" role="img" aria-label="Average speed comparison for Plane, Bus and Train (km/h)"></canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- Chapter 4: Capacity -->
-                <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
-                    <div class="text-center lg:text-left fade-in lg:order-last">
-                        <h3 class="text-3xl font-bold text-accent-color mb-4">Chapter 4: The Capacity Constraint</h3>
-                        <p class="text-lg text-text-muted mb-6">Even if we accept their flaws, buses and planes simply can't move enough people. With a capacity of only 40 and 180 passengers, they are inefficient solutions for a connected Europe. The train system is the only one built for mass transit, with a capacity of 800, but it lacks the speed to make it the default choice.</p>
+                        <!-- Slide 2: CO₂ Emissions -->
+                        <div class="swiper-slide" id="problem-slide-co2">
+                            <div class="problem-panel glass-card p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-4 md:gap-6 items-center">
+                                    <div class="col p-4 md:p-6 text-center lg:text-left">
+                                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Carbon Cost</h3>
+                                        <p class="text-lg text-text-muted mb-6">The "fast" option comes at a massive environmental price. Flying produces an enormous amount of CO₂ per kilometer, completely undermining European sustainability goals. The train is incredibly clean, but it's too slow. We are forced to choose between our planet and our time.</p>
+                                    </div>
+                                    <div class="col p-4 md:p-6">
+                                        <div class="chart-title mb-2">CO₂ Emissions (g/km per passenger)</div>
+                                        <div class="chart-box"><canvas id="co2Chart" role="img" aria-label="CO₂ emissions comparison for Plane, Bus and Train (g/km per passenger)"></canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3: Access Time -->
+                        <div class="swiper-slide" id="problem-slide-access">
+                            <div class="problem-panel glass-card p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-4 md:gap-6 items-center">
+                                    <div class="col p-4 md:p-6 text-center lg:text-left">
+                                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Waiting Game</h3>
+                                        <p class="text-lg text-text-muted mb-6">A plane's "speed" is misleading. The data shows a staggering 120 minutes of access time — the hassle of check‑in, security, and boarding. This high‑friction experience wastes time before you ever leave the ground. Train and bus travel are simple and efficient to board, but they lose all that time on the journey itself.</p>
+                                    </div>
+                                    <div class="col p-4 md:p-6">
+                                        <div class="chart-title mb-2">Average Access Time (minutes)</div>
+                                        <div class="chart-box"><canvas id="accessChart" role="img" aria-label="Access time comparison for Plane, Bus and Train (minutes)"></canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4: Capacity -->
+                        <div class="swiper-slide" id="problem-slide-capacity">
+                            <div class="problem-panel glass-card p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-4 md:gap-6 items-center">
+                                    <div class="col p-4 md:p-6 text-center lg:text-left">
+                                        <h3 class="text-3xl font-bold text-accent-color mb-4">The Capacity Constraint</h3>
+                                        <p class="text-lg text-text-muted mb-6">Even if we accept their flaws, buses and planes simply can't move enough people. With a capacity of only 40 and 180 passengers, they are inefficient solutions for a connected Europe. The train system is the only one built for mass transit, with a capacity of 800, but it lacks the speed to make it the default choice.</p>
+                                    </div>
+                                    <div class="col p-4 md:p-6">
+                                        <div class="chart-title mb-2">Passenger Capacity</div>
+                                        <div class="chart-box"><canvas id="capacityChart" role="img" aria-label="Passenger capacity comparison for Plane, Bus and Train"></canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="chart-container fade-in glass-card p-6">
-                        <div class="chart-title">Passenger Capacity</div>
-                        <canvas id="capacityProblemChart"></canvas>
-                    </div>
+                    
                 </div>
 
                 <!-- Summary -->
@@ -296,27 +344,27 @@
             </div>
         </section>
 
-        <section id="news" class="py-20">
-            <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span></h2>
-                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto stagger-children">
-                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
-                        <img src="images/news-tue-contest.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">
-                        <div class="p-6 flex-grow">
-                            <h3 class="text-2xl font-bold text-white mb-3">TU/e Contest Participation</h3>
-                            <p class="text-text-muted mb-4">We're thrilled to be part of the TU/e Contest, showcasing our vision for future rail. Join us!</p>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">
-                        <img src="images/news-prototype.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">
-                        <div class="p-6 flex-grow">
-                            <h3 class="text-2xl font-bold text-white mb-3">Prototype Design Phase Complete</h3>
-                            <p class="text-text-muted mb-4">Our engineering team has finalized the initial prototype designs, moving us closer to physical manifestation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!--        <section id="news" class="py-20">-->
+<!--            <div class="container mx-auto px-6 max-w-6xl text-center fade-in">-->
+<!--                <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span></h2>-->
+<!--                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto stagger-children">-->
+<!--                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">-->
+<!--                        <img src="images/news-tue-contest.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">-->
+<!--                        <div class="p-6 flex-grow">-->
+<!--                            <h3 class="text-2xl font-bold text-white mb-3">TU/e (Technical University of Eindhoven) Contest Participation</h3>-->
+<!--                            <p class="text-text-muted mb-4">We're thrilled to be part of the TU/e (Technical University of Eindhoven) Contest, showcasing our vision for future rail. Join us!</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">-->
+<!--                        <img src="images/news-prototype.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">-->
+<!--                        <div class="p-6 flex-grow">-->
+<!--                            <h3 class="text-2xl font-bold text-white mb-3">Prototype Design Phase Complete</h3>-->
+<!--                            <p class="text-text-muted mb-4">Our engineering team has finalized the initial prototype designs, moving us closer to physical manifestation.</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
 
         <section id="contact" class="py-24">
             <div class="container mx-auto px-6 max-w-5xl text-center fade-in">
@@ -349,27 +397,27 @@
                     </a>
 
                     <!-- Brainport profile -->
-                    <a href="https://brainporteindhoven.com/en/discover-brainport/studying-and-developing/what-are-our-student-teams-working-on/team-hmr" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Brainport Eindhoven profile" aria-label="Brainport Eindhoven profile">
-                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0901 22.5958C11.2059 22.6753 11.2981 22.7366 11.3626 22.7788L11.4687 22.8472C11.7933 23.0504 12.2061 23.0508 12.5307 22.8476L12.6375 22.7788C12.7019 22.7366 12.7941 22.6753 12.9099 22.5958C13.1415 22.4367 13.4685 22.2041 13.8591 21.9041C14.6386 21.3054 15.6801 20.4322 16.7247 19.3336C18.7857 17.1661 21 13.9725 21 10.1818C21 7.75381 20.0571 5.42084 18.3719 3.69728C16.6859 1.97296 14.3943 1 12 1C9.60571 1 7.31415 1.97296 5.62814 3.69728C3.94288 5.42084 3 7.75381 3 10.1818C3 13.9725 5.21434 17.1661 7.27531 19.3336C8.31993 20.4322 9.36136 21.3054 10.1409 21.9041C10.5315 22.2041 10.8585 22.4367 11.0901 22.5958ZM12 3C10.1508 3 8.37273 3.75107 7.05815 5.09552C5.74283 6.44073 5 8.26992 5 10.1818C5 13.2007 6.78566 15.9162 8.72469 17.9554C9.68007 18.9602 10.6386 19.7646 11.3591 20.3179C11.6046 20.5065 11.8215 20.6651 12 20.7918C12.1785 20.6651 12.3954 20.5065 12.6409 20.3179C13.3614 19.7646 14.3199 18.9602 15.2753 17.9554C17.2143 15.9162 19 13.2007 19 10.1818C19 8.26992 18.2572 6.44073 16.9418 5.09552C15.6273 3.75107 13.8492 3 12 3Z"/>
-                        </svg>
-                        <div>
-                            <div class="text-white font-bold">Brainport Eindhoven</div>
-                            <div class="text-text-muted text-sm">Our team profile</div>
-                        </div>
-                    </a>
+<!--                    <a href="https://brainporteindhoven.com/en/discover-brainport/studying-and-developing/what-are-our-student-teams-working-on/team-hmr" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Brainport Eindhoven profile" aria-label="Brainport Eindhoven profile">-->
+<!--                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">-->
+<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"/>-->
+<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0901 22.5958C11.2059 22.6753 11.2981 22.7366 11.3626 22.7788L11.4687 22.8472C11.7933 23.0504 12.2061 23.0508 12.5307 22.8476L12.6375 22.7788C12.7019 22.7366 12.7941 22.6753 12.9099 22.5958C13.1415 22.4367 13.4685 22.2041 13.8591 21.9041C14.6386 21.3054 15.6801 20.4322 16.7247 19.3336C18.7857 17.1661 21 13.9725 21 10.1818C21 7.75381 20.0571 5.42084 18.3719 3.69728C16.6859 1.97296 14.3943 1 12 1C9.60571 1 7.31415 1.97296 5.62814 3.69728C3.94288 5.42084 3 7.75381 3 10.1818C3 13.9725 5.21434 17.1661 7.27531 19.3336C8.31993 20.4322 9.36136 21.3054 10.1409 21.9041C10.5315 22.2041 10.8585 22.4367 11.0901 22.5958ZM12 3C10.1508 3 8.37273 3.75107 7.05815 5.09552C5.74283 6.44073 5 8.26992 5 10.1818C5 13.2007 6.78566 15.9162 8.72469 17.9554C9.68007 18.9602 10.6386 19.7646 11.3591 20.3179C11.6046 20.5065 11.8215 20.6651 12 20.7918C12.1785 20.6651 12.3954 20.5065 12.6409 20.3179C13.3614 19.7646 14.3199 18.9602 15.2753 17.9554C17.2143 15.9162 19 13.2007 19 10.1818C19 8.26992 18.2572 6.44073 16.9418 5.09552C15.6273 3.75107 13.8492 3 12 3Z"/>-->
+<!--                        </svg>-->
+<!--                        <div>-->
+<!--                            <div class="text-white font-bold">Brainport Eindhoven</div>-->
+<!--                            <div class="text-text-muted text-sm">Our team profile</div>-->
+<!--                        </div>-->
+<!--                    </a>-->
 
                     <!-- Linktree -->
-                    <a href="https://linktr.ee/hybridmaglevrailways" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Linktree" aria-label="Linktree links">
-                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" role="img">
-                        <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486-.404.89-.89.89H6.577a.898.898 0 0 1-.889-.891v-4.774H.992c-.728 0-1.214-.729-.89-1.377l6.96-12.627a1.065 1.065 0 0 1 1.863 0l2.913 5.585-3.885 7.042zm15.945 0-6.96-12.627a1.065 1.065 0 0 0-1.862 0l-2.995 5.586 3.885 7.04c.081.164.081.326.081.487-.08.517-.529.897-1.052.89h-1.296v4.776c.005.49.4.887.89.89h2.914a.9.9 0 0 0 .892-.89v-4.775h4.612c.73 0 1.214-.729.89-1.377z"/>
-                    </svg>
-                        <div>
-                            <div class="text-white font-bold">Linktree</div>
-                            <div class="text-text-muted text-sm">All our links in one place</div>
-                        </div>
-                    </a>
+<!--                    <a href="https://linktr.ee/hybridmaglevrailways" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Linktree" aria-label="Linktree links">-->
+<!--                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" role="img">-->
+<!--                        <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486-.404.89-.89.89H6.577a.898.898 0 0 1-.889-.891v-4.774H.992c-.728 0-1.214-.729-.89-1.377l6.96-12.627a1.065 1.065 0 0 1 1.863 0l2.913 5.585-3.885 7.042zm15.945 0-6.96-12.627a1.065 1.065 0 0 0-1.862 0l-2.995 5.586 3.885 7.04c.081.164.081.326.081.487-.08.517-.529.897-1.052.89h-1.296v4.776c.005.49.4.887.89.89h2.914a.9.9 0 0 0 .892-.89v-4.775h4.612c.73 0 1.214-.729.89-1.377z"/>-->
+<!--                    </svg>-->
+<!--                        <div>-->
+<!--                            <div class="text-white font-bold">Linktree</div>-->
+<!--                            <div class="text-text-muted text-sm">All our links in one place</div>-->
+<!--                        </div>-->
+<!--                    </a>-->
 
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/hmr_hybridmaglevrailways/" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Instagram" aria-label="Instagram: hmr_hybridmaglevrailways">
@@ -389,8 +437,8 @@
         </section>
     </main>
 
-    <footer class="bg-primary-bg text-text-muted p-8 text-center text-sm border-t border-border-color">
-        <p>&copy; 2025 Team HMR - Hybrid Maglev Railways. A TU/e Student Team. All rights reserved.</p>
+    <footer class="glass-card text-text-muted p-8 text-center text-sm border-t border-border-color">
+        <p>&copy; 2025 Team HMR - Hybrid Maglev Railways. A TU/e (Technical University of Eindhoven) Student Team. All rights reserved.</p>
     </footer>
 
 </body>

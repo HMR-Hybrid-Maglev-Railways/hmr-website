@@ -2,7 +2,7 @@
   HMR Website — extracted styles (migrated from inline <style> in index.html)
   Date: 2025-11-13
 */
-
+@import "tailwindcss";
 :root {
     /* Surfaces */
     --primary-bg: #0B0C10; /* Deeper near-black for stronger contrast */
@@ -19,6 +19,25 @@
     --text-light: #E6E8EF;
     --text-muted: #8B90A3;
     --border-color: #2A2D3A;
+
+    /* Glass tokens (used by navbar, cards, and mobile dropdown) */
+    --glass-bg: rgba(255, 255, 255, 0.04); /* base card tint over dark */
+    --glass-bg-navbar: rgba(255, 255, 255, 0.05); /* slightly stronger for navbar */
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-border-strong: rgba(255, 255, 255, 0.12);
+    --glass-blur: 10px;
+    --glass-blur-navbar: 12px;
+    --glass-blur-mobile: 14px; /* stronger on mobile menu for legibility */
+    --glass-saturate: 120%;
+    --glass-saturate-strong: 125%;
+    --glass-shadow-card: 10px 10px 24px rgba(0, 0, 0, 0.35),
+                         -8px -8px 20px rgba(255, 255, 255, 0.015),
+                         inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --glass-shadow-navbar: 0 10px 24px rgba(0, 0, 0, 0.35),
+                           inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Overlay alphas used for mobile dropdown to keep glassy yet legible */
+    --glass-mobile-overlay-top: 0.24;
+    --glass-mobile-overlay-bottom: 0.28;
 }
 
 body {
@@ -29,6 +48,9 @@ body {
     min-height: 100vh;
     position: relative; /* anchor for background overlays */
 }
+
+/* Reserve space for the scrollbar in supporting browsers to avoid layout shift */
+html { scrollbar-gutter: stable both-edges; }
 
 /* Aurora background inspired by JetBrains product pages */
 body::before {
@@ -192,6 +214,21 @@ button:focus-visible,
     right: 0;
     width: 100%;
     z-index: 50; /* ensure it stays above content */
+    isolation: isolate; /* create new stacking context to stabilize backdrop on iOS */
+}
+
+/* Keep header aligned with body compensation while menu is open */
+body.menu-open .navbar-fixed {
+    padding-right: var(--sb-comp, 0px);
+    box-sizing: border-box;
+}
+
+/* Solid, usability-first header (no glass effects) */
+.site-header {
+    background-color: var(--primary-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* subtle depth without heavy glow */
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 /* Deprecated: .navbar-blur kept for backward compatibility (no longer used) */
@@ -203,13 +240,25 @@ button:focus-visible,
 
 /* Glassy navbar variant to match .glass-card */
 .glass-navbar {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    box-shadow:
-      0 10px 24px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Layered tint + subtle dark gradient for legibility over bright hero */
+    background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.06)),
+        var(--glass-bg-navbar, rgba(255, 255, 255, 0.05));
+    border-bottom: 1px solid var(--glass-border-strong, rgba(255, 255, 255, 0.12));
+    backdrop-filter: blur(var(--glass-blur-navbar, 12px)) saturate(var(--glass-saturate, 120%));
+    -webkit-backdrop-filter: blur(var(--glass-blur-navbar, 12px)) saturate(var(--glass-saturate, 120%));
+    box-shadow: var(--glass-shadow-navbar, 0 10px 24px rgba(0, 0, 0, 0.35)), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    background-clip: padding-box;
+    will-change: backdrop-filter;
+}
+
+/* Slightly stronger tint on compact viewports to keep text legible */
+@media (max-width: 767.98px) {
+    .glass-navbar {
+        background:
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.10)),
+            rgba(255, 255, 255, 0.08);
+    }
 }
 
 /* Navbar link utilities for larger hit areas */
@@ -291,16 +340,13 @@ button:focus-visible,
 /* Glassy/neuromorphic card */
 .glass-card {
     /* translucent glass over dark with slight tint */
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: var(--glass-bg, rgba(255, 255, 255, 0.04));
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.10));
     border-radius: 14px;
-    backdrop-filter: blur(10px) saturate(120%);
-    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    backdrop-filter: blur(var(--glass-blur, 10px)) saturate(var(--glass-saturate, 120%));
+    -webkit-backdrop-filter: blur(var(--glass-blur, 10px)) saturate(var(--glass-saturate, 120%));
     /* soft neuromorphic shadows */
-    box-shadow:
-        10px 10px 24px rgba(0, 0, 0, 0.35),
-        -8px -8px 20px rgba(255, 255, 255, 0.015),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: var(--glass-shadow-card, 10px 10px 24px rgba(0, 0, 0, 0.35), -8px -8px 20px rgba(255, 255, 255, 0.015), inset 0 1px 0 rgba(255, 255, 255, 0.08));
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
@@ -312,6 +358,236 @@ button:focus-visible,
         -10px -10px 24px rgba(255, 255, 255, 0.02),
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 0 24px var(--accent-glow);
+}
+
+/* Mobile full-screen menu — glassy overlay below the fixed header */
+@media (max-width: 767.98px) {
+    #mobile-menu {
+        position: fixed;
+        /* Place the overlay below the fixed header (mobile header height = 64px) */
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40; /* below header (header is z-index: 50) */
+        /* Glassy background: subtle dark gradient over translucent tint */
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, var(--glass-mobile-overlay-top, 0.24)),
+            rgba(0, 0, 0, var(--glass-mobile-overlay-bottom, 0.28))
+          ),
+          var(--glass-bg, rgba(255, 255, 255, 0.04));
+        border-top: 1px solid var(--glass-border-strong, rgba(255, 255, 255, 0.12));
+        backdrop-filter: blur(var(--glass-blur-mobile, 14px)) saturate(var(--glass-saturate-strong, 125%));
+        -webkit-backdrop-filter: blur(var(--glass-blur-mobile, 14px)) saturate(var(--glass-saturate-strong, 125%));
+        background-clip: padding-box;
+        will-change: backdrop-filter;
+        color: var(--text-light);
+        /* Equal vertical distribution using grid */
+        display: grid;
+        grid-template-rows: repeat(5, 1fr);
+        place-items: center;
+        text-align: center;
+        /* Header already occupies the top safe area; keep bottom safe area only */
+        padding: 1.25rem 1.25rem calc(2rem + env(safe-area-inset-bottom, 0px));
+        /* show/hide animation state (paired with .is-open) */
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    #mobile-menu.is-open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    /* Larger, unified link style within the overlay */
+    #mobile-menu .nav-link {
+        font-size: clamp(1.25rem, 5.5vw, 2rem);
+        padding: 0.75rem 1rem;
+        min-height: 56px; /* comfortable tap target */
+        width: min(92vw, 560px);
+        justify-content: center;
+        align-self: center;
+        border-radius: 12px;
+    }
+}
+
+/* Remove any mobile glass overrides for navbar (navigation is solid now) */
+
+/* Fallback for browsers that don't support backdrop-filter (common on older mobile browsers)
+   Without blur, very low alpha backgrounds appear effectively transparent. Provide a solid fallback. */
+@supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+    /* Solid fallback for glassy surfaces */
+    .glass-card,
+    .glass-navbar,
+    #mobile-menu {
+        background: rgba(11, 12, 16, 0.92) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        background-image: none !important;
+    }
+}
+
+/* Body scroll lock when mobile menu is open */
+body.menu-open {
+    overflow: hidden;
+    /* Compensate for disappearing scrollbar to prevent content shift */
+    padding-right: var(--sb-comp, 0px);
+}
+
+/* All nav links share the same style now (no special variants) */
+
+@media (prefers-reduced-motion: reduce) {
+    #mobile-menu { transition: none !important; transform: none !important; }
+    .burger-line { transition: none !important; }
+}
+
+/* Burger button animation */
+.burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+}
+
+/* ==========================
+   Problem slider (Swiper)
+   ========================== */
+
+.problem-swiper {
+    /* give some breathing room below */
+    margin-bottom: 3rem;
+}
+
+.problem-swiper .swiper-slide {
+    /* slight internal padding for narrow screens */
+    padding: 0.5rem 0.25rem;
+    height: auto; /* allow autoHeight with fade */
+    /* Blur/soften non-focused slides by default */
+    filter: blur(6px) saturate(85%);
+    opacity: 0.45;
+    transition: filter 220ms ease, opacity 220ms ease, transform 220ms ease;
+    will-change: filter, opacity;
+}
+
+/* Partially visible neighbors: apply a milder blur */
+.problem-swiper .swiper-slide.swiper-slide-visible {
+    filter: blur(3px) saturate(95%);
+    opacity: 0.8;
+}
+
+/* Fully visible (active/center) slide: crisp */
+.problem-swiper .swiper-slide.swiper-slide-active {
+    filter: none;
+    opacity: 1;
+}
+
+/* Make non-active slides feel interactable for click-to-activate */
+.problem-swiper .swiper-slide:not(.swiper-slide-active) {
+    cursor: pointer;
+}
+
+/* Chart wrapper ensures Chart.js can size responsively without CLS */
+.chart-box {
+    position: relative;
+    height: 340px;
+}
+
+@media (min-width: 1024px) {
+    .chart-box { height: 380px; }
+}
+
+/* Theme Swiper controls to match accent */
+.problem-swiper .swiper-button-next,
+.problem-swiper .swiper-button-prev {
+    color: var(--accent-color);
+}
+
+.problem-swiper .swiper-button-next:hover,
+.problem-swiper .swiper-button-prev:hover {
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.problem-swiper .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.35);
+    opacity: 1;
+}
+
+.problem-swiper .swiper-pagination-bullet-active {
+    background: var(--accent-color);
+}
+
+/* Problem section tiles (tabs) */
+.problem-tiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.problem-tile {
+    appearance: none;
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.10));
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-light);
+    padding: 0.5rem 0.875rem;
+    border-radius: 9999px; /* pill */
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    backdrop-filter: blur(var(--glass-blur, 10px)) saturate(var(--glass-saturate, 120%));
+    -webkit-backdrop-filter: blur(var(--glass-blur, 10px)) saturate(var(--glass-saturate, 120%));
+}
+
+.problem-tile:hover { background-color: rgba(255,255,255,0.06); }
+
+.problem-tile.is-active,
+.problem-tile[aria-selected="true"] {
+    color: var(--accent-color);
+    border-color: rgba(123, 104, 238, 0.45);
+    box-shadow: inset 0 0 0 2px rgba(123, 104, 238, 0.20), 0 0 12px rgba(123, 104, 238, 0.18);
+    background-color: rgba(255,255,255,0.06);
+}
+
+/* Glassy panel that frames each slide */
+.problem-panel {
+    overflow: hidden; /* clip inner effects neatly */
+}
+
+/* Allow panel shadows to be visible outside Swiper mask */
+.problem-swiper { overflow: visible; }
+
+/* Ensure equal column behavior inside slides and prevent text from stretching columns */
+
+.problem-panel .grid > * { min-width: 0; }
+.burger-line {
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-light);
+    border-radius: 2px;
+    transition: transform 220ms ease, opacity 220ms ease, background-color 220ms ease;
+    transform-origin: 50% 50%;
+}
+.burger-line:nth-child(1) { transform: translateY(-7px); }
+.burger-line:nth-child(2) { transform: translateY(0); }
+.burger-line:nth-child(3) { transform: translateY(7px); }
+
+.burger.is-open .burger-line:nth-child(1) { transform: translateY(0) rotate(45deg); }
+.burger.is-open .burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burger.is-open .burger-line:nth-child(3) { transform: translateY(0) rotate(-45deg); }
+
+/* Hide burger on desktop */
+@media (min-width: 768px) {
+    .burger { display: none !important; }
 }
 
 /* (removed unused .ui-input styles) */
