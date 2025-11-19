@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="css/output.css">
     <!-- Swiper CSS (slider) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
-    <!-- Load custom styles after Tailwind output so overrides take effect -->
-    <link rel="stylesheet" href="css/style.css">
     <!-- Performance: we'll lazy‑load Chart.js and Swiper from JS when the section approaches viewport -->
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -52,11 +50,12 @@
         <section class="h-92vh md:h-screen flex items-center justify-center text-center p-6">
             <div class="relative z-10 max-w-5xl">
                 <h2 class="hero-title font-extrabold mb-5 leading-tight mx-auto max-w-92vw md:max-w-5xl">
-                    <span class="hero-line text-gradient-accent reveal-up delay-100">Plane‑level speed,</span>
-                    <span class="hero-line text-gradient-accent reveal-up delay-200">Train‑level simplicity</span>
+<!--                    <span class="hero-line text-gradient-accent reveal-up delay-100">Plane‑level speed,</span>-->
+<!--                    <span class="hero-line text-gradient-accent reveal-up delay-200">Train‑level simplicity</span>-->
+                    <span class="hero-line text-gradient-accent reveal-up delay-200">The Future of European High-Speed Travel </span>
                 </h2>
-                <p class="text-lg md:text-2xl max-w-3xl mx-auto mb-8 text-text-light reveal-up delay-300">
-                    HMR upgrades Europe’s existing rail to reach ~500 km/h on selected corridors—without stopping the continent and with full backward compatibility.
+                <p class="text-lg md:text-2xl max-w-3xl mx-auto mb-10 text-text-light reveal-up delay-300">
+                    We are Hybrid Maglev Railways (HMR), a student team at Eindhoven University of Technology developing a new hybrid train system for Europe. Our mission is to create high-speed, sustainable mobility that works seamlessly on existing rail infrastructure.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10 reveal-scale delay-400">
                     <a href="#problem" class="glow-button">Explore Our Vision</a>
@@ -176,7 +175,7 @@
                         <p class="text-text-muted">You get sustainability (3g CO2/km) and capacity (800) but you sacrifice your time (150 km/h avg speed).</p>
                     </div>
                     <div class="glass-card p-6 reveal-card">
-                        <h3 class="text-2xl font-bold text-white mb-3">The Bus: <span class="text-yellow-400">The Long Haul</span></h3>
+                        <h3 class="text-2xl font-bold text-white mb-3">The Bus: <span class="text-red-400">The Long Haul</span></h3>
                         <p class="text-text-muted">You get simplicity (20 min access) but lose on every other metric: speed (80 km/h) and capacity (40).</p>
                     </div>
                 </div>
@@ -185,34 +184,88 @@
 
         <section id="solution" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl text-center fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-12">The Solution: <span class="text-white">1 Track, 1 Train, 2 Systems</span></h2>
-                <p class="text-2xl leading-relaxed text-text-light max-w-4xl mx-auto mb-16">
-                    HMR ends the compromise by upgrading Europe’s existing rail network. Our solution is built on two core principles: roll out upgrades gradually without stopping Europe, and keep full backward compatibility so today’s conventional trains keep running.
-                </p>
-                <div class="grid md:grid-cols-3 gap-10 mb-12 text-left stagger-children">
-                    <div class="glass-card p-6 reveal-card">
-                        <!-- Replaced emoji with SVG: Lightning bolt -->
-                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path d="M13 2L3 14h6l-2 8 10-12h-6z"/>
-                        </svg>
-                        <span class="sr-only">Retrofitted Train</span>
-                        <h3 class="text-2xl font-bold text-accent-color mb-3">The Retrofitted Train</h3>
-                        <p class="text-text-muted">A high-speed train that behaves like a standard wheel‑on‑rail vehicle at low speeds, and levitates above ~200 km/h on upgraded segments — targeting 500 km/h — while remaining fully compatible with existing operations.</p>
+                <h2 class="text-4xl font-bold text-accent-color mb-12">Our Solution: <span class="text-white">Railway Duality</span></h2>
+                <!-- Juxt-opposing systems (placed directly under the Solution header) -->
+                <div class="duo-systems mb-12 text-left fade-in">
+                    <div class="grid md:grid-cols-2 gap-6 items-stretch">
+                        <!-- Conventional Mode (Today) -->
+                        <div class="system-card system-card--conventional glass-card p-6 md:p-8 reveal-card">
+                            <div class="flex items-start gap-3 mb-3">
+                                <!-- Simple wheel-on-rail icon -->
+                                <svg class="system-icon icon-svg" xmlns="http://www.w3.org/2000/svg" id="_x32_" viewBox="0 0 512 512" xml:space="preserve">
+                                <g>
+                                    <path class="st0" d="M431.665,356.848V147.207c0-48.019-38.916-86.944-86.943-86.944h-40.363l4.812-42.824h8.813   c9.435,0,17.508,5.74,20.965,13.898l16.06-6.779V24.55C348.929,10.124,334.641,0.018,317.984,0L193.999,0.009   c-16.639,0.009-30.928,10.116-37.016,24.541l16.06,6.796c3.466-8.166,11.539-13.906,20.956-13.897h8.823l4.81,42.815h-40.354   c-48.01,0-86.942,38.924-86.942,86.944v209.641c0,36.403,26.483,66.736,61.208,72.773L87.011,512h48.488l22.378-33.823h196.264   L376.519,512h48.47l-54.516-82.379C405.182,423.576,431.665,393.252,431.665,356.848z M291.621,17.44l-4.803,42.824h-61.635   l-4.819-42.815L291.621,17.44z M180.715,99.299h150.57v25.095h-150.57V99.299z M135.413,180.409   c0-10.917,8.839-19.773,19.756-19.773h201.664c10.916,0,19.773,8.856,19.773,19.773v65.96c0,10.917-8.857,19.764-19.773,19.764   H155.168c-10.916,0-19.756-8.847-19.756-19.764V180.409z M154.232,378.495c-12.739,0-23.06-10.321-23.06-23.043   c0-12.739,10.321-23.052,23.06-23.052c12.722,0,23.043,10.313,23.043,23.052C177.275,368.174,166.954,378.495,154.232,378.495z    M172.421,456.19l16.844-25.461h133.471l16.844,25.461H172.421z M357.768,378.495c-12.722,0-23.043-10.321-23.043-23.043   c0-12.739,10.321-23.052,23.043-23.052c12.739,0,23.06,10.313,23.06,23.052C380.828,368.174,370.507,378.495,357.768,378.495z"/>
+                                </g>
+                                </svg>
+                                <h3 class="text-2xl font-bold text-white">Conventional Mode</h3>
+                            </div>
+                            <p class="text-text-muted mb-4">Wheel‑on‑rail trains run everywhere in Europe today and momentarily replacing them is impossible. Our upgrades keep them running — same stations, same operations, reliable operations, and maintenance ecosystem.</p>
+                            <!-- Structured details: fixed 2×2 equal grid (uniform cells, full width, glassy tiles) -->
+                            <div class="mt-4 grid grid-cols-2 grid-rows-2 gap-4 place-items-stretch text-sm text-text-light">
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Where it runs</div>
+                                    <div class="text-text-muted">Entire European network</div>
+                                </div>
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Speed range</div>
+                                    <div class="text-text-muted">0–200 km/h (typical)</div>
+                                </div>
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Propulsion</div>
+                                    <div class="text-text-muted">Electric wheel‑on‑rail</div>
+                                </div>
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Role in hybrid</div>
+                                    <div class="text-text-muted">Stations, yards, and universal baseline</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hybrid Maglev Mode (Upgraded) -->
+                        <div class="system-card system-card--maglev glass-card p-6 md:p-8 reveal-card" tabindex="0">
+                            <div class="flex items-start gap-3 mb-3">
+                                <!-- Magnet/levitation icon -->
+                                <svg class="system-icon icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                    <path d="M1 9L1 20L4 20C4.3347834 20 4.6665129 20.0136 5 20.019531L5 26.017578C4.6673942 26.014536 4.3308054 26 4 26L1 26L1 37L3.1015625 37C3.5684515 39.274577 5.5928465 41 8 41C10.407153 41 12.431549 39.274577 12.898438 37L15.101562 37C15.568451 39.274577 17.592847 41 20 41C21.969352 41 23.667454 39.842931 24.480469 38.175781C26.098201 39.223369 27.195611 40.594971 27.212891 40.617188C27.401891 40.858187 27.693 41 28 41L42 41C42.404 41 42.768828 40.756813 42.923828 40.382812C43.078828 40.008813 42.993031 39.578969 42.707031 39.292969L40.414062 37L30 37C29.448 37 29 36.553 29 36C29 35.447 29.448 35 30 35L38.414062 35L40.414062 37C47.977063 36.578 49.004047 33.399828 48.998047 32.048828C48.988047 29.855828 47.917 28.071938 44.625 25.460938L44.402344 25.279297C38.844344 20.688297 31.582438 16.382031 23.398438 12.832031C15.258437 9.2990312 7.6370469 9.0229531 3.3730469 9.0019531C2.9970469 8.9999531 2.6471719 9 2.3261719 9L1 9 z M 13.908203 11.980469C16.634203 12.522469 19.584563 13.358969 22.601562 14.667969C26.761563 16.473969 30.741187 18.528937 34.367188 20.710938C31.123188 20.295938 25.474 19.381 20.875 17.625C16.965 16.132 15.221203 13.556469 13.908203 11.980469 z M 7 20.087891C9.405667 20.212226 11.756589 20.47084 14 20.824219L14 26.398438C11.724558 26.236634 9.3745388 26.113862 7 26.052734L7 20.087891 z M 16 21.166016C18.155144 21.565213 20.145687 22.040833 22 22.535156L21.228516 27.046875C19.583885 26.870677 17.931983 26.700461 16 26.542969L16 21.166016 z M 23.9375 23.068359C26.819334 23.913077 29.181571 24.770448 30.705078 25.408203C31.017078 25.539203 31.108625 25.932406 30.890625 26.191406L29.505859 27.835938C29.393859 27.968937 29.229594 28.034766 29.058594 28.009766C28.365621 27.906996 26.052868 27.603742 23.21875 27.273438L23.9375 23.068359 z M 5.1816406 37L10.818359 37C10.408769 38.167075 9.3148489 39 8 39C6.6851511 39 5.5912309 38.167075 5.1816406 37 z M 17.181641 37L21 37C21.584389 37 22.152971 37.114915 22.695312 37.296875C22.213187 38.300615 21.198959 39 20 39C18.685151 39 17.591231 38.167075 17.181641 37 z"/>
+                                </svg>
+                                <h3 class="text-2xl font-bold text-white">Hybrid Maglev Mode</h3>
+                            </div>
+                            <p class="text-text-muted mb-4">With our minimal modifications to railways and trains, we can facilitate maglev technology to let trains levitate above the rails and accelerate to plane-like speeds. Frictionless and modular system that fixes all the trains problems!</p>
+                            <!-- Structured details: fixed 2×2 equal grid (uniform cells, full width, glassy tiles; pills removed) -->
+                            <div class="mt-4 grid grid-cols-2 grid-rows-2 gap-4 place-items-stretch text-sm text-text-light">
+                                <!-- Where it runs -->
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Where it runs</div>
+                                    <div class="text-text-muted">Upgraded hybrid corridors</div>
+                                </div>
+                                <!-- Speed range -->
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Speed range</div>
+                                    <div class="text-text-muted">~200–500 km/h</div>
+                                </div>
+                                <!-- Propulsion -->
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Propulsion</div>
+                                    <div class="text-text-muted">Linear motor + magnetic levitation</div>
+                                </div>
+                                <!-- Role in hybrid -->
+                                <div class="w-full h-full rounded-md glass-tile p-3">
+                                    <div class="font-semibold text-white">Role in hybrid</div>
+                                    <div class="text-text-muted">High‑speed overlay; automatic mode‑switch</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="glass-card p-6 reveal-card">
-                        <span class="icon-char">⛮</span>
-                        <h3 class="text-2xl font-bold text-accent-color mb-3">The "Plug-and-Play" Track</h3>
-                        <p class="text-text-muted">A modular insert for existing rails that enables maglev propulsion/levitation on select corridors yet allows conventional trains to pass normally — ensuring backward compatibility by design.</p>
-                    </div>
-                    <div class="glass-card p-6 reveal-card">
-                        <span class="icon-char">↔</span>
-                        <h3 class="text-2xl font-bold text-accent-color mb-3">A True Hybrid System</h3>
-                        <p class="text-text-muted">New and existing fleets share the same infrastructure. Corridors can be upgraded step‑by‑step without network shutdowns — keeping Europe moving while performance climbs.</p>
+                    <div class="compat-ribbon" aria-hidden="true">
+                        <span class="label">Same track · Two Trains · Two Systems</span>
                     </div>
                 </div>
+                <p class="text-2xl leading-relaxed text-text-light max-w-4xl mx-auto mb-16">
+                    HMR aims to bring maglev performance to existing railways. Instead of building entirely new tracks, we retrofit trains and rail segments with a hybrid maglev module that enables frictionless levitation, seamless mode-switching, and speeds up to 500 km/h. High-speed, sustainable, and scalable, without rebuilding and disrupting Europe’s existing network.
+                </p>
 
                 <!-- Benefits -->
-                <h3 class="text-3xl font-bold text-accent-color mb-6">Why this Hybrid Wins</h3>
+                <h3 class="text-3xl font-bold mb-6">Why this Hybrid Wins</h3>
                 <div class="grid md:grid-cols-3 gap-8 mb-12 text-left stagger-children">
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: High capacity (stacked bars) -->
@@ -236,7 +289,7 @@
                         </svg>
                         <span class="sr-only">Plane‑like speeds</span>
                         <h4 class="text-xl font-bold text-white mb-2">Plane‑like speeds</h4>
-                        <p class="text-text-muted">Target ~500 km/h on upgraded segments with train‑like boarding, delivering door‑to‑door times that rival flying.</p>
+                        <p class="text-text-muted">500 km/h on upgraded segments with train‑like boarding delivers door‑to‑door times that rival flying.</p>
                     </div>
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: Low emissions (leaf) -->
@@ -247,13 +300,22 @@
                         <h4 class="text-xl font-bold text-white mb-2">Low emissions</h4>
                         <p class="text-text-muted">Electric propulsion and efficient aerodynamics cut per‑passenger CO₂ versus short‑haul flights.</p>
                     </div>
+                    <!-- Energy efficiency (reuse lightning bolt icon from solution cards) -->
+                    <div class="glass-card p-6 reveal-card">
+                        <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true" role="img">
+                            <path d="M13 2L3 14h6l-2 8 10-12h-6z"/>
+                        </svg>
+                        <span class="sr-only">Energy efficiency</span>
+                        <h4 class="text-xl font-bold text-white mb-2">Energy‑efficient</h4>
+                        <p class="text-text-muted">Maglev propulsion and streamlined design reduce energy per passenger‑kilometre while boosting speed.</p>
+                    </div>
                     <div class="glass-card p-6 reveal-card">
                         <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg"  width="800px" height="800px" viewBox="0 0 256 213" xml:space="preserve">
                             <path d="M228.849,40H163V16.275C163,7.513,155.222,2,145.649,2c0,0-36.497,0-36.298,0C99.978,2,92,7.513,92,16.275V41H27.165  C14.138,41,2,52.056,2,66.666c0,0.395,0,117.569,0,117.569C2,200.523,14.171,211,27,211h201.948c12.772,0,25.052-9.589,25.052-26.07  c0,0,0-118.461,0-118.961C253.902,51.187,241.818,40,228.849,40z M105,16h45v25h-45V16z M127.922,177.35  c-28.891,0-52.345-23.454-52.345-52.345c0-29.046,23.299-52.655,52.345-52.655s52.5,23.454,52.5,52.5  C180.422,153.896,156.813,177.35,127.922,177.35z M147.493,136.603c0,8.232-5.022,14.497-15.636,16.879v8.232h-7.249v-7.973  c-6.265,0-12.581-1.657-15.636-3.365l2.64-10.614c3.365,1.657,8.646,3.624,14.238,3.624c6.006,0,8.957-2.641,8.957-6.265  s-2.848-5.126-9.785-7.818c-9.63-3.365-15.636-8.232-15.636-16.879c0-7.973,5.281-14.238,14.963-16.206v-8.646h7.249v8.232  c6.006,0,10.355,1.243,13.565,2.951l-2.951,10.355c-2.382-0.984-6.265-2.641-11.598-2.641c-5.333,0-8.232,2.641-8.232,5.281  c0,3.624,3.365,5.022,10.614,7.973C142.885,123.349,147.493,128.371,147.493,136.603z"/>
                         </svg>
                         <span class="sr-only">Gradual investment</span>
                         <h4 class="text-xl font-bold text-white mb-2">Gradual investment</h4>
-                        <p class="text-text-muted">Upgrade the network in modules and corridors with the best ROI first — avoiding all‑at‑once mega‑projects.</p>
+                        <p class="text-text-muted">Upgrade the network in modules and corridors with the best return on investment — avoiding all‑at‑once mega‑projects.</p>
                     </div>
                     <div class="glass-card p-6 reveal-card">
                         <!-- Replaced emoji with SVG: Keep Europe moving (circular arrows) -->
@@ -262,7 +324,7 @@
                         </svg>
                         <span class="sr-only">Keep Europe moving</span>
                         <h4 class="text-xl font-bold text-white mb-2">Keep Europe moving</h4>
-                        <p class="text-text-muted">Backward‑compatible by design: conventional trains keep running while hybrid service scales — no continent‑wide shutdowns.</p>
+                        <p class="text-text-muted">Backward‑compatible by design: conventional trains keep running while hybrid service scales — no need for continent‑wide shutdowns.</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +332,7 @@
 
         <section id="team" class="py-20">
             <div class="container mx-auto px-6 max-w-6xl fade-in">
-                <h2 class="text-4xl font-bold text-accent-color mb-8 text-center">Meet the <span class="text-white">Catalysts</span></h2>
+                <h2 class="text-4xl font-bold text-accent-color mb-8 text-center">Meet the <span class="text-white">Team</span></h2>
 
                 <!-- Subteam browser: left tile list, right detail panel -->
                 <div class="subteam-layout">
@@ -344,33 +406,11 @@
             </div>
         </section>
 
-<!--        <section id="news" class="py-20">-->
-<!--            <div class="container mx-auto px-6 max-w-6xl text-center fade-in">-->
-<!--                <h2 class="text-4xl font-bold text-accent-color mb-12">Latest <span class="text-white">Transmissions</span></h2>-->
-<!--                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto stagger-children">-->
-<!--                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">-->
-<!--                        <img src="images/news-tue-contest.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">-->
-<!--                        <div class="p-6 flex-grow">-->
-<!--                            <h3 class="text-2xl font-bold text-white mb-3">TU/e (Technical University of Eindhoven) Contest Participation</h3>-->
-<!--                            <p class="text-text-muted mb-4">We're thrilled to be part of the TU/e (Technical University of Eindhoven) Contest, showcasing our vision for future rail. Join us!</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="glass-card rounded-lg overflow-hidden flex flex-col reveal-card">-->
-<!--                        <img src="images/news-prototype.svg" alt="News article" class="w-full h-48 object-cover border-b border-border-color" loading="lazy" decoding="async" width="600" height="400">-->
-<!--                        <div class="p-6 flex-grow">-->
-<!--                            <h3 class="text-2xl font-bold text-white mb-3">Prototype Design Phase Complete</h3>-->
-<!--                            <p class="text-text-muted mb-4">Our engineering team has finalized the initial prototype designs, moving us closer to physical manifestation.</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
-
         <section id="contact" class="py-24">
             <div class="container mx-auto px-6 max-w-5xl text-center fade-in">
                 <h2 class="text-4xl font-bold text-accent-color mb-4">Connect with <span class="text-white">Our Future</span></h2>
                 <p class="text-xl leading-relaxed mb-10 text-text-light">
-                    Beam us a message, follow our journey, or ping us on your channel of choice.
+                    Follow our mission, get updates, or reach out directly. We’d love to hear from you!
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 stagger-children">
                     <!-- Email / Gmail -->
@@ -395,30 +435,6 @@
                             <div class="text-text-muted text-sm">Company updates & posts</div>
                         </div>
                     </a>
-
-                    <!-- Brainport profile -->
-<!--                    <a href="https://brainporteindhoven.com/en/discover-brainport/studying-and-developing/what-are-our-student-teams-working-on/team-hmr" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Brainport Eindhoven profile" aria-label="Brainport Eindhoven profile">-->
-<!--                        <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24">-->
-<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8Z"/>-->
-<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.0901 22.5958C11.2059 22.6753 11.2981 22.7366 11.3626 22.7788L11.4687 22.8472C11.7933 23.0504 12.2061 23.0508 12.5307 22.8476L12.6375 22.7788C12.7019 22.7366 12.7941 22.6753 12.9099 22.5958C13.1415 22.4367 13.4685 22.2041 13.8591 21.9041C14.6386 21.3054 15.6801 20.4322 16.7247 19.3336C18.7857 17.1661 21 13.9725 21 10.1818C21 7.75381 20.0571 5.42084 18.3719 3.69728C16.6859 1.97296 14.3943 1 12 1C9.60571 1 7.31415 1.97296 5.62814 3.69728C3.94288 5.42084 3 7.75381 3 10.1818C3 13.9725 5.21434 17.1661 7.27531 19.3336C8.31993 20.4322 9.36136 21.3054 10.1409 21.9041C10.5315 22.2041 10.8585 22.4367 11.0901 22.5958ZM12 3C10.1508 3 8.37273 3.75107 7.05815 5.09552C5.74283 6.44073 5 8.26992 5 10.1818C5 13.2007 6.78566 15.9162 8.72469 17.9554C9.68007 18.9602 10.6386 19.7646 11.3591 20.3179C11.6046 20.5065 11.8215 20.6651 12 20.7918C12.1785 20.6651 12.3954 20.5065 12.6409 20.3179C13.3614 19.7646 14.3199 18.9602 15.2753 17.9554C17.2143 15.9162 19 13.2007 19 10.1818C19 8.26992 18.2572 6.44073 16.9418 5.09552C15.6273 3.75107 13.8492 3 12 3Z"/>-->
-<!--                        </svg>-->
-<!--                        <div>-->
-<!--                            <div class="text-white font-bold">Brainport Eindhoven</div>-->
-<!--                            <div class="text-text-muted text-sm">Our team profile</div>-->
-<!--                        </div>-->
-<!--                    </a>-->
-
-                    <!-- Linktree -->
-<!--                    <a href="https://linktr.ee/hybridmaglevrailways" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Linktree" aria-label="Linktree links">-->
-<!--                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" role="img">-->
-<!--                        <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486-.404.89-.89.89H6.577a.898.898 0 0 1-.889-.891v-4.774H.992c-.728 0-1.214-.729-.89-1.377l6.96-12.627a1.065 1.065 0 0 1 1.863 0l2.913 5.585-3.885 7.042zm15.945 0-6.96-12.627a1.065 1.065 0 0 0-1.862 0l-2.995 5.586 3.885 7.04c.081.164.081.326.081.487-.08.517-.529.897-1.052.89h-1.296v4.776c.005.49.4.887.89.89h2.914a.9.9 0 0 0 .892-.89v-4.775h4.612c.73 0 1.214-.729.89-1.377z"/>-->
-<!--                    </svg>-->
-<!--                        <div>-->
-<!--                            <div class="text-white font-bold">Linktree</div>-->
-<!--                            <div class="text-text-muted text-sm">All our links in one place</div>-->
-<!--                        </div>-->
-<!--                    </a>-->
-
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/hmr_hybridmaglevrailways/" target="_blank" rel="noopener noreferrer" class="glass-card p-5 flex items-center gap-4 hover:bg-secondary-bg transition-colors duration-200 text-left social-link reveal-card" title="Instagram" aria-label="Instagram: hmr_hybridmaglevrailways">
                         <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
