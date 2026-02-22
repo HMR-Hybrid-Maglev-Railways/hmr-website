@@ -1,0 +1,27 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#050a18" />
+      <stop offset="1" stop-color="#0b1f3c" />
+    </linearGradient>
+    <linearGradient id="train" x1="100" y1="200" x2="700" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb" />
+      <stop offset="1" stop-color="#38bdf8" />
+    </linearGradient>
+    <radialGradient id="lift" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 300) rotate(90) scale(40 220)">
+      <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.7" />
+      <stop offset="1" stop-color="#0b1f3c" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)" />
+  <rect x="0" y="340" width="800" height="6" fill="#0f172a" />
+  <rect x="0" y="360" width="800" height="3" fill="#1f2937" />
+  <rect x="100" y="200" width="600" height="70" rx="28" fill="url(#train)" />
+  <rect x="135" y="220" width="140" height="18" rx="9" fill="#0b1c33" />
+  <rect x="300" y="220" width="140" height="18" rx="9" fill="#0b1c33" />
+  <rect x="465" y="220" width="140" height="18" rx="9" fill="#0b1c33" />
+  <rect x="220" y="285" width="360" height="10" rx="5" fill="url(#lift)" />
+  <circle cx="240" cy="310" r="12" fill="#111827" stroke="#60a5fa" stroke-width="2" />
+  <circle cx="560" cy="310" r="12" fill="#111827" stroke="#60a5fa" stroke-width="2" />
+  <rect x="120" y="310" width="560" height="6" fill="#0b1c33" />
+</svg>

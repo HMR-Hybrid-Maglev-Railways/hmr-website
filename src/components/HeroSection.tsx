@@ -1,5 +1,98 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+
+const SpeedCounter = () => {
+  const [speed, setSpeed] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const duration = 2500;
+    const target = 1000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setSpeed(target);
+        clearInterval(timer);
+      } else {
+        setSpeed(Math.floor(current));
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [isInView]);
+
+  return (
+    <div ref={ref} className="flex items-baseline gap-2">
+      <span className="speed-counter text-6xl md:text-8xl font-bold text-gradient-animated">
+        {speed}
+      </span>
+      <span className="font-mono-tech text-xl md:text-2xl text-muted-foreground">km/h</span>
+    </div>
+  );
+};
+
+const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      let i = 0;
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          setDisplayText(text.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(timer);
+          setTimeout(() => setShowCursor(false), 1000);
+        }
+      }, 50);
+      return () => clearInterval(timer);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [text, delay]);
+
+  return (
+    <span>
+      {displayText}
+      {showCursor && <span className="typewriter-cursor" />}
+    </span>
+  );
+};
+
+const FloatingParticles = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(20)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute w-1 h-1 rounded-full bg-hmr-light/30"
+        initial={{
+          x: Math.random() * 100 + "%",
+          y: Math.random() * 100 + "%",
+          scale: Math.random() * 0.5 + 0.5,
+        }}
+        animate={{
+          y: [null, "-20%", null],
+          opacity: [0.3, 0.8, 0.3],
+        }}
+        transition={{
+          duration: Math.random() * 10 + 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: Math.random() * 5,
+        }}
+      />
+    ))}
+  </div>
+);
 
 const HeroSection = () => {
   const scrollTo = (href: string) => {
@@ -8,89 +101,183 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background glow effects */}
+      {/* Background layers */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-hmr-light/5 blur-[120px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-hmr-dark/10 blur-[100px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-hmr/5 blur-[150px]" />
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-hmr-light/5 blur-[150px] animate-pulse-glow" />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-hmr-dark/10 blur-[120px] animate-pulse-glow"
+          style={{ animationDelay: "1.5s" }}
+        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-hmr/5 blur-[180px]" />
       </div>
 
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: "linear-gradient(hsl(var(--hmr-blue) / 0.3) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--hmr-blue) / 0.3) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* Dot grid overlay */}
+      <div className="absolute inset-0 dot-grid opacity-40" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      {/* Radial gradient vignette */}
+      <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/80" />
+
+      {/* Floating particles */}
+      <FloatingParticles />
+
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        {/* Logo badge */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-8"
         >
-          <p className="text-sm md:text-base uppercase tracking-[0.3em] text-hmr-light mb-6 font-medium">
-            Hybrid Maglev Railways · TU/e
-          </p>
+          <div className="relative">
+            <motion.img
+              src="/logo/hmr_logo.svg"
+              alt="HMR Logo"
+              className="h-20 md:h-28 w-auto"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            />
+            {/* Glow effect behind logo */}
+            <div className="absolute inset-0 blur-2xl bg-hmr/20 -z-10 scale-150" />
+          </div>
         </motion.div>
 
+        {/* Subtitle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="mb-6"
+        >
+          <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-hmr/20 bg-secondary/30 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-hmr animate-pulse" />
+            <span className="font-mono-tech text-xs md:text-sm tracking-[0.15em] text-hmr-light uppercase">
+              TU/e Student Team
+            </span>
+          </span>
+        </motion.div>
+
+        {/* Main headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6"
         >
-          Engineering the{" "}
-          <span className="text-gradient-hmr">Future</span>
+          <TypewriterText text="Engineering the" delay={800} />
           <br />
-          of Rail
+          <span className="text-gradient-hmr">Future of Rail</span>
         </motion.h1>
 
+        {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
         >
           Bridging historical infrastructure with futuristic propulsion.
           We're making trains fly—fractions above the tracks you already know.
         </motion.p>
 
+        {/* Speed counter */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="flex flex-col items-center gap-2 mb-14"
+        >
+          <SpeedCounter />
+          <p className="font-mono-tech text-sm text-muted-foreground tracking-wider">
+            TARGET CRUISING SPEED
+          </p>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 1 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <button
             onClick={() => scrollTo("#join")}
-            className="px-8 py-3.5 rounded-lg bg-gradient-hmr text-primary-foreground font-heading font-semibold text-base hover:opacity-90 transition-opacity glow-blue"
+            className="group relative px-8 py-4 rounded-xl overflow-hidden"
           >
-            Join the Team
+            <span className="absolute inset-0 bg-gradient-hmr" />
+            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-white/10" />
+            <span className="relative text-primary-foreground font-heading font-semibold text-base flex items-center justify-center gap-2">
+              Join the Team
+              <motion.span
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                →
+              </motion.span>
+            </span>
+            {/* Glow */}
+            <span className="absolute inset-0 rounded-xl glow-blue opacity-50 group-hover:opacity-100 transition-opacity" />
           </button>
+
           <button
-            onClick={() => scrollTo("#vision")}
-            className="px-8 py-3.5 rounded-lg border border-border text-foreground font-heading font-semibold text-base hover:bg-secondary transition-colors"
+            onClick={() => scrollTo("#hybrid-maglev")}
+            className="group px-8 py-4 rounded-xl border border-border bg-card/30 backdrop-blur-sm text-foreground font-heading font-semibold text-base hover:bg-secondary/50 hover:border-hmr/30 transition-all flex items-center justify-center gap-2"
           >
-            Learn More
+            <span>See How It Works</span>
+            <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
           </button>
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.button
-        onClick={() => scrollTo("#vision")}
+        onClick={() => scrollTo("#hybrid-maglev")}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-foreground transition-colors"
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
         aria-label="Scroll down"
       >
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-          <ChevronDown className="w-6 h-6" />
+        <span className="font-mono-tech text-[10px] tracking-[0.2em] uppercase opacity-60">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="w-6 h-10 rounded-full border border-border flex items-start justify-center p-2 group-hover:border-hmr/50 transition-colors"
+        >
+          <motion.div
+            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="w-1 h-2 rounded-full bg-hmr"
+          />
         </motion.div>
       </motion.button>
+
+      {/* Corner decorations */}
+      <div className="absolute top-24 left-8 hidden lg:block">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.2 }}
+          className="flex items-center gap-3 text-muted-foreground"
+        >
+          <div className="w-12 h-px bg-gradient-to-r from-hmr/50 to-transparent" />
+          <span className="font-mono-tech text-[10px] tracking-wider">EST. 2024</span>
+        </motion.div>
+      </div>
+
+      <div className="absolute top-24 right-8 hidden lg:block">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.2 }}
+          className="flex items-center gap-3 text-muted-foreground"
+        >
+          <span className="font-mono-tech text-[10px] tracking-wider">EINDHOVEN, NL</span>
+          <div className="w-12 h-px bg-gradient-to-l from-hmr/50 to-transparent" />
+        </motion.div>
+      </div>
     </section>
   );
 };

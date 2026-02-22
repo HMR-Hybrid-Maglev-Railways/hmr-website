@@ -1,0 +1,351 @@
+import { motion } from "framer-motion";
+import { Users, Linkedin, Wrench, Zap, Atom } from "lucide-react";
+import { useState } from "react";
+
+type Discipline = "all" | "ME" | "EE" | "AP";
+
+const teamMembers = [
+  {
+    name: "Alex van der Berg",
+    role: "Team Lead",
+    discipline: "ME" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Sophie de Vries",
+    role: "Propulsion Engineer",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Lucas Bakker",
+    role: "Levitation Systems",
+    discipline: "AP" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Emma Jansen",
+    role: "Control Systems",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Daan Visser",
+    role: "Structural Design",
+    discipline: "ME" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Julia Smit",
+    role: "Electromagnetics",
+    discipline: "AP" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Thomas de Jong",
+    role: "Power Electronics",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "#",
+  },
+  {
+    name: "Lisa Mulder",
+    role: "Simulation & Modeling",
+    discipline: "ME" as const,
+    image: null,
+    linkedin: "#",
+  },
+];
+
+const disciplines = [
+  { id: "all" as const, label: "All Team", icon: Users, count: teamMembers.length },
+  {
+    id: "ME" as const,
+    label: "Mechanical",
+    icon: Wrench,
+    count: teamMembers.filter((m) => m.discipline === "ME").length,
+  },
+  {
+    id: "EE" as const,
+    label: "Electrical",
+    icon: Zap,
+    count: teamMembers.filter((m) => m.discipline === "EE").length,
+  },
+  {
+    id: "AP" as const,
+    label: "Physics",
+    icon: Atom,
+    count: teamMembers.filter((m) => m.discipline === "AP").length,
+  },
+];
+
+const disciplineColors = {
+  ME: "badge-me",
+  EE: "badge-ee",
+  AP: "badge-ap",
+};
+
+const TeamMemberCard = ({
+  member,
+  index,
+}: {
+  member: (typeof teamMembers)[0];
+  index: number;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      className="group"
+    >
+      <div className="team-card rounded-2xl p-6 h-full">
+        {/* Avatar */}
+        <div className="relative mb-5">
+          <div className="w-20 h-20 mx-auto relative">
+            {/* Hex border */}
+            <div className="absolute inset-0 hex-avatar bg-gradient-hmr" />
+            <div className="absolute inset-[2px] hex-avatar bg-secondary flex items-center justify-center overflow-hidden">
+              {member.image ? (
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="font-heading text-2xl font-bold text-gradient-hmr">
+                  {member.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Discipline badge */}
+          <div
+            className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-mono-tech tracking-wider text-white ${
+              disciplineColors[member.discipline]
+            }`}
+          >
+            {member.discipline}
+          </div>
+        </div>
+
+        {/* Info */}
+        <div className="text-center">
+          <h3 className="font-heading text-lg font-semibold mb-1 group-hover:text-gradient-hmr transition-colors">
+            {member.name}
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
+
+          {/* LinkedIn */}
+          <a
+            href={member.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-hmr/30 transition-colors text-sm"
+          >
+            <Linkedin className="w-4 h-4" />
+            <span className="font-mono-tech text-xs">Connect</span>
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const TeamSection = () => {
+  const [activeFilter, setActiveFilter] = useState<Discipline>("all");
+
+  const filteredMembers =
+    activeFilter === "all"
+      ? teamMembers
+      : teamMembers.filter((m) => m.discipline === activeFilter);
+
+  return (
+    <section id="team" className="py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/3 left-0 w-96 h-96 rounded-full bg-hmr-light/5 blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-hmr-dark/10 blur-[120px]" />
+      </div>
+
+      {/* Logo watermark */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.02]">
+        <img src="/logo/hmr_logo.svg" alt="" className="w-[600px] h-auto" />
+      </div>
+
+      {/* Wave divider */}
+      <div className="wave-divider" />
+
+      <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-hmr/20 bg-secondary/30 backdrop-blur-sm mb-6">
+            <Users className="w-4 h-4 text-hmr" />
+            <span className="font-mono-tech text-xs tracking-[0.15em] text-hmr-light uppercase">
+              The Engineers
+            </span>
+          </div>
+
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            Meet the <span className="text-gradient-hmr">Team</span>
+          </h2>
+
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+            A multidisciplinary group of TU/e students united by a shared vision
+            of revolutionizing European rail transportation.
+          </p>
+        </motion.div>
+
+        {/* Team stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-8 mb-12"
+        >
+          <div className="text-center">
+            <p className="font-mono-tech text-4xl font-bold text-gradient-hmr">
+              {teamMembers.length}+
+            </p>
+            <p className="font-mono-tech text-xs text-muted-foreground tracking-wider">
+              ENGINEERS
+            </p>
+          </div>
+          <div className="w-px h-12 bg-border" />
+          <div className="text-center">
+            <p className="font-mono-tech text-4xl font-bold text-gradient-hmr">3</p>
+            <p className="font-mono-tech text-xs text-muted-foreground tracking-wider">
+              DISCIPLINES
+            </p>
+          </div>
+          <div className="w-px h-12 bg-border" />
+          <div className="text-center">
+            <p className="font-mono-tech text-4xl font-bold text-gradient-hmr">1</p>
+            <p className="font-mono-tech text-xs text-muted-foreground tracking-wider">
+              MISSION
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Filter tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-2 mb-12"
+        >
+          {disciplines.map((d) => {
+            const isActive = activeFilter === d.id;
+            return (
+              <button
+                key={d.id}
+                onClick={() => setActiveFilter(d.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300 ${
+                  isActive
+                    ? "bg-gradient-hmr border-transparent text-primary-foreground"
+                    : "border-border bg-card/50 text-muted-foreground hover:text-foreground hover:border-hmr/30"
+                }`}
+              >
+                <d.icon className="w-4 h-4" />
+                <span className="font-mono-tech text-sm">{d.label}</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded text-[10px] ${
+                    isActive ? "bg-white/20" : "bg-secondary"
+                  }`}
+                >
+                  {d.count}
+                </span>
+              </button>
+            );
+          })}
+        </motion.div>
+
+        {/* Team grid */}
+        <motion.div
+          layout
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+        >
+          {filteredMembers.map((member, i) => (
+            <TeamMemberCard key={member.name} member={member} index={i} />
+          ))}
+        </motion.div>
+
+        {/* Connection lines decoration */}
+        <div className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
+          <svg
+            className="w-full h-full opacity-10"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            {[...Array(5)].map((_, i) => (
+              <motion.line
+                key={i}
+                x1={10 + i * 20}
+                y1="20"
+                x2={30 + i * 15}
+                y2="80"
+                stroke="hsl(var(--hmr-blue))"
+                strokeWidth="0.1"
+                strokeDasharray="2 4"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 2, delay: i * 0.2 }}
+              />
+            ))}
+          </svg>
+        </div>
+
+        {/* Join CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 text-center"
+        >
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-6 rounded-2xl border border-dashed border-hmr/30 bg-card/30 backdrop-blur-sm">
+            <div className="w-16 h-16 rounded-full border-2 border-dashed border-hmr/50 flex items-center justify-center">
+              <span className="text-3xl">?</span>
+            </div>
+            <div className="text-center sm:text-left">
+              <p className="font-heading text-lg font-semibold mb-1">
+                Your spot is waiting
+              </p>
+              <p className="text-sm text-muted-foreground">
+                We're looking for passionate engineers to join our mission
+              </p>
+            </div>
+            <a
+              href="#join"
+              className="px-6 py-3 rounded-lg bg-gradient-hmr text-primary-foreground font-heading font-semibold text-sm hover:opacity-90 transition-opacity"
+            >
+              Apply Now
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default TeamSection;

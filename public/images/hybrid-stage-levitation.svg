@@ -1,0 +1,26 @@
+<svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#040815" />
+      <stop offset="1" stop-color="#0a2142" />
+    </linearGradient>
+    <linearGradient id="train" x1="90" y1="150" x2="710" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8" />
+      <stop offset="1" stop-color="#22d3ee" />
+    </linearGradient>
+    <radialGradient id="lift" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 275) rotate(90) scale(70 260)">
+      <stop offset="0" stop-color="#a5f3fc" stop-opacity="0.8" />
+      <stop offset="1" stop-color="#0a2142" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)" />
+  <rect x="0" y="370" width="800" height="6" fill="#0f172a" />
+  <rect x="0" y="392" width="800" height="3" fill="#1f2937" />
+  <rect x="90" y="150" width="620" height="70" rx="30" fill="url(#train)" />
+  <rect x="130" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
+  <rect x="305" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
+  <rect x="480" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
+  <rect x="200" y="245" width="400" height="16" rx="8" fill="url(#lift)" />
+  <path d="M90 255H40" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" opacity="0.5" />
+  <path d="M710 255H760" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" opacity="0.5" />
+</svg>
