@@ -68,7 +68,7 @@ const PhaseCard = ({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
       onClick={onClick}
-      className={`group relative rounded-2xl cursor-pointer transition-all duration-500 ${
+      className={`group relative rounded-2xl cursor-pointer transition-all duration-500 min-h-[520px] md:min-h-[560px] ${
         isActive
           ? "bg-card tech-card-glow scale-[1.02]"
           : "bg-card/50 hover:bg-card/80"
@@ -101,11 +101,7 @@ const PhaseCard = ({
           />
 
           {/* Speed overlay */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent flex items-end justify-between p-4 transition-opacity duration-300 ${
-              isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-            }`}
-          >
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent flex items-end justify-between p-4">
             <div>
               <p className="font-mono-tech text-[10px] text-hmr-light tracking-wider mb-1">
                 SPEED RANGE
@@ -156,11 +152,10 @@ const PhaseCard = ({
         <motion.div
           initial={false}
           animate={{
-            height: isActive ? "auto" : 0,
             opacity: isActive ? 1 : 0,
           }}
           transition={{ duration: 0.3 }}
-          className="overflow-hidden"
+          className={`${isActive ? "block" : "invisible"}`}
         >
           <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
             {phase.specs.map((spec) => (
@@ -284,31 +279,7 @@ const HybridMaglevSection = () => {
           ))}
         </div>
 
-        {/* Bottom decoration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 flex justify-center"
-        >
-          <div className="flex items-center gap-6 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full border-2 border-muted-foreground/30" />
-              <span className="font-mono-tech text-xs">Wheels</span>
-            </div>
-            <div className="w-8 h-px bg-gradient-to-r from-muted-foreground/30 via-hmr/50 to-muted-foreground/30" />
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full border-2 border-hmr/50 bg-hmr/20" />
-              <span className="font-mono-tech text-xs">Hybrid</span>
-            </div>
-            <div className="w-8 h-px bg-gradient-to-r from-muted-foreground/30 via-hmr/50 to-muted-foreground/30" />
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-hmr" />
-              <span className="font-mono-tech text-xs">Maglev</span>
-            </div>
-          </div>
-        </motion.div>
+
       </div>
     </section>
   );

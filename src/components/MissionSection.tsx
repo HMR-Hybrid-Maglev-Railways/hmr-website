@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { Target, Activity, CheckCircle2 } from "lucide-react";
+import { Target, Activity, CheckCircle2, Zap, Workflow, FlaskConical, Award, Map } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 const stats = [
@@ -13,26 +13,58 @@ const goals = [
   {
     number: "01",
     title: "Eliminate Friction",
+    icon: Zap,
     description:
-      "Lowering energy consumption and maintenance costs by removing physical contact at speed.",
+      "Design and implement a magnetic levitation system that removes physical wheel-rail contact at high speeds, dramatically reducing rolling resistance and energy consumption while minimizing infrastructure wear.",
     status: "active",
-    progress: 65,
+    details: [
+      "Develop electromagnetic suspension architecture",
+      "Optimize power consumption at cruising speed",
+      "Minimize infrastructure wear and tear"
+    ],
+    outcome: "Energy-efficient propulsion system with 90% reduction in mechanical friction"
   },
   {
     number: "02",
     title: "Seamless Integration",
+    icon: Workflow,
     description:
-      "Integrating with current European rail infrastructure to minimize land use and construction time.",
+      "Engineer a hybrid system that works with existing European rail infrastructure, enabling gradual deployment without requiring complete track replacement or massive capital investment.",
     status: "active",
-    progress: 40,
+    details: [
+      "Retrofit solution for existing rail corridors",
+      "Compatible with current signaling systems",
+      "Phased deployment strategy for infrastructure"
+    ],
+    outcome: "Upgrade solution requiring minimal modifications to existing tracks"
   },
   {
     number: "03",
     title: "Prove Viability",
+    icon: FlaskConical,
     description:
-      "Rigorous engineering and prototyping at TU/e to demonstrate retrofittable Maglev solutions.",
+      "Conduct rigorous engineering research and build functional prototypes at TU/e to validate the technical feasibility, safety, and performance of retrofittable maglev technology.",
     status: "active",
-    progress: 25,
+    details: [
+      "Build and test functional prototype vehicle",
+      "Conduct track compatibility testing",
+      "Validate safety standards and regulations"
+    ],
+    outcome: "Demonstrator vehicle proving technical feasibility at TU/e facilities"
+  },
+  {
+    number: "04",
+    title: "Railway Network Analysis Tool",
+    icon: Map,
+    description:
+      "Develop an interactive web-based platform that enables stakeholders to investigate costs, benefits, and deployment feasibility of hybrid maglev technology across various European rail network configurations.",
+    status: "active",
+    details: [
+      "Interactive cost and benefit modeling system",
+      "Route optimization and feasibility analysis",
+      "Visual exploration of deployment scenarios"
+    ],
+    outcome: "Web platform for exploring hybrid maglev deployment across Europe"
   },
 ];
 
@@ -149,85 +181,81 @@ const GoalCard = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const Icon = goal.icon;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.15 }}
-      className="relative group"
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative group h-full"
     >
-      {/* Connection line to next */}
-      {index < goals.length - 1 && (
-        <div className="absolute left-6 top-16 bottom-0 w-px">
-          <motion.div
-            className="w-full h-full bg-gradient-to-b from-hmr/50 to-transparent"
-            initial={{ scaleY: 0 }}
-            animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 0.8, delay: index * 0.2 + 0.3 }}
-            style={{ transformOrigin: "top" }}
-          />
-        </div>
-      )}
+      <div className="h-full rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 p-8 group-hover:border-hmr/30 group-hover:bg-card/70 transition-all duration-300 card-lift">
+        {/* Header with Icon and Status */}
+        <div className="flex items-center justify-between mb-4">
+          {/* Icon */}
+          <div className="relative w-14 h-14">
+            <div className="absolute inset-0 rounded-xl bg-gradient-hmr opacity-20 blur-md" />
+            <div className="relative w-full h-full rounded-xl bg-gradient-hmr flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <Icon className="w-7 h-7 text-primary-foreground" />
+            </div>
+          </div>
 
-      <div className="flex gap-6 items-start">
-        {/* Number node */}
-        <div className="relative shrink-0">
-          <div className="w-12 h-12 rounded-xl bg-gradient-hmr flex items-center justify-center">
-            <span className="font-mono-tech text-lg font-bold text-primary-foreground">
-              {goal.number}
+          {/* Status indicator */}
+          <div className="flex items-center gap-2">
+            <span
+              className={`w-2 h-2 rounded-full ${
+                goal.status === "active" ? "bg-hmr animate-pulse" : "bg-muted"
+              }`}
+            />
+            <span className="font-mono-tech text-[10px] tracking-[0.15em] text-muted-foreground uppercase">
+              {goal.status === "active" ? "In Progress" : "Pending"}
             </span>
           </div>
-          {/* Pulse ring */}
-          <motion.div
-            className="absolute inset-0 rounded-xl border-2 border-hmr"
-            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-          />
         </div>
 
-        {/* Content */}
-        <div className="flex-1 pb-8">
-          <div className="rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 p-6 group-hover:border-hmr/30 transition-all duration-300">
-            {/* Status badge */}
-            <div className="flex items-center gap-2 mb-3">
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  goal.status === "active" ? "bg-hmr animate-pulse" : "bg-muted"
-                }`}
-              />
-              <span className="font-mono-tech text-[10px] tracking-[0.15em] text-muted-foreground uppercase">
-                {goal.status === "active" ? "In Progress" : "Pending"}
-              </span>
-            </div>
+        <h3 className="font-heading text-2xl font-semibold mb-3 group-hover:text-gradient-hmr transition-colors">
+          {goal.title}
+        </h3>
 
-            <h3 className="font-heading text-xl font-semibold mb-2 group-hover:text-gradient-hmr transition-colors">
-              {goal.title}
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              {goal.description}
-            </p>
+        <p className="text-muted-foreground leading-relaxed mb-6">
+          {goal.description}
+        </p>
 
-            {/* Progress bar */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="font-mono-tech text-muted-foreground">
-                  Progress
-                </span>
-                <span className="font-mono-tech text-hmr-light">
-                  {goal.progress}%
-                </span>
-              </div>
-              <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-hmr rounded-full"
-                  initial={{ width: 0 }}
-                  animate={isInView ? { width: `${goal.progress}%` } : {}}
-                  transition={{ duration: 1, delay: index * 0.2 + 0.5 }}
-                />
-              </div>
+        {/* Key Focus Areas */}
+        <div className="mb-6">
+          <h4 className="font-mono-tech text-xs tracking-[0.15em] text-hmr-light uppercase mb-3">
+            Key Focus Areas
+          </h4>
+          <ul className="space-y-2">
+            {goal.details.map((detail, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ delay: index * 0.1 + i * 0.1 + 0.3 }}
+                className="flex items-start gap-3 text-sm text-foreground/80"
+              >
+                <CheckCircle2 className="w-4 h-4 text-hmr shrink-0 mt-0.5" />
+                <span>{detail}</span>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Expected Outcome */}
+        <div className="rounded-lg bg-secondary/50 border border-hmr/20 p-4">
+          <div className="flex items-start gap-3">
+            <Target className="w-5 h-5 text-hmr shrink-0 mt-0.5" />
+            <div>
+              <p className="font-mono-tech text-[10px] tracking-[0.15em] text-hmr-light uppercase mb-1">
+                Expected Outcome
+              </p>
+              <p className="text-sm text-foreground/90 leading-relaxed">
+                {goal.outcome}
+              </p>
             </div>
           </div>
         </div>
@@ -286,114 +314,24 @@ const MissionSection = () => {
         </div>
 
         {/* Goals section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left: Goals timeline */}
-          <div className="space-y-0">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 mb-8"
-            >
-              <CheckCircle2 className="w-5 h-5 text-hmr" />
-              <h3 className="font-heading text-2xl font-semibold">
-                Engineering Objectives
-              </h3>
-            </motion.div>
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <CheckCircle2 className="w-5 h-5 text-hmr" />
+            <h3 className="font-heading text-2xl font-semibold">
+              Engineering Objectives
+            </h3>
+          </motion.div>
 
+          <div className="grid md:grid-cols-2 gap-6">
             {goals.map((goal, i) => (
               <GoalCard key={goal.number} goal={goal} index={i} />
             ))}
           </div>
-
-          {/* Right: System status panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="sticky top-24"
-          >
-            <div className="rounded-2xl bg-card border border-border overflow-hidden">
-              {/* Header */}
-              <div className="px-6 py-4 border-b border-border bg-secondary/30 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                    <span className="w-3 h-3 rounded-full bg-green-500/80" />
-                  </div>
-                  <span className="font-mono-tech text-xs text-muted-foreground">
-                    system_status.hmr
-                  </span>
-                </div>
-                <span className="w-2 h-2 rounded-full bg-hmr animate-pulse" />
-              </div>
-
-              {/* Content */}
-              <div className="p-6 font-mono-tech text-sm">
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">project:</span>
-                    <span className="text-hmr-light">hybrid_maglev_v2</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">team_size:</span>
-                    <span className="text-foreground">15+</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">disciplines:</span>
-                    <span className="text-foreground">3</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">location:</span>
-                    <span className="text-foreground">TU/e, Eindhoven</span>
-                  </div>
-                  <div className="h-px bg-border my-4" />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">status:</span>
-                    <span className="text-green-400">OPERATIONAL</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">next_milestone:</span>
-                    <span className="text-foreground">Prototype_v1</span>
-                  </div>
-                </div>
-
-                {/* Animated cursor */}
-                <div className="mt-6 flex items-center gap-2">
-                  <span className="text-hmr">→</span>
-                  <span className="text-muted-foreground">
-                    Seeking new team members
-                  </span>
-                  <span className="typewriter-cursor" />
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative elements */}
-            <div className="mt-6 flex justify-center">
-              <div className="flex items-center gap-4 px-4 py-2 rounded-full border border-border/50 bg-card/30">
-                <span className="font-mono-tech text-xs text-muted-foreground">
-                  LIVE DATA FEED
-                </span>
-                <div className="flex gap-1">
-                  {[...Array(4)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="w-1 h-4 bg-hmr rounded-full"
-                      animate={{ scaleY: [0.3, 1, 0.3] }}
-                      transition={{
-                        duration: 0.8,
-                        repeat: Infinity,
-                        delay: i * 0.15,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>

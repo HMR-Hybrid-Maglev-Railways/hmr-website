@@ -110,21 +110,20 @@ const VisionCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="group relative h-[380px] perspective-1000"
+      className="group relative h-[380px]"
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}
     >
-      {/* Card container with 3D flip */}
-      <motion.div
-        className="relative w-full h-full"
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        style={{ transformStyle: "preserve-3d" }}
-      >
+      {/* Card container */}
+      <div className="relative w-full h-full">
         {/* Front face */}
-        <div
+        <motion.div
           className="absolute inset-0 rounded-2xl bg-card p-8 holographic card-lift border border-border/50"
-          style={{ backfaceVisibility: "hidden" }}
+          animate={{
+            opacity: isFlipped ? 0 : 1,
+            y: isFlipped ? -10 : 0,
+          }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           {/* Icon */}
           <div className="relative w-14 h-14 mb-6">
@@ -147,12 +146,18 @@ const VisionCard = ({
             <span className="font-mono-tech text-xs">Hover for details</span>
             <ArrowRight className="w-4 h-4" />
           </div>
-        </div>
+        </motion.div>
 
         {/* Back face */}
-        <div
+        <motion.div
           className="absolute inset-0 rounded-2xl bg-gradient-to-br from-secondary via-card to-secondary p-8 border border-hmr/30"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{
+            opacity: isFlipped ? 1 : 0,
+            y: isFlipped ? 0 : 10,
+          }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          style={{ pointerEvents: isFlipped ? "auto" : "none" }}
         >
           {/* Stat highlight */}
           <div className="mb-6">
@@ -169,20 +174,8 @@ const VisionCard = ({
 
           {/* Detailed description */}
           <p className="text-foreground leading-relaxed mb-6">{card.detail}</p>
-
-          {/* Bottom decoration */}
-          <div className="absolute bottom-8 left-8 right-8">
-            <div className="h-1 bg-secondary rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-gradient-hmr"
-                initial={{ width: "0%" }}
-                animate={{ width: isFlipped ? "100%" : "0%" }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              />
-            </div>
-          </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </motion.div>
   );
 };
