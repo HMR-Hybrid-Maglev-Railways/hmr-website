@@ -1,12 +1,84 @@
-import { motion, useInView } from "framer-motion";
-import { Target, Activity, CheckCircle2, Zap, Workflow, FlaskConical, Award, Map } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Target, CheckCircle2, Zap, Workflow, FlaskConical, Map, Plane, Bus, Train, Gauge, Users, Leaf, Clock, TrendingUp, TrendingDown } from "lucide-react";
 
-const stats = [
-  { value: 0, label: "Rolling Resistance", suffix: "", prefix: "" },
-  { value: 95, label: "Noise Reduction", suffix: "%", prefix: "" },
-  { value: 90, label: "Less Wear", suffix: "%", prefix: "" },
-  { value: 1000, label: "Target Speed", suffix: "", prefix: "", unit: "km/h" },
+type TransportMode = "Plane" | "Bus" | "Maglev";
+
+interface MetricData {
+  id: string;
+  metric: string;
+  shortName: string;
+  unit: string;
+  icon: typeof Gauge;
+  values: Record<TransportMode, number>;
+  inverted?: boolean;
+}
+
+const metricsData: MetricData[] = [
+  {
+    id: "speed",
+    metric: "Average Speed",
+    shortName: "Speed",
+    unit: "km/h",
+    icon: Gauge,
+    values: { Plane: 800, Bus: 90, Maglev: 600 },
+  },
+  {
+    id: "capacity",
+    metric: "Capacity",
+    shortName: "Capacity",
+    unit: "pax",
+    icon: Users,
+    values: { Plane: 180, Bus: 50, Maglev: 400 },
+  },
+  {
+    id: "emissions",
+    metric: "CO₂ Emissions",
+    shortName: "CO₂",
+    unit: "g/pax/km",
+    icon: Leaf,
+    values: { Plane: 285, Bus: 68, Maglev: 14 },
+    inverted: true,
+  },
+  {
+    id: "boarding",
+    metric: "Boarding Time",
+    shortName: "Boarding",
+    unit: "min",
+    icon: Clock,
+    values: { Plane: 120, Bus: 5, Maglev: 10 },
+    inverted: true,
+  },
+];
+
+const transportModes: {
+  name: TransportMode;
+  icon: typeof Train;
+  color: string;
+  bgColor: string;
+  lightColor: string;
+}[] = [
+  {
+    name: "Maglev",
+    icon: Train,
+    color: "hsl(205, 90%, 60%)",
+    bgColor: "bg-[hsl(205,90%,60%)]",
+    lightColor: "hsl(205, 90%, 70%)"
+  },
+  {
+    name: "Plane",
+    icon: Plane,
+    color: "rgb(245, 158, 11)",
+    bgColor: "bg-amber-500",
+    lightColor: "rgb(251, 191, 36)"
+  },
+  {
+    name: "Bus",
+    icon: Bus,
+    color: "rgb(107, 114, 128)",
+    bgColor: "bg-gray-500",
+    lightColor: "rgb(156, 163, 175)"
+  },
 ];
 
 const goals = [
@@ -68,105 +140,548 @@ const goals = [
   },
 ];
 
-const AnimatedStat = ({
-  stat,
-  index,
-}: {
-  stat: (typeof stats)[0];
-  index: number;
-}) => {
-  const [count, setCount] = useState(0);
+// Helper function to normalize values for radar chart (0-100 scale)
+const normalizeValue = (value: number, metric: MetricData) => {
+  const values = Object.values(metric.values);
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+
+  if (metric.inverted) {
+    // For inverted metrics, lower is better, so invert the scale
+    return ((max - value) / (max - min)) * 100;
+  }
+  return (value / max) * 100;
+};
+
+// Helper to get winner for a metric
+const getWinner = (metric: MetricData): TransportMode => {
+  const entries = Object.entries(metric.values) as [TransportMode, number][];
+  if (metric.inverted) {
+    return entries.reduce((min, curr) => curr[1] < min[1] ? curr : min)[0];
+  }
+  return entries.reduce((max, curr) => curr[1] > max[1] ? curr : max)[0];
+};
+
+const InteractiveComparison = () => {
+  const [activeMode, setActiveMode] = useState<TransportMode | null>(null);
+  const [expandedMetric, setExpandedMetric] = useState<string | null>(null);
+  const [visibleModes, setVisibleModes] = useState<Set<TransportMode>>(
+    new Set(["Maglev", "Plane", "Bus"])
+  );
+  const [hoveredPoint, setHoveredPoint] = useState<{
+    mode: TransportMode;
+    metricId: string;
+    x: number;
+    y: number;
+  } | null>(null);
+  const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
+  const [hoveredPolygon, setHoveredPolygon] = useState<TransportMode | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  useEffect(() => {
-    if (!isInView) return;
+  const toggleMode = (mode: TransportMode) => {
+    const newVisible = new Set(visibleModes);
+    if (newVisible.has(mode)) {
+      if (newVisible.size > 1) newVisible.delete(mode);
+    } else {
+      newVisible.add(mode);
+    }
+    setVisibleModes(newVisible);
+  };
 
-    const duration = 2000;
-    const steps = 50;
-    const increment = stat.value / steps;
-    let current = 0;
+  // SVG configuration
+  const SVG_SIZE = 360;
+  const CENTER = SVG_SIZE / 2; // 180
+  const MAX_RADIUS = 130;
+  const LABEL_RADIUS = 160;
 
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= stat.value) {
-        setCount(stat.value);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
-      }
-    }, duration / steps);
+  // Generate radar chart points
+  const getRadarPoints = (mode: TransportMode) => {
+    return metricsData.map((metric, i) => {
+      const angle = (i * 2 * Math.PI) / metricsData.length - Math.PI / 2;
+      const value = normalizeValue(metric.values[mode], metric);
+      const radius = (value / 100) * MAX_RADIUS;
+      return {
+        x: CENTER + radius * Math.cos(angle),
+        y: CENTER + radius * Math.sin(angle),
+        angle,
+        metric,
+      };
+    });
+  };
 
-    return () => clearInterval(timer);
-  }, [isInView, stat.value]);
+  const getRadarPath = (mode: TransportMode) => {
+    const points = getRadarPoints(mode);
+    return points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + ' Z';
+  };
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative group"
+      transition={{ duration: 0.6 }}
+      className="rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 p-8 md:p-10"
     >
-      <div className="rounded-2xl bg-card/50 backdrop-blur-sm border border-border/50 p-6 text-center hover:border-hmr/30 transition-all duration-300">
-        {/* Gauge visualization */}
-        <div className="relative w-20 h-20 mx-auto mb-4">
-          <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-            {/* Background circle */}
-            <circle
-              cx="18"
-              cy="18"
-              r="15"
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth="3"
-            />
-            {/* Progress arc */}
-            <motion.circle
-              cx="18"
-              cy="18"
-              r="15"
-              fill="none"
-              stroke="url(#gaugeGradient)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeDasharray={`${(count / (stat.value || 1)) * 94.2} 94.2`}
-              initial={{ strokeDasharray: "0 94.2" }}
-              animate={
-                isInView
-                  ? { strokeDasharray: `${(stat.value > 0 ? 94.2 : 0)} 94.2` }
-                  : {}
-              }
-              transition={{ duration: 2, ease: "easeOut" }}
-            />
-            <defs>
-              <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="hsl(var(--hmr-blue-light))" />
-                <stop offset="100%" stopColor="hsl(var(--hmr-blue-dark))" />
-              </linearGradient>
-            </defs>
-          </svg>
-          {/* Center value */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Activity className="w-6 h-6 text-hmr" />
+      <div className="grid lg:grid-cols-[1fr,1.2fr] gap-8 items-start">
+        {/* Left: Radar Chart */}
+        <div className="space-y-6">
+          <div className="text-center lg:text-left">
+            <h3 className="font-heading text-xl font-semibold mb-2">
+              Transport Mode Comparison
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Click transport modes to toggle visibility
+            </p>
+          </div>
+
+          {/* Radar Chart */}
+          <div className="relative w-full max-w-sm mx-auto aspect-square">
+            <svg viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} className="w-full h-full">
+              {/* Grid circles */}
+              {[20, 40, 60, 80, 100].map((percent) => (
+                <g key={percent}>
+                  <circle
+                    cx={CENTER}
+                    cy={CENTER}
+                    r={(percent / 100) * MAX_RADIUS}
+                    fill="none"
+                    stroke="hsl(var(--border))"
+                    strokeWidth="1"
+                    opacity={0.3}
+                  />
+                  {/* Percentage label */}
+                  <text
+                    x={CENTER + 5}
+                    y={CENTER - (percent / 100) * MAX_RADIUS + 5}
+                    className="fill-muted-foreground font-mono-tech text-[8px]"
+                    opacity={0.5}
+                  >
+                    {percent}%
+                  </text>
+                </g>
+              ))}
+
+              {/* Grid lines to each metric */}
+              {metricsData.map((_, i) => {
+                const angle = (i * 2 * Math.PI) / metricsData.length - Math.PI / 2;
+                const x = CENTER + MAX_RADIUS * Math.cos(angle);
+                const y = CENTER + MAX_RADIUS * Math.sin(angle);
+                return (
+                  <line
+                    key={i}
+                    x1={CENTER}
+                    y1={CENTER}
+                    x2={x}
+                    y2={y}
+                    stroke="hsl(var(--border))"
+                    strokeWidth="1"
+                    opacity={0.3}
+                  />
+                );
+              })}
+
+              {/* Data polygons */}
+              {transportModes.map((mode) => {
+                if (!visibleModes.has(mode.name)) return null;
+                const isActive = activeMode === mode.name || activeMode === null;
+                const isPolygonHovered = hoveredPolygon === mode.name;
+
+                return (
+                  <motion.g key={mode.name}>
+                    {/* Polygon area */}
+                    <motion.path
+                      d={getRadarPath(mode.name)}
+                      fill={mode.color}
+                      fillOpacity={isPolygonHovered ? 0.25 : isActive ? 0.15 : 0.05}
+                      stroke={mode.color}
+                      strokeWidth={isPolygonHovered ? 3 : 2}
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={
+                        isInView
+                          ? { pathLength: 1, opacity: 1 }
+                          : { pathLength: 0, opacity: 0 }
+                      }
+                      transition={{ duration: 1, delay: 0.2 }}
+                      style={{
+                        opacity: isActive ? 1 : 0.3,
+                        cursor: 'pointer',
+                        filter: isPolygonHovered ? `drop-shadow(0 0 8px ${mode.color})` : 'none'
+                      }}
+                      onMouseEnter={() => setHoveredPolygon(mode.name)}
+                      onMouseLeave={() => setHoveredPolygon(null)}
+                    />
+                    {/* Data points */}
+                    {getRadarPoints(mode.name).map((point, i) => {
+                      const metric = metricsData[i];
+                      const isPointHovered =
+                        hoveredPoint?.mode === mode.name &&
+                        hoveredPoint?.metricId === metric.id;
+                      const isMetricHighlighted = hoveredMetric === metric.id;
+
+                      return (
+                        <g key={i}>
+                          {/* Invisible larger hit area for easier hovering */}
+                          <circle
+                            cx={point.x}
+                            cy={point.y}
+                            r="12"
+                            fill="transparent"
+                            style={{ cursor: 'pointer' }}
+                            onMouseEnter={(e) => {
+                              const rect = e.currentTarget.getBoundingClientRect();
+                              setHoveredPoint({
+                                mode: mode.name,
+                                metricId: metric.id,
+                                x: rect.left + rect.width / 2,
+                                y: rect.top,
+                              });
+                            }}
+                            onMouseLeave={() => setHoveredPoint(null)}
+                          />
+                          {/* Visible point */}
+                          <motion.circle
+                            cx={point.x}
+                            cy={point.y}
+                            r={isPointHovered || isMetricHighlighted ? 6 : 4}
+                            fill={mode.color}
+                            initial={{ scale: 0 }}
+                            animate={isInView ? { scale: 1 } : { scale: 0 }}
+                            transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
+                            style={{
+                              opacity: isActive ? 1 : 0.3,
+                              filter: isPointHovered ? `drop-shadow(0 0 6px ${mode.lightColor})` : 'none',
+                              pointerEvents: 'none'
+                            }}
+                          />
+                          {/* Pulsing ring on hover */}
+                          {isPointHovered && (
+                            <motion.circle
+                              cx={point.x}
+                              cy={point.y}
+                              r="8"
+                              fill="none"
+                              stroke={mode.color}
+                              strokeWidth="2"
+                              initial={{ scale: 0.8, opacity: 0.8 }}
+                              animate={{ scale: 1.5, opacity: 0 }}
+                              transition={{ duration: 1, repeat: Infinity }}
+                            />
+                          )}
+                        </g>
+                      );
+                    })}
+                  </motion.g>
+                );
+              })}
+
+              {/* Metric labels */}
+              {metricsData.map((metric, i) => {
+                const angle = (i * 2 * Math.PI) / metricsData.length - Math.PI / 2;
+                const x = CENTER + LABEL_RADIUS * Math.cos(angle);
+                const y = CENTER + LABEL_RADIUS * Math.sin(angle);
+                const Icon = metric.icon;
+                const isHighlighted = hoveredMetric === metric.id;
+
+                return (
+                  <g key={metric.id}>
+                    <foreignObject
+                      x={x - 24}
+                      y={y - 24}
+                      width="48"
+                      height="48"
+                      className="overflow-visible"
+                    >
+                      <div className="flex items-center justify-center w-full h-full">
+                        <motion.div
+                          className={`rounded-lg bg-card/90 backdrop-blur-sm border p-2.5 transition-all cursor-pointer group ${
+                            isHighlighted
+                              ? 'border-hmr shadow-lg shadow-hmr/30'
+                              : 'border-border/50 hover:border-hmr/50'
+                          }`}
+                          onMouseEnter={() => setHoveredMetric(metric.id)}
+                          onMouseLeave={() => setHoveredMetric(null)}
+                          animate={isHighlighted ? { scale: 1.1 } : { scale: 1 }}
+                        >
+                          <Icon className="w-5 h-5 text-hmr group-hover:scale-110 transition-transform" />
+                        </motion.div>
+                      </div>
+                    </foreignObject>
+                  </g>
+                );
+              })}
+
+              {/* Cross-metric comparison lines when metric is highlighted */}
+              {hoveredMetric && transportModes.map((mode) => {
+                if (!visibleModes.has(mode.name)) return null;
+                const points = getRadarPoints(mode.name);
+                const metricIndex = metricsData.findIndex(m => m.id === hoveredMetric);
+                if (metricIndex === -1) return null;
+                const point = points[metricIndex];
+                const metric = metricsData[metricIndex];
+
+                return (
+                  <g key={`line-${mode.name}`}>
+                    <motion.line
+                      x1={CENTER}
+                      y1={CENTER}
+                      x2={point.x}
+                      y2={point.y}
+                      stroke={mode.color}
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.3 }}
+                      opacity={0.6}
+                    />
+                    <motion.text
+                      x={point.x + (point.x > CENTER ? 8 : -8)}
+                      y={point.y}
+                      className="font-mono-tech text-[10px] font-semibold"
+                      fill={mode.color}
+                      textAnchor={point.x > CENTER ? 'start' : 'end'}
+                      dominantBaseline="middle"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
+                      {metric.values[mode.name]}
+                    </motion.text>
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Tooltip for hovered points */}
+            <AnimatePresence>
+              {hoveredPoint && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-1/2 -translate-x-1/2 bottom-4 z-10 pointer-events-none"
+                >
+                  <div className="rounded-lg bg-card/95 backdrop-blur-sm border border-hmr/30 p-3 shadow-xl shadow-hmr/20">
+                    <div className="flex items-center gap-2 mb-1">
+                      {(() => {
+                        const mode = transportModes.find(m => m.name === hoveredPoint.mode)!;
+                        const Icon = mode.icon;
+                        return (
+                          <>
+                            <Icon className="w-4 h-4" style={{ color: mode.color }} />
+                            <span className="font-mono-tech text-sm font-semibold" style={{ color: mode.color }}>
+                              {hoveredPoint.mode}
+                            </span>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      {(() => {
+                        const metric = metricsData.find(m => m.id === hoveredPoint.metricId)!;
+                        const MetricIcon = metric.icon;
+                        const value = metric.values[hoveredPoint.mode];
+                        return (
+                          <>
+                            <MetricIcon className="w-3 h-3 text-hmr" />
+                            <span className="font-heading text-xs text-muted-foreground">
+                              {metric.metric}:
+                            </span>
+                            <span className="font-mono-tech text-lg font-bold text-gradient-hmr">
+                              {value}
+                            </span>
+                            <span className="font-mono-tech text-xs text-muted-foreground">
+                              {metric.unit}
+                            </span>
+                          </>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Polygon hover info */}
+            <AnimatePresence>
+              {hoveredPolygon && !hoveredPoint && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute left-1/2 -translate-x-1/2 bottom-4 z-10 pointer-events-none"
+                >
+                  <div className="rounded-lg bg-card/95 backdrop-blur-sm border border-hmr/30 p-3 shadow-xl shadow-hmr/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      {(() => {
+                        const mode = transportModes.find(m => m.name === hoveredPolygon)!;
+                        const Icon = mode.icon;
+                        return (
+                          <>
+                            <Icon className="w-4 h-4" style={{ color: mode.color }} />
+                            <span className="font-mono-tech text-sm font-semibold" style={{ color: mode.color }}>
+                              {hoveredPolygon}
+                            </span>
+                          </>
+                        );
+                      })()}
+                    </div>
+                    <div className="space-y-1">
+                      {metricsData.map(metric => {
+                        const MetricIcon = metric.icon;
+                        const value = metric.values[hoveredPolygon];
+                        return (
+                          <div key={metric.id} className="flex items-center gap-2 text-xs">
+                            <MetricIcon className="w-3 h-3 text-hmr" />
+                            <span className="text-muted-foreground min-w-[60px]">{metric.shortName}:</span>
+                            <span className="font-mono-tech font-semibold text-foreground">{value}</span>
+                            <span className="text-muted-foreground text-[10px]">{metric.unit}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Transport mode toggles */}
+          <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+            {transportModes.map((mode) => {
+              const Icon = mode.icon;
+              const isVisible = visibleModes.has(mode.name);
+
+              return (
+                <motion.button
+                  key={mode.name}
+                  onClick={() => toggleMode(mode.name)}
+                  onMouseEnter={() => setActiveMode(mode.name)}
+                  onMouseLeave={() => setActiveMode(null)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`
+                    flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all
+                    ${isVisible
+                      ? 'border-current bg-card/50'
+                      : 'border-border/30 bg-secondary/30 opacity-50'
+                    }
+                  `}
+                  style={{
+                    borderColor: isVisible ? mode.color : undefined,
+                    color: isVisible ? mode.color : undefined
+                  }}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="font-mono-tech text-sm font-medium">
+                    {mode.name}
+                  </span>
+                </motion.button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Value */}
-        <p className="font-mono-tech text-3xl md:text-4xl font-bold text-gradient-hmr mb-1">
-          {stat.prefix}
-          {count}
-          {stat.suffix}
-          {stat.unit && (
-            <span className="text-base ml-1 text-muted-foreground">
-              {stat.unit}
-            </span>
-          )}
-        </p>
-        <p className="font-mono-tech text-xs text-muted-foreground uppercase tracking-wider">
-          {stat.label}
-        </p>
+        {/* Right: Metric Cards */}
+        <div className="space-y-3">
+          {metricsData.map((metric, index) => {
+            const Icon = metric.icon;
+            const winner = getWinner(metric);
+            const winnerMode = transportModes.find(m => m.name === winner)!;
+            const isExpanded = expandedMetric === metric.id;
+            const maxValue = Math.max(...Object.values(metric.values));
+
+            return (
+              <motion.div
+                key={metric.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                onMouseEnter={() => setExpandedMetric(metric.id)}
+                onMouseLeave={() => setExpandedMetric(null)}
+                onClick={() => setExpandedMetric(isExpanded ? null : metric.id)}
+                className="rounded-xl bg-secondary/30 border border-border/50 p-4 cursor-pointer hover:border-hmr/30 transition-all"
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-hmr/10 border border-hmr/20 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-hmr" />
+                    </div>
+                    <div>
+                      <h4 className="font-heading text-sm font-semibold">
+                        {metric.metric}
+                      </h4>
+                      <p className="font-mono-tech text-xs text-muted-foreground">
+                        {metric.unit}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Winner badge */}
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-tech"
+                    style={{ backgroundColor: `${winnerMode.color}20`, color: winnerMode.color }}
+                  >
+                    {React.createElement(winnerMode.icon, { className: "w-3 h-3" })}
+                    <span className="font-semibold">{metric.values[winner]}</span>
+                  </div>
+                </div>
+
+                {/* Comparison bars */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-2 overflow-hidden"
+                    >
+                      {transportModes.map((mode) => {
+                        const value = metric.values[mode.name];
+                        const percentage = metric.inverted
+                          ? ((maxValue - value) / maxValue) * 100
+                          : (value / maxValue) * 100;
+                        const isWinner = mode.name === winner;
+
+                        return (
+                          <div key={mode.name} className="flex items-center gap-2">
+                            <div className="w-16 flex items-center gap-1.5">
+                              {React.createElement(mode.icon, { className: "w-3 h-3", style: { color: mode.color } })}
+                              <span className="font-mono-tech text-xs" style={{ color: mode.color }}>
+                                {mode.name}
+                              </span>
+                            </div>
+                            <div className="flex-1 h-6 bg-secondary/50 rounded overflow-hidden relative">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${percentage}%` }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="h-full relative"
+                                style={{ backgroundColor: mode.color }}
+                              >
+                                {isWinner && (
+                                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/20" />
+                                )}
+                              </motion.div>
+                            </div>
+                            <span className="w-12 text-right font-mono-tech text-xs font-semibold">
+                              {value}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </motion.div>
   );
@@ -306,11 +821,9 @@ const MissionSection = () => {
           </p>
         </motion.div>
 
-        {/* Stats dashboard */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-20">
-          {stats.map((stat, i) => (
-            <AnimatedStat key={stat.label} stat={stat} index={i} />
-          ))}
+        {/* Interactive Comparison Dashboard */}
+        <div className="mb-20">
+          <InteractiveComparison />
         </div>
 
         {/* Goals section */}
