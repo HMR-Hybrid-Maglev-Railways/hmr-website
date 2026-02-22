@@ -10,7 +10,7 @@ const SpeedCounter = () => {
   useEffect(() => {
     if (!isInView) return;
 
-    const duration = 2500;
+    const duration = 1500;
     const target = 1000;
     const steps = 60;
     const increment = target / steps;
@@ -123,33 +123,12 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        {/* Logo badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-center mb-8"
-        >
-          <div className="relative">
-            <motion.img
-              src="/logo/hmr_logo.svg"
-              alt="HMR Logo"
-              className="h-20 md:h-28 w-auto"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            />
-            {/* Glow effect behind logo */}
-            <div className="absolute inset-0 blur-2xl bg-hmr/20 -z-10 scale-150" />
-          </div>
-        </motion.div>
-
         {/* Subtitle */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mb-6"
+          className="mb-8"
         >
           <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-hmr/20 bg-secondary/30 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-hmr animate-pulse" />
@@ -166,7 +145,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-6"
         >
-          <TypewriterText text="Engineering the" delay={800} />
+          Engineering the
           <br />
           <span className="text-gradient-hmr">Future of Rail</span>
         </motion.h1>
@@ -178,8 +157,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Bridging historical infrastructure with futuristic propulsion.
-          We're making trains fly—fractions above the tracks you already know.
+          Hybrid Maglev Railways is a TU/e student team focusing on bringing
+          fast, sustainable, and implementable maglev technology to EU rails
         </motion.p>
 
         {/* Speed counter */}
@@ -253,31 +232,6 @@ const HeroSection = () => {
           />
         </motion.div>
       </motion.button>
-
-      {/* Corner decorations */}
-      <div className="absolute top-24 left-8 hidden lg:block">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2 }}
-          className="flex items-center gap-3 text-muted-foreground"
-        >
-          <div className="w-12 h-px bg-gradient-to-r from-hmr/50 to-transparent" />
-          <span className="font-mono-tech text-[10px] tracking-wider">EST. 2024</span>
-        </motion.div>
-      </div>
-
-      <div className="absolute top-24 right-8 hidden lg:block">
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2 }}
-          className="flex items-center gap-3 text-muted-foreground"
-        >
-          <span className="font-mono-tech text-[10px] tracking-wider">EINDHOVEN, NL</span>
-          <div className="w-12 h-px bg-gradient-to-l from-hmr/50 to-transparent" />
-        </motion.div>
-      </div>
     </section>
   );
 };

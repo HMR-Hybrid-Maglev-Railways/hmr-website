@@ -1,26 +1,90 @@
 <svg width="800" height="480" viewBox="0 0 800 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="480" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#040815" />
-      <stop offset="1" stop-color="#0a2142" />
-    </linearGradient>
-    <linearGradient id="train" x1="90" y1="150" x2="710" y2="230" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#38bdf8" />
-      <stop offset="1" stop-color="#22d3ee" />
-    </linearGradient>
-    <radialGradient id="lift" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 275) rotate(90) scale(70 260)">
-      <stop offset="0" stop-color="#a5f3fc" stop-opacity="0.8" />
-      <stop offset="1" stop-color="#0a2142" stop-opacity="0" />
-    </radialGradient>
-  </defs>
-  <rect width="800" height="480" fill="url(#bg)" />
-  <rect x="0" y="370" width="800" height="6" fill="#0f172a" />
-  <rect x="0" y="392" width="800" height="3" fill="#1f2937" />
-  <rect x="90" y="150" width="620" height="70" rx="30" fill="url(#train)" />
-  <rect x="130" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
-  <rect x="305" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
-  <rect x="480" y="170" width="150" height="18" rx="9" fill="#0b1c33" />
-  <rect x="200" y="245" width="400" height="16" rx="8" fill="url(#lift)" />
-  <path d="M90 255H40" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" opacity="0.5" />
-  <path d="M710 255H760" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" opacity="0.5" />
+  <!-- Background -->
+  <rect width="800" height="480" fill="#0a1628"/>
+
+  <!-- Ground -->
+  <rect x="0" y="320" width="800" height="160" fill="#1e293b"/>
+
+  <!-- Railway bed -->
+  <rect x="0" y="300" width="800" height="24" fill="#334155"/>
+
+  <!-- Rail -->
+  <rect x="0" y="296" width="800" height="6" fill="#64748b"/>
+
+  <!-- Sleepers -->
+  <g fill="#1e293b">
+    <rect x="80" y="304" width="10" height="16"/>
+    <rect x="140" y="304" width="10" height="16"/>
+    <rect x="200" y="304" width="10" height="16"/>
+    <rect x="260" y="304" width="10" height="16"/>
+    <rect x="320" y="304" width="10" height="16"/>
+    <rect x="380" y="304" width="10" height="16"/>
+    <rect x="440" y="304" width="10" height="16"/>
+    <rect x="500" y="304" width="10" height="16"/>
+    <rect x="560" y="304" width="10" height="16"/>
+    <rect x="620" y="304" width="10" height="16"/>
+    <rect x="680" y="304" width="10" height="16"/>
+    <rect x="740" y="304" width="10" height="16"/>
+  </g>
+
+  <!-- Side magnets (bright) -->
+  <g fill="#67e8f9">
+    <rect x="120" y="290" width="20" height="6" rx="1"/>
+    <rect x="220" y="290" width="20" height="6" rx="1"/>
+    <rect x="320" y="290" width="20" height="6" rx="1"/>
+    <rect x="420" y="290" width="20" height="6" rx="1"/>
+    <rect x="520" y="290" width="20" height="6" rx="1"/>
+    <rect x="620" y="290" width="20" height="6" rx="1"/>
+    <rect x="720" y="290" width="20" height="6" rx="1"/>
+  </g>
+
+  <!-- Under-rail magnets (bright) -->
+  <g fill="#67e8f9" opacity="0.9">
+    <rect x="170" y="308" width="24" height="4"/>
+    <rect x="320" y="308" width="24" height="4"/>
+    <rect x="470" y="308" width="24" height="4"/>
+    <rect x="620" y="308" width="24" height="4"/>
+  </g>
+
+  <!-- Speed lines (more intense) -->
+  <g stroke="#7dd3fc" stroke-width="2" opacity="0.5">
+    <line x1="30" y1="195" x2="100" y2="195"/>
+    <line x1="20" y1="215" x2="95" y2="215"/>
+    <line x1="35" y1="235" x2="105" y2="235"/>
+    <line x1="25" y1="255" x2="90" y2="255"/>
+    <line x1="40" y1="275" x2="100" y2="275"/>
+  </g>
+
+  <!-- Magnetic glow under train -->
+  <ellipse cx="400" cy="278" rx="220" ry="12" fill="#38bdf8" opacity="0.25"/>
+
+  <!-- Train (fully elevated) -->
+  <g transform="translate(0, -35)">
+    <!-- Body -->
+    <rect x="200" y="220" width="400" height="60" rx="12" fill="#3b82f6"/>
+
+    <!-- Nose -->
+    <path d="M600 220 L600 280 L660 265 Q680 255 680 250 Q680 245 660 235 L600 220" fill="#60a5fa"/>
+
+    <!-- Tail -->
+    <path d="M200 220 L140 235 Q120 245 120 250 Q120 255 140 265 L200 280" fill="#2563eb"/>
+
+    <!-- Windows -->
+    <rect x="230" y="235" width="50" height="24" rx="3" fill="#0c4a6e"/>
+    <rect x="300" y="235" width="50" height="24" rx="3" fill="#0c4a6e"/>
+    <rect x="370" y="235" width="50" height="24" rx="3" fill="#0c4a6e"/>
+    <rect x="440" y="235" width="50" height="24" rx="3" fill="#0c4a6e"/>
+    <rect x="510" y="235" width="50" height="24" rx="3" fill="#0c4a6e"/>
+
+    <!-- Stripe -->
+    <rect x="120" y="265" width="560" height="3" fill="#7dd3fc"/>
+
+    <!-- Headlight -->
+    <circle cx="670" cy="250" r="4" fill="#fef3c7"/>
+
+    <!-- Rear light -->
+    <circle cx="130" cy="250" r="3" fill="#ef4444"/>
+  </g>
+
+  <!-- No wheels (fully retracted) -->
 </svg>

@@ -50,30 +50,15 @@ const Navbar = () => {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 md:h-18 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => scrollTo("#hero")}
-            className="relative group flex items-center gap-3"
-          >
-            <div className="relative">
-              <img
-                src="/logo/hmr_logo.svg"
-                alt="HMR Logo"
-                className="h-8 md:h-9 w-auto transition-transform duration-300 group-hover:scale-105"
-              />
-              {/* Radar pulse on hover */}
-              <motion.div
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
-                initial={false}
-                animate={scrolled ? { scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] } : {}}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-            <span className="hidden sm:block font-mono-tech text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-              Hybrid Maglev Railways
-            </span>
-          </button>
+          <div className="relative flex items-center gap-3">
+            <img
+              src="/logo/hmr_logo.svg"
+              alt="HMR Logo"
+              className="h-16 md:h-16 w-auto"
+            />
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
@@ -175,20 +160,6 @@ const Navbar = () => {
               transition={{ delay: 0.1 }}
               className="relative flex flex-col items-center justify-center min-h-screen px-6"
             >
-              {/* Logo */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.15 }}
-                className="mb-12"
-              >
-                <img
-                  src="/logo/hmr_logo.svg"
-                  alt="HMR Logo"
-                  className="h-16 w-auto opacity-20"
-                />
-              </motion.div>
-
               {/* Links */}
               <nav className="flex flex-col items-center gap-2">
                 {navLinks.map((link, i) => (

@@ -66,7 +66,7 @@ const Footer = () => {
                 <img
                   src="/logo/hmr_logo.svg"
                   alt="HMR Logo"
-                  className="h-12 w-auto mb-4"
+                  className="h-36 w-auto mb-4"
                 />
                 <p className="text-muted-foreground leading-relaxed max-w-md">
                   A TU/e student team engineering the future of rail
