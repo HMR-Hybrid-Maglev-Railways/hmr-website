@@ -1,73 +1,134 @@
-# Welcome to your Lovable project
+# Hybrid Maglev Railways - TU/e Student Team
 
-## Project info
+A showcase website for the Hybrid Maglev Railways (HMR) student team at Eindhoven University of Technology (TU/e), featuring our work on retrofittable magnetic levitation railway technology.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About the Project
 
-## How can I edit this code?
+Hybrid Maglev Railways is revolutionizing long-distance rail travel by developing a magnetic levitation system that can be retrofitted to existing European railway infrastructure. Our mission is to make rail travel the obvious choice for international journeys by combining high-speed maglev technology with the practicality of existing rail networks.
 
-There are several ways of editing your application.
+**Live Website:** [https://skyrimer.github.io/glide-on-rails/](https://skyrimer.github.io/glide-on-rails/)
 
-**Use Lovable**
+## Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Interactive Radar Visualization** - Dynamic comparison chart showing Maglev performance vs. Plane and Bus across multiple metrics
+- **Responsive Design** - Optimized for all device sizes from mobile to desktop
+- **Smooth Animations** - Powered by Framer Motion for engaging user interactions
+- **Modern UI** - Built with shadcn-ui components and Tailwind CSS
+- **Team Showcase** - Meet the multidisciplinary TU/e student team
 
-Changes made via Lovable will be committed automatically to this repo.
+## Technology Stack
 
-**Use your preferred IDE**
+This project is built with modern web technologies:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **[Vite](https://vitejs.dev/)** - Fast build tool and development server
+- **[React 18](https://react.dev/)** - UI component library
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[shadcn-ui](https://ui.shadcn.com/)** - Beautifully designed components
+- **[Framer Motion](https://www.framer.com/motion/)** - Animation library
+- **[Lucide React](https://lucide.dev/)** - Icon library
+- **React Router** - Client-side routing
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Node.js (v18 or higher recommended)
+- npm or yarn package manager
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Clone the repository
+git clone https://github.com/skyrimer/glide-on-rails.git
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Navigate to project directory
+cd glide-on-rails
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The development server will start at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+- `npm run test` - Run tests
+- `npm run deploy` - Build and deploy to GitHub Pages
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Deployment
 
-## What technologies are used for this project?
+This site is configured for deployment to GitHub Pages:
 
-This project is built with:
+```bash
+# Build and deploy in one command
+npm run deploy
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The site will be automatically built and pushed to the `gh-pages` branch, making it available at the GitHub Pages URL.
 
-## How can I deploy this project?
+## Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```
+glide-on-rails/
+├── src/
+│   ├── components/          # React components
+│   │   ├── ui/             # shadcn-ui components
+│   │   ├── HeroSection.tsx
+│   │   ├── MissionSection.tsx
+│   │   ├── TechnologySection.tsx
+│   │   ├── TeamSection.tsx
+│   │   └── ...
+│   ├── pages/              # Route pages
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Utility functions
+│   ├── App.tsx             # Root component
+│   └── main.tsx            # Application entry point
+├── public/                 # Static assets
+├── index.html             # HTML template
+├── vite.config.ts         # Vite configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+└── package.json           # Project dependencies
+```
 
-## Can I connect a custom domain to my Lovable project?
+## Key Components
 
-Yes, you can!
+### Interactive Mission Control Visualization
+The `MissionSection` component features a fully interactive radar chart that compares transport modes across multiple metrics:
+- Hover over data points to see exact values
+- Click metric icons to highlight cross-mode comparisons
+- Toggle transport modes on/off
+- Expandable metric cards with detailed breakdowns
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Responsive Navigation
+Smart navigation with smooth scrolling to sections and mobile-friendly menu.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Team Profiles
+Showcases the multidisciplinary TU/e student team with hexagonal avatars and discipline badges.
+
+## About TU/e
+
+This project is developed by students at [Eindhoven University of Technology (TU/e)](https://www.tue.nl/), one of Europe's leading technical universities.
+
+## Contributing
+
+This is a student team project. If you're a TU/e student interested in joining the Hybrid Maglev Railways team, check out the "Join Us" section on our website.
+
+## License
+
+© 2025 HMR — Hybrid Maglev Railways. All rights reserved.
+
+## Contact
+
+For inquiries about the project or team, please visit our website or reach out through the contact information provided there.
+
+---
+
+**Built with ❤️ by the HMR Team at TU/e**

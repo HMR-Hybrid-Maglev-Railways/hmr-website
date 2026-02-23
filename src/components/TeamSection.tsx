@@ -181,7 +181,7 @@ const TeamSection = () => {
 
       {/* Logo watermark */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.02]">
-        <img src="/logo/hmr_logo_headless.svg" alt="" className="w-[600px] h-auto" />
+        <img src={`${import.meta.env.BASE_URL}logo/hmr_logo_headless.svg`} alt="" className="w-[600px] h-auto" />
       </div>
 
       {/* Wave divider */}

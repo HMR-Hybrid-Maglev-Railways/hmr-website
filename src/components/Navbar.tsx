@@ -54,7 +54,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="relative flex items-center gap-3">
             <img
-              src="/logo/hmr_logo.svg"
+              src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
               alt="HMR Logo"
               className="h-16 md:h-16 w-auto"
             />
