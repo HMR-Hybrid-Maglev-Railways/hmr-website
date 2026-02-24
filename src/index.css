@@ -343,6 +343,14 @@
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
   }
 
+  .badge-ds {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+  }
+
+  .badge-ie {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+
   /* Typewriter cursor */
   @keyframes blink {
     0%, 50% { opacity: 1; }

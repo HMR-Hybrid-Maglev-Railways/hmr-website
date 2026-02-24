@@ -2,64 +2,85 @@ import { motion } from "framer-motion";
 import { Users, Linkedin, Wrench, Zap, Atom } from "lucide-react";
 import { useState } from "react";
 
-type Discipline = "all" | "ME" | "EE" | "AP";
+type Discipline = "all" | "ME" | "EE" | "DS" | "IE";
 
 const teamMembers = [
   {
-    name: "Alex van der Berg",
+    name: "Lars Hilkens",
     role: "Team Lead",
     discipline: "ME" as const,
     image: null,
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/lars-hilkens/",
   },
   {
-    name: "Sophie de Vries",
-    role: "Propulsion Engineer",
-    discipline: "EE" as const,
+    name: "Kirill Chekmenev",
+    role: "Project Lead",
+    discipline: "DS" as const,
     image: null,
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/kirill-chekmenev/",
   },
   {
-    name: "Lucas Bakker",
-    role: "Levitation Systems",
-    discipline: "AP" as const,
-    image: null,
-    linkedin: "#",
-  },
-  {
-    name: "Emma Jansen",
-    role: "Control Systems",
-    discipline: "EE" as const,
-    image: null,
-    linkedin: "#",
-  },
-  {
-    name: "Daan Visser",
-    role: "Structural Design",
+    name: "Andreas Christoforou",
+    role: "Engineer",
     discipline: "ME" as const,
     image: null,
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/andreas-christoforou-39698033a/",
   },
   {
-    name: "Julia Smit",
-    role: "Electromagnetics",
-    discipline: "AP" as const,
-    image: null,
-    linkedin: "#",
-  },
-  {
-    name: "Thomas de Jong",
-    role: "Power Electronics",
-    discipline: "EE" as const,
-    image: null,
-    linkedin: "#",
-  },
-  {
-    name: "Lisa Mulder",
-    role: "Simulation & Modeling",
+    name: "José Ledesma Martin",
+    role: "Engineer",
     discipline: "ME" as const,
     image: null,
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/jose-luis-ledesma-martin-1360b832b/",
+  },
+  {
+    name: "Gustavs Grecihins",
+    role: "Engineer",
+    discipline: "ME" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/gustavs-gre%C4%8Dihins-b37553342/",
+  },
+  {
+    name: "Ahmed Elsaid",
+    role: "Engineer",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/ahmed-elsaid-4815b8292/",
+  },
+  {
+    name: "Nabeel Shaikh",
+    role: "Engineer",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/nabeel-shaikh-a51413363/",
+  },
+  {
+    name: "Yuexi Yang",
+    role: "Data Analyst",
+    discipline: "DS" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/yuexi-yang-636114333/",
+  },
+  {
+    name: "Zofia Bilewicz",
+    role: "Data Analyst",
+    discipline: "DS" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/zofia-bilewicz-09536b25a/",
+  },
+  {
+    name: "Tigran Bagdasaryan",
+    role: "PR Manager",
+    discipline: "IE" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/tigran-bagdasaryan-52207133b/",
+  },
+  {
+    name: "Alisa Morozova",
+    role: "Social Media Manager / Engineer",
+    discipline: "EE" as const,
+    image: null,
+    linkedin: "https://www.linkedin.com/in/alisa-morozova-2b2b87210/",
   },
 ];
 
@@ -67,28 +88,35 @@ const disciplines = [
   { id: "all" as const, label: "All Team", icon: Users, count: teamMembers.length },
   {
     id: "ME" as const,
-    label: "Mechanical",
+    label: "Mechanical Eng.",
     icon: Wrench,
     count: teamMembers.filter((m) => m.discipline === "ME").length,
   },
   {
     id: "EE" as const,
-    label: "Electrical",
+    label: "Electrical Eng.",
     icon: Zap,
     count: teamMembers.filter((m) => m.discipline === "EE").length,
   },
   {
-    id: "AP" as const,
-    label: "Physics",
+    id: "DS" as const,
+    label: "Data Science",
     icon: Atom,
-    count: teamMembers.filter((m) => m.discipline === "AP").length,
+    count: teamMembers.filter((m) => m.discipline === "DS").length,
+  },
+  {
+    id: "IE" as const,
+    label: "Industrial Eng.",
+    icon: Users,
+    count: teamMembers.filter((m) => m.discipline === "IE").length,
   },
 ];
 
 const disciplineColors = {
   ME: "badge-me",
   EE: "badge-ee",
-  AP: "badge-ap",
+  DS: "badge-ds",
+  IE: "badge-ie",
 };
 
 const TeamMemberCard = ({
@@ -231,7 +259,7 @@ const TeamSection = () => {
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
-            <p className="font-mono-tech text-4xl font-bold text-gradient-hmr">3</p>
+            <p className="font-mono-tech text-4xl font-bold text-gradient-hmr">4</p>
             <p className="font-mono-tech text-xs text-muted-foreground tracking-wider">
               DISCIPLINES
             </p>

@@ -35,8 +35,8 @@ const phases = [
   },
   {
     title: "Full Levitation",
-    speedLabel: "200-1000 km/h",
-    speedValue: 1000,
+    speedLabel: "200-800 km/h",
+    speedValue: 800,
     mode: "FULL_MAGLEV",
     description:
       "At cruising speed the train is fully levitated with no rolling contact, enabling plane-like velocities with minimal friction.",
@@ -206,7 +206,7 @@ const ProgressLine = ({ activeIndex }: { activeIndex: number }) => {
           <span className="absolute inset-0 rounded-full bg-hmr animate-ping opacity-50" />
         </motion.div>
       </div>
-      <span className="font-mono-tech text-xs text-hmr-light">1000 km/h</span>
+      <span className="font-mono-tech text-xs text-hmr-light">800 km/h</span>
     </div>
   );
 };

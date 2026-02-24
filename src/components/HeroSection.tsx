@@ -11,7 +11,7 @@ const SpeedCounter = () => {
     if (!isInView) return;
 
     const duration = 1500;
-    const target = 1000;
+    const target = 800;
     const steps = 60;
     const increment = target / steps;
     let current = 0;
