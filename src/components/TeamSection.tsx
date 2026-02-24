@@ -170,8 +170,15 @@ const TeamMemberCard = ({
 
         {/* Info */}
         <div className="text-center">
-          <h3 className="font-heading text-lg font-semibold mb-1 group-hover:text-gradient-hmr transition-colors">
-            {member.name}
+          <h3 className="font-heading text-lg font-semibold mb-1 relative">
+            {/* Base text (visible when not hovered) */}
+            <span className="transition-opacity duration-300 group-hover:opacity-0">
+              {member.name}
+            </span>
+            {/* Gradient text (visible when hovered) */}
+            <span className="absolute inset-0 text-gradient-hmr opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              {member.name}
+            </span>
           </h3>
           <p className="text-sm text-muted-foreground mb-4">{member.role}</p>
 
@@ -201,20 +208,6 @@ const TeamSection = () => {
 
   return (
     <section id="team" className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-0 w-96 h-96 rounded-full bg-hmr-light/5 blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-hmr-dark/10 blur-[120px]" />
-      </div>
-
-      {/* Logo watermark */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.02]">
-        <img src={`${import.meta.env.BASE_URL}logo/hmr_logo_headless.svg`} alt="" className="w-[600px] h-auto" />
-      </div>
-
-      {/* Wave divider */}
-      <div className="wave-divider" />
-
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div
@@ -317,32 +310,6 @@ const TeamSection = () => {
           ))}
         </motion.div>
 
-        {/* Connection lines decoration */}
-        <div className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
-          <svg
-            className="w-full h-full opacity-10"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {[...Array(5)].map((_, i) => (
-              <motion.line
-                key={i}
-                x1={10 + i * 20}
-                y1="20"
-                x2={30 + i * 15}
-                y2="80"
-                stroke="hsl(var(--hmr-blue))"
-                strokeWidth="0.1"
-                strokeDasharray="2 4"
-                initial={{ pathLength: 0 }}
-                whileInView={{ pathLength: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 2, delay: i * 0.2 }}
-              />
-            ))}
-          </svg>
-        </div>
-
         {/* Join CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -364,7 +331,9 @@ const TeamSection = () => {
               </p>
             </div>
             <a
-              href="#join"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdC70GmIn8hGNJdvvRUFeUNFvddyR6NKyY6yy6bCBYOkEwm-Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-6 py-3 rounded-lg bg-gradient-hmr text-primary-foreground font-heading font-semibold text-sm hover:opacity-90 transition-opacity"
             >
               Apply Now

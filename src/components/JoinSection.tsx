@@ -46,39 +46,6 @@ const benefits = [
 const JoinSection = () => {
   return (
     <section id="join" className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-hmr-light/10 blur-[150px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 rounded-full bg-hmr-dark/15 blur-[120px]" />
-      </div>
-
-      {/* Animated particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-hmr/40"
-            initial={{
-              x: `${Math.random() * 100}%`,
-              y: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [null, `${Math.random() * 100}%`],
-              x: [null, `${Math.random() * 100}%`],
-              opacity: [0.2, 0.6, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 15,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Wave divider */}
-      <div className="wave-divider" />
-
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div
@@ -232,19 +199,21 @@ const JoinSection = () => {
                   </div>
 
                   <p className="text-muted-foreground mb-6 leading-relaxed">
-                    Send us your CV and a brief motivation letter explaining why
-                    you want to be part of HMR. We'll get back to you within a
+                    Fill out our application form with your details and tell us
+                    why you want to be part of HMR. We'll get back to you within a
                     week.
                   </p>
 
                   <a
-                    href="mailto:team@hmr-tue.nl"
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSdC70GmIn8hGNJdvvRUFeUNFvddyR6NKyY6yy6bCBYOkEwm-Q/viewform"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group flex items-center justify-between w-full px-6 py-4 rounded-xl bg-gradient-hmr text-primary-foreground font-heading font-semibold hover:opacity-90 transition-opacity"
                   >
                     <span>Apply Now</span>
                     <div className="flex items-center gap-2">
                       <span className="font-mono-tech text-sm font-normal opacity-80">
-                        team@hmr-tue.nl
+                        Application Form
                       </span>
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -281,13 +250,13 @@ const JoinSection = () => {
                 </p>
 
                 <a
-                  href="mailto:sponsors@hmr-tue.nl"
+                  href="mailto:board.hmr@gmail.com"
                   className="group flex items-center justify-between w-full px-6 py-4 rounded-xl border border-border bg-secondary/30 text-foreground font-heading font-semibold hover:border-hmr/30 hover:bg-secondary/50 transition-all"
                 >
                   <span>Get in Touch</span>
                   <div className="flex items-center gap-2">
                     <span className="font-mono-tech text-sm font-normal text-muted-foreground">
-                      sponsors@hmr-tue.nl
+                      board.hmr@gmail.com
                     </span>
                     <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 group-hover:text-foreground transition-all" />
                   </div>

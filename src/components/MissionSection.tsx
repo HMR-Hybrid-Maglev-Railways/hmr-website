@@ -731,8 +731,15 @@ const GoalCard = ({
           </div>
         </div>
 
-        <h3 className="font-heading text-2xl font-semibold mb-3 group-hover:text-gradient-hmr transition-colors">
-          {goal.title}
+        <h3 className="font-heading text-2xl font-semibold mb-3 relative">
+          {/* Base text (visible when not hovered) */}
+          <span className="transition-opacity duration-300 group-hover:opacity-0">
+            {goal.title}
+          </span>
+          {/* Gradient text (visible when hovered) */}
+          <span className="absolute inset-0 text-gradient-hmr opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            {goal.title}
+          </span>
         </h3>
 
         <p className="text-muted-foreground leading-relaxed mb-6">
@@ -782,18 +789,6 @@ const GoalCard = ({
 const MissionSection = () => {
   return (
     <section id="mission" className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-hmr-dark/10 blur-[150px]" />
-        <div className="absolute bottom-1/4 right-0 w-80 h-80 rounded-full bg-hmr-light/5 blur-[120px]" />
-      </div>
-
-      {/* Circuit pattern */}
-      <div className="absolute inset-0 dot-grid opacity-15" />
-
-      {/* Wave divider */}
-      <div className="wave-divider" />
-
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div

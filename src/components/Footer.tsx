@@ -11,9 +11,9 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Linkedin, href: "https://linkedin.com/company/hmr-tue", label: "LinkedIn" },
-  { icon: Instagram, href: "https://instagram.com/hmr_tue", label: "Instagram" },
-  { icon: Mail, href: "mailto:team@hmr-tue.nl", label: "Email" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/hybrid-maglev-railways/", label: "LinkedIn" },
+  { icon: Instagram, href: "https://www.instagram.com/hmr_hybridmaglevrailways/", label: "Instagram" },
+  { icon: Mail, href: "mailto:board.hmr@gmail.com", label: "Email" },
 ];
 
 const Footer = () => {
@@ -164,7 +164,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="mailto:team@hmr-tue.nl"
+                    href="mailto:board.hmr@gmail.com"
                     className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                   >
                     Contact Us
@@ -172,7 +172,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="mailto:sponsors@hmr-tue.nl"
+                    href="mailto:board.hmr@gmail.com"
                     className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                   >
                     Sponsorship

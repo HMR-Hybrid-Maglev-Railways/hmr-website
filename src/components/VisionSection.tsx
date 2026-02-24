@@ -29,72 +29,6 @@ const cards = [
   },
 ];
 
-const routeNodes = [
-  { city: "Amsterdam", x: 35, y: 25 },
-  { city: "Brussels", x: 32, y: 40 },
-  { city: "Paris", x: 28, y: 55 },
-  { city: "Berlin", x: 55, y: 30 },
-  { city: "Munich", x: 52, y: 50 },
-  { city: "Milan", x: 45, y: 65 },
-];
-
-const EuropeMap = () => (
-  <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
-    <svg
-      viewBox="0 0 100 100"
-      className="w-full h-full"
-      preserveAspectRatio="xMidYMid slice"
-    >
-      {/* Animated route lines */}
-      {routeNodes.map((node, i) =>
-        routeNodes.slice(i + 1).map((target, j) => (
-          <motion.line
-            key={`${node.city}-${target.city}`}
-            x1={node.x}
-            y1={node.y}
-            x2={target.x}
-            y2={target.y}
-            stroke="hsl(var(--hmr-blue))"
-            strokeWidth="0.3"
-            strokeDasharray="2 2"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 0.5 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: (i + j) * 0.1 }}
-          />
-        ))
-      )}
-      {/* City nodes */}
-      {routeNodes.map((node, i) => (
-        <motion.g key={node.city}>
-          <motion.circle
-            cx={node.x}
-            cy={node.y}
-            r="1.5"
-            fill="hsl(var(--hmr-blue))"
-            initial={{ scale: 0, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 + 0.5 }}
-          />
-          <motion.circle
-            cx={node.x}
-            cy={node.y}
-            r="3"
-            fill="none"
-            stroke="hsl(var(--hmr-blue))"
-            strokeWidth="0.2"
-            initial={{ scale: 0, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 0.5 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 + 0.6 }}
-          />
-        </motion.g>
-      ))}
-    </svg>
-  </div>
-);
-
 const VisionCard = ({
   card,
   index,
@@ -183,18 +117,6 @@ const VisionCard = ({
 const VisionSection = () => {
   return (
     <section id="vision" className="py-32 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-hmr-light/5 blur-[150px]" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-hmr-dark/10 blur-[120px]" />
-      </div>
-
-      {/* Europe map background */}
-      <EuropeMap />
-
-      {/* Wave divider */}
-      <div className="wave-divider" />
-
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div

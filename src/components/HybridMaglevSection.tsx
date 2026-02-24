@@ -135,12 +135,15 @@ const PhaseCard = ({
         </div>
 
         {/* Title */}
-        <h3
-          className={`font-heading text-xl md:text-2xl font-semibold mb-3 transition-colors ${
-            isActive ? "text-gradient-hmr" : ""
-          }`}
-        >
-          {phase.title}
+        <h3 className="font-heading text-xl md:text-2xl font-semibold mb-3 relative">
+          {/* Base text (visible when not active) */}
+          <span className={`transition-opacity duration-300 ${isActive ? "opacity-0" : ""}`}>
+            {phase.title}
+          </span>
+          {/* Gradient text (visible when active) */}
+          <span className={`absolute inset-0 text-gradient-hmr transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0"}`}>
+            {phase.title}
+          </span>
         </h3>
 
         {/* Description */}
@@ -228,15 +231,6 @@ const HybridMaglevSection = () => {
       id="hybrid-maglev"
       className="py-32 relative overflow-hidden"
     >
-      {/* Background effects */}
-      <motion.div className="absolute inset-0" style={{ y: backgroundY }}>
-        <div className="absolute top-10 right-10 w-72 h-72 rounded-full bg-hmr-light/10 blur-[140px]" />
-        <div className="absolute bottom-0 left-1/3 w-96 h-96 rounded-full bg-hmr-dark/20 blur-[170px]" />
-      </motion.div>
-
-      {/* Dot grid */}
-      <div className="absolute inset-0 dot-grid opacity-20" />
-
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div

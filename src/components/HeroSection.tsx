@@ -68,32 +68,6 @@ const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) =
   );
 };
 
-const FloatingParticles = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(20)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute w-1 h-1 rounded-full bg-hmr-light/30"
-        initial={{
-          x: Math.random() * 100 + "%",
-          y: Math.random() * 100 + "%",
-          scale: Math.random() * 0.5 + 0.5,
-        }}
-        animate={{
-          y: [null, "-20%", null],
-          opacity: [0.3, 0.8, 0.3],
-        }}
-        transition={{
-          duration: Math.random() * 10 + 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: Math.random() * 5,
-        }}
-      />
-    ))}
-  </div>
-);
-
 const HeroSection = () => {
   const scrollTo = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
@@ -101,26 +75,6 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background layers */}
-      <div className="absolute inset-0">
-        {/* Gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-hmr-light/5 blur-[150px] animate-pulse-glow" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-hmr-dark/10 blur-[120px] animate-pulse-glow"
-          style={{ animationDelay: "1.5s" }}
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-hmr/5 blur-[180px]" />
-      </div>
-
-      {/* Dot grid overlay */}
-      <div className="absolute inset-0 dot-grid opacity-40" />
-
-      {/* Radial gradient vignette */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-background/80" />
-
-      {/* Floating particles */}
-      <FloatingParticles />
-
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         {/* Subtitle */}

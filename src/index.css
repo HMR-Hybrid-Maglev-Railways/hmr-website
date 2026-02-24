@@ -252,6 +252,22 @@
     animation: float 6s ease-in-out infinite;
   }
 
+  @keyframes float-slow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    66% {
+      transform: translate(-30px, 30px) scale(0.95);
+    }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 20s ease-in-out infinite;
+  }
+
   /* Glow pulse for active elements */
   @keyframes glow-pulse {
     0%, 100% {
@@ -369,28 +385,6 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Section divider wave */
-  .wave-divider {
-    position: relative;
-  }
-
-  .wave-divider::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      hsl(var(--hmr-blue) / 0.3) 20%,
-      hsl(var(--hmr-blue) / 0.5) 50%,
-      hsl(var(--hmr-blue) / 0.3) 80%,
-      transparent
-    );
-  }
-
   /* Scroll snap container */
   .snap-x-mandatory {
     scroll-snap-type: x mandatory;
@@ -399,5 +393,21 @@
 
   .snap-center {
     scroll-snap-align: center;
+  }
+
+  /* Electromagnetic field and network effects */
+  @media (prefers-reduced-motion: reduce) {
+    .magnetic-field-line,
+    .network-node,
+    .energy-particle {
+      animation: none !important;
+    }
+  }
+
+  /* Performance optimizations for animated elements */
+  .magnetic-field-line,
+  .network-node,
+  .energy-particle {
+    will-change: transform, opacity;
   }
 }
