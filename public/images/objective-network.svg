@@ -1,0 +1,125 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-network" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2035;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="node-glow">
+      <stop offset="0%" style="stop-color:#55C1F6;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#143DB8;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg-network)"/>
+
+  <!-- European map outline (simplified) -->
+  <g stroke="#2d3d5a" stroke-width="2" fill="none" opacity="0.4">
+    <!-- Rough Europe outline -->
+    <path d="M 150,100 L 200,80 L 300,75 L 400,85 L 500,100 L 580,120 L 620,180 L 600,250 L 550,300 L 450,320 L 350,310 L 250,280 L 180,230 L 150,180 Z"/>
+  </g>
+
+  <!-- Rail network connections -->
+  <g stroke="#2B7CEE" stroke-width="2" opacity="0.5">
+    <!-- Major routes -->
+    <line x1="250" y1="180" x2="400" y2="200"/>
+    <line x1="400" y1="200" x2="500" y2="180"/>
+    <line x1="250" y1="180" x2="300" y2="240"/>
+    <line x1="300" y1="240" x2="400" y2="260"/>
+    <line x1="400" y1="200" x2="400" y2="260"/>
+    <line x1="400" y1="260" x2="480" y2="270"/>
+    <line x1="500" y1="180" x2="540" y2="220"/>
+    <line x1="300" y1="150" x2="250" y2="180"/>
+    <line x1="300" y1="150" x2="400" y2="140"/>
+    <line x1="400" y1="140" x2="500" y2="180"/>
+  </g>
+
+  <!-- City nodes -->
+  <g>
+    <!-- Amsterdam -->
+    <circle cx="300" cy="150" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="300" cy="150" r="15" fill="url(#node-glow)"/>
+    <text x="300" y="135" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">AMS</text>
+
+    <!-- Brussels -->
+    <circle cx="250" cy="180" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="250" cy="180" r="15" fill="url(#node-glow)"/>
+    <text x="250" y="165" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">BRU</text>
+
+    <!-- Paris -->
+    <circle cx="300" cy="240" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="300" cy="240" r="15" fill="url(#node-glow)"/>
+    <text x="300" y="225" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">PAR</text>
+
+    <!-- Frankfurt -->
+    <circle cx="400" cy="200" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="400" cy="200" r="15" fill="url(#node-glow)"/>
+    <text x="400" y="185" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">FRA</text>
+
+    <!-- Berlin -->
+    <circle cx="500" cy="180" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="500" cy="180" r="15" fill="url(#node-glow)"/>
+    <text x="500" y="165" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">BER</text>
+
+    <!-- Munich -->
+    <circle cx="400" cy="260" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="400" cy="260" r="15" fill="url(#node-glow)"/>
+    <text x="400" y="245" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">MUC</text>
+
+    <!-- Milan -->
+    <circle cx="400" cy="140" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="400" cy="140" r="15" fill="url(#node-glow)"/>
+    <text x="400" y="125" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">MIL</text>
+
+    <!-- Vienna -->
+    <circle cx="480" cy="270" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="480" cy="270" r="15" fill="url(#node-glow)"/>
+    <text x="480" y="255" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">VIE</text>
+
+    <!-- Prague -->
+    <circle cx="540" cy="220" r="8" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="540" cy="220" r="15" fill="url(#node-glow)"/>
+    <text x="540" y="205" font-family="monospace" font-size="11" fill="#55C1F6" text-anchor="middle" opacity="0.7">PRG</text>
+  </g>
+
+  <!-- Data visualization overlay (right side) -->
+  <g transform="translate(600, 100)">
+    <rect x="0" y="0" width="150" height="200" fill="#0a1520" opacity="0.8" rx="10"/>
+    <text x="10" y="20" font-family="monospace" font-size="12" fill="#55C1F6" opacity="0.9">ANALYSIS TOOL</text>
+
+    <!-- Mock data visualization -->
+    <rect x="15" y="35" width="120" height="4" fill="#143DB8" opacity="0.6"/>
+    <rect x="15" y="35" width="90" height="4" fill="#2B7CEE" opacity="0.8"/>
+
+    <rect x="15" y="50" width="120" height="4" fill="#143DB8" opacity="0.6"/>
+    <rect x="15" y="50" width="105" height="4" fill="#55C1F6" opacity="0.8"/>
+
+    <rect x="15" y="65" width="120" height="4" fill="#143DB8" opacity="0.6"/>
+    <rect x="15" y="65" width="75" height="4" fill="#2B7CEE" opacity="0.8"/>
+
+    <!-- Charts -->
+    <line x1="20" y1="110" x2="130" y2="110" stroke="#2d3d5a" stroke-width="1"/>
+    <line x1="20" y1="85" x2="20" y2="110" stroke="#2d3d5a" stroke-width="1"/>
+
+    <polyline points="20,110 35,100 50,95 65,92 80,88 95,85 110,83 125,80" fill="none" stroke="#55C1F6" stroke-width="2" opacity="0.7"/>
+
+    <!-- Metrics -->
+    <text x="15" y="135" font-family="monospace" font-size="9" fill="#2B7CEE" opacity="0.7">COST ANALYSIS</text>
+    <text x="15" y="150" font-family="monospace" font-size="9" fill="#2B7CEE" opacity="0.7">ROUTE OPTIMIZATION</text>
+    <text x="15" y="165" font-family="monospace" font-size="9" fill="#2B7CEE" opacity="0.7">DEPLOYMENT MAP</text>
+
+    <circle cx="130" cy="132" r="3" fill="#55C1F6" opacity="0.9"/>
+    <circle cx="130" cy="147" r="3" fill="#55C1F6" opacity="0.9"/>
+    <circle cx="130" cy="162" r="3" fill="#55C1F6" opacity="0.9"/>
+  </g>
+
+  <!-- Moving data particles (simulating real-time analysis) -->
+  <circle cx="320" cy="170" r="2" fill="#55C1F6" opacity="0.6"/>
+  <circle cx="440" cy="210" r="2" fill="#2B7CEE" opacity="0.6"/>
+  <circle cx="370" cy="240" r="2" fill="#143DB8" opacity="0.6"/>
+
+  <!-- Title text -->
+  <text x="400" y="430" font-family="monospace" font-size="24" fill="#55C1F6" text-anchor="middle" opacity="0.5">
+    NETWORK ANALYSIS TOOL
+  </text>
+</svg>

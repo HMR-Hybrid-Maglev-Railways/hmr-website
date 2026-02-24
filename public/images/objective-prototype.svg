@@ -1,0 +1,109 @@
+<svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-prototype" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2540;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="lab-glow">
+      <stop offset="0%" style="stop-color:#55C1F6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#143DB8;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg-prototype)"/>
+
+  <!-- Lab floor -->
+  <rect x="0" y="320" width="800" height="130" fill="#0d1a2e" opacity="0.5"/>
+
+  <!-- Grid pattern on floor -->
+  <g stroke="#2B7CEE" stroke-width="1" opacity="0.2">
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="380" x2="800" y2="380"/>
+    <line x1="0" y1="410" x2="800" y2="410"/>
+    <line x1="100" y1="320" x2="100" y2="450"/>
+    <line x1="200" y1="320" x2="200" y2="450"/>
+    <line x1="300" y1="320" x2="300" y2="450"/>
+    <line x1="400" y1="320" x2="400" y2="450"/>
+    <line x1="500" y1="320" x2="500" y2="450"/>
+    <line x1="600" y1="320" x2="600" y2="450"/>
+    <line x1="700" y1="320" x2="700" y2="450"/>
+  </g>
+
+  <!-- Test track structure -->
+  <g transform="translate(150, 280)">
+    <!-- Support pillars -->
+    <rect x="0" y="0" width="15" height="40" fill="#2d3d5a"/>
+    <rect x="485" y="0" width="15" height="40" fill="#2d3d5a"/>
+
+    <!-- Track bed -->
+    <rect x="0" y="-15" width="500" height="25" fill="#1a2a4a" opacity="0.8"/>
+
+    <!-- Rails with magnetic guides -->
+    <rect x="10" y="-8" width="480" height="4" fill="#55C1F6" opacity="0.6"/>
+    <rect x="10" y="4" width="480" height="4" fill="#55C1F6" opacity="0.6"/>
+  </g>
+
+  <!-- Prototype vehicle -->
+  <g transform="translate(250, 200)">
+    <!-- Main body -->
+    <path d="M 0 30 L 10 0 L 290 0 L 300 30 L 300 60 L 0 60 Z" fill="#2B7CEE" opacity="0.9"/>
+
+    <!-- Cockpit/front -->
+    <path d="M 220 10 L 280 10 L 285 30 L 220 30 Z" fill="#143DB8" opacity="0.7"/>
+
+    <!-- Sensors/equipment -->
+    <circle cx="30" cy="20" r="5" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="50" cy="20" r="5" fill="#55C1F6" opacity="0.8"/>
+    <circle cx="100" cy="25" r="8" fill="#2B7CEE" opacity="0.6"/>
+    <rect x="130" y="15" width="60" height="20" fill="#143DB8" opacity="0.5"/>
+
+    <!-- Windows -->
+    <rect x="230" y="15" width="35" height="12" rx="2" fill="#55C1F6" opacity="0.6"/>
+
+    <!-- Undercarriage sensors -->
+    <rect x="40" y="60" width="8" height="12" fill="#143DB8" opacity="0.7"/>
+    <rect x="100" y="60" width="8" height="12" fill="#143DB8" opacity="0.7"/>
+    <rect x="160" y="60" width="8" height="12" fill="#143DB8" opacity="0.7"/>
+    <rect x="220" y="60" width="8" height="12" fill="#143DB8" opacity="0.7"/>
+
+    <!-- Magnetic field visualization -->
+    <ellipse cx="150" cy="75" rx="120" ry="10" fill="#55C1F6" opacity="0.4"/>
+  </g>
+
+  <!-- Measurement instruments -->
+  <g transform="translate(50, 100)">
+    <!-- Sensor array left -->
+    <rect x="0" y="0" width="30" height="80" fill="#1a2a4a" opacity="0.8"/>
+    <rect x="5" y="10" width="20" height="15" fill="#55C1F6" opacity="0.5"/>
+    <rect x="5" y="35" width="20" height="15" fill="#2B7CEE" opacity="0.5"/>
+    <rect x="5" y="60" width="20" height="15" fill="#143DB8" opacity="0.5"/>
+    <!-- Beam lines -->
+    <line x1="30" y1="17" x2="220" y2="230" stroke="#55C1F6" stroke-width="1" opacity="0.3" stroke-dasharray="5,5"/>
+    <line x1="30" y1="42" x2="250" y2="235" stroke="#2B7CEE" stroke-width="1" opacity="0.3" stroke-dasharray="5,5"/>
+  </g>
+
+  <g transform="translate(720, 100)">
+    <!-- Sensor array right -->
+    <rect x="0" y="0" width="30" height="80" fill="#1a2a4a" opacity="0.8"/>
+    <rect x="5" y="10" width="20" height="15" fill="#55C1F6" opacity="0.5"/>
+    <rect x="5" y="35" width="20" height="15" fill="#2B7CEE" opacity="0.5"/>
+    <rect x="5" y="60" width="20" height="15" fill="#143DB8" opacity="0.5"/>
+    <!-- Beam lines -->
+    <line x1="0" y1="17" x2="580" y2="230" stroke="#55C1F6" stroke-width="1" opacity="0.3" stroke-dasharray="5,5"/>
+    <line x1="0" y1="42" x2="550" y2="235" stroke="#2B7CEE" stroke-width="1" opacity="0.3" stroke-dasharray="5,5"/>
+  </g>
+
+  <!-- Data points/measurements -->
+  <circle cx="350" cy="180" r="3" fill="#55C1F6" opacity="0.8"/>
+  <circle cx="420" cy="190" r="3" fill="#2B7CEE" opacity="0.8"/>
+  <circle cx="280" cy="200" r="3" fill="#143DB8" opacity="0.8"/>
+
+  <!-- TU/e branding hint -->
+  <text x="50" y="40" font-family="monospace" font-size="16" fill="#2B7CEE" opacity="0.6">TU/e FACILITY</text>
+
+  <!-- Title text -->
+  <text x="400" y="430" font-family="monospace" font-size="24" fill="#55C1F6" text-anchor="middle" opacity="0.5">
+    PROVE VIABILITY
+  </text>
+</svg>

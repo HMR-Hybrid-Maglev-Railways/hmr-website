@@ -86,6 +86,8 @@ const goals = [
     number: "01",
     title: "Eliminate Friction",
     icon: Zap,
+    image: `${import.meta.env.BASE_URL}images/objective-friction.svg`,
+    alt: "Electromagnetic levitation system diagram showing reduced friction",
     description:
       "Design and implement a magnetic levitation system that removes physical wheel-rail contact at high speeds, dramatically reducing rolling resistance and energy consumption while minimizing infrastructure wear.",
     status: "active",
@@ -100,6 +102,8 @@ const goals = [
     number: "02",
     title: "Seamless Integration",
     icon: Workflow,
+    image: `${import.meta.env.BASE_URL}images/objective-integration.svg`,
+    alt: "Hybrid maglev system integration with existing rail infrastructure",
     description:
       "Engineer a hybrid system that works with existing European rail infrastructure, enabling gradual deployment without requiring complete track replacement or massive capital investment.",
     status: "active",
@@ -114,6 +118,8 @@ const goals = [
     number: "03",
     title: "Prove Viability",
     icon: FlaskConical,
+    image: `${import.meta.env.BASE_URL}images/objective-prototype.svg`,
+    alt: "Prototype maglev vehicle testing at TU/e facilities",
     description:
       "Conduct rigorous engineering research and build functional prototypes at TU/e to validate the technical feasibility, safety, and performance of retrofittable maglev technology.",
     status: "active",
@@ -128,6 +134,8 @@ const goals = [
     number: "04",
     title: "Railway Network Analysis Tool",
     icon: Map,
+    image: `${import.meta.env.BASE_URL}images/objective-network.svg`,
+    alt: "Interactive web platform for European rail network analysis",
     description:
       "Develop an interactive web-based platform that enables stakeholders to investigate costs, benefits, and deployment feasibility of hybrid maglev technology across various European rail network configurations.",
     status: "active",
@@ -707,9 +715,30 @@ const GoalCard = ({
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="relative group h-full"
     >
-      <div className="h-full rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 p-8 group-hover:border-hmr/30 group-hover:bg-card/70 transition-all duration-300 card-lift">
-        {/* Header with Icon and Status */}
-        <div className="flex items-center justify-between mb-4">
+      <div className="h-full rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-hmr/30 group-hover:bg-card/70 transition-all duration-300 card-lift">
+        {/* Hero Image Section */}
+        <div className="relative h-48 md:h-56 overflow-hidden">
+          <img
+            src={goal.image}
+            alt={goal.alt}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
+
+          {/* Objective number overlay */}
+          <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-hmr/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+            <span className="font-mono-tech text-sm font-bold text-primary-foreground">
+              {goal.number}
+            </span>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="p-6 md:p-8">
+          {/* Header with Icon and Status */}
+          <div className="flex items-center justify-between mb-4">
           {/* Icon */}
           <div className="relative w-14 h-14">
             <div className="absolute inset-0 rounded-xl bg-gradient-hmr opacity-20 blur-md" />
@@ -781,6 +810,7 @@ const GoalCard = ({
             </div>
           </div>
         </div>
+        </div>
       </div>
     </motion.div>
   );
@@ -835,7 +865,7 @@ const MissionSection = () => {
             </h3>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
             {goals.map((goal, i) => (
               <GoalCard key={goal.number} goal={goal} index={i} />
             ))}
