@@ -188,7 +188,7 @@ const PhaseCard = ({
 };
 
 const ProgressLine = ({ activeIndex }: { activeIndex: number }) => {
-  const progress = ((activeIndex + 1) / phases.length) * 100;
+  const progress = (activeIndex / (phases.length - 1)) * 100;
 
   return (
     <div className="hidden lg:flex items-center justify-center gap-4 mb-12">
@@ -209,7 +209,7 @@ const ProgressLine = ({ activeIndex }: { activeIndex: number }) => {
           <span className="absolute inset-0 rounded-full bg-hmr animate-ping opacity-50" />
         </motion.div>
       </div>
-      <span className="font-mono-tech text-xs text-hmr-light">800 km/h</span>
+      <span className="font-mono-tech text-xs text-hmr-light">FLYING</span>
     </div>
   );
 };

@@ -134,8 +134,8 @@ const VisionSection = () => {
           </div>
 
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            A Europe Without{" "}
-            <span className="text-gradient-hmr">Barriers</span>
+            A Europe{" "}
+            <span className="text-gradient-hmr">Without Barriers</span>
           </h2>
 
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">

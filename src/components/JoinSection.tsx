@@ -263,30 +263,6 @@ const JoinSection = () => {
                 </a>
               </div>
             </motion.div>
-
-            {/* Social proof */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="flex items-center justify-center gap-4 pt-4"
-            >
-              <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full border-2 border-background bg-secondary flex items-center justify-center text-xs font-medium text-muted-foreground"
-                  >
-                    {String.fromCharCode(65 + i)}
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Join <span className="text-foreground font-medium">15+</span>{" "}
-                students building the future
-              </p>
-            </motion.div>
           </div>
         </div>
       </div>
