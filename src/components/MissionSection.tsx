@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Target, CheckCircle2, Zap, Workflow, FlaskConical, Map, Plane, Bus, Train, Gauge, Users, Leaf, Clock, TrendingUp, TrendingDown } from "lucide-react";
+import { Target, CheckCircle2, Zap, Wrench, Atom, Camera, Plane, Bus, Train, Gauge, Users, Leaf, Clock, Crosshair, Briefcase } from "lucide-react";
 
 type TransportMode = "Plane" | "Bus" | "Maglev";
 
@@ -81,70 +81,98 @@ const transportModes: {
   },
 ];
 
-const goals = [
+const teamObjectives = [
   {
-    number: "01",
-    title: "Eliminate Friction",
+    id: "ME",
+    teamName: "Mechanical Engineering",
+    badge: "ME",
+    badgeColor: "badge-me",
+    accentColor: "hsl(25, 95%, 53%)", // Orange
+    icon: Wrench,
+    lead: "Lars Hilkens",
+    memberCount: 4,
+    status: "active",
+    tagline: "Building the Hardware of Tomorrow",
+    description:
+      "Our mechanical team is responsible for the physical realization of the hybrid maglev concept. From electromagnetic suspension mounts to aerodynamic pod designs, we're engineering the components that will make frictionless rail travel a reality.",
+    responsibilities: [
+      "Electromagnetic suspension system design & mounting",
+      "Structural analysis using FEA simulation",
+      "Prototype fabrication & testing",
+      "Material selection for weight optimization",
+      "Integration with existing bogie systems"
+    ],
+    currentFocus: "Designing and testing the electromagnetic levitation mounting brackets that will allow maglev modules to retrofit onto existing European rail car bogies. Currently in the CAD modeling and stress analysis phase.",
+    tools: ["SolidWorks", "ANSYS", "3D Printing", "CNC Machining"],
+  },
+  {
+    id: "EE",
+    teamName: "Electrical Engineering",
+    badge: "EE",
+    badgeColor: "badge-ee",
+    accentColor: "hsl(205, 90%, 60%)", // Blue
     icon: Zap,
-    image: `${import.meta.env.BASE_URL}images/objective-friction.svg`,
-    alt: "Electromagnetic levitation system diagram showing reduced friction",
-    description:
-      "Design and implement a magnetic levitation system that removes physical wheel-rail contact at high speeds, dramatically reducing rolling resistance and energy consumption while minimizing infrastructure wear.",
+    lead: "Ahmed Elsaid",
+    memberCount: 3,
     status: "active",
-    details: [
-      "Develop electromagnetic suspension architecture",
-      "Optimize power consumption at cruising speed",
-      "Minimize infrastructure wear and tear"
+    tagline: "Powering the Future of Rail",
+    description:
+      "The electrical team develops the power systems, control electronics, and sensor networks that bring the maglev system to life. We're creating the brains and nervous system of the hybrid train.",
+    responsibilities: [
+      "Power electronics for levitation coils",
+      "Real-time control system development",
+      "Sensor integration & feedback loops",
+      "Safety interlock systems",
+      "Energy harvesting & regenerative braking"
     ],
-    outcome: "Energy-efficient propulsion system with 90% reduction in mechanical friction"
+    currentFocus: "Developing the power management unit (PMU) that controls current flow to the electromagnetic coils. Working on PID controllers for stable levitation at varying speeds and loads.",
+    tools: ["MATLAB/Simulink", "KiCad", "Embedded C", "Oscilloscopes"],
   },
   {
-    number: "02",
-    title: "Seamless Integration",
-    icon: Workflow,
-    image: `${import.meta.env.BASE_URL}images/objective-integration.svg`,
-    alt: "Hybrid maglev system integration with existing rail infrastructure",
-    description:
-      "Engineer a hybrid system that works with existing European rail infrastructure, enabling gradual deployment without requiring complete track replacement or massive capital investment.",
+    id: "DS",
+    teamName: "Data Science & Software",
+    badge: "DS",
+    badgeColor: "badge-ds",
+    accentColor: "hsl(280, 70%, 60%)", // Purple
+    icon: Atom,
+    lead: "Kirill Chekmenev",
+    memberCount: 3,
     status: "active",
-    details: [
-      "Retrofit solution for existing rail corridors",
-      "Compatible with current signaling systems",
-      "Phased deployment strategy for infrastructure"
+    tagline: "Mapping the Network Revolution",
+    description:
+      "Our data science team builds the analytical backbone of the project. We're developing the Railway Network Analysis Tool—an interactive platform that models deployment scenarios, costs, and benefits across the European rail network.",
+    responsibilities: [
+      "Railway network graph modeling",
+      "Cost-benefit analysis algorithms",
+      "Interactive web visualization platform",
+      "Simulation of deployment scenarios",
+      "Data collection & infrastructure mapping"
     ],
-    outcome: "Upgrade solution requiring minimal modifications to existing tracks"
+    currentFocus: "Building an interactive web application that allows stakeholders to explore hybrid maglev deployment scenarios. Implementing route optimization algorithms and visualizing network connectivity improvements.",
+    tools: ["Python", "React", "D3.js", "Graph Databases"],
   },
   {
-    number: "03",
-    title: "Prove Viability",
-    icon: FlaskConical,
-    image: `${import.meta.env.BASE_URL}images/objective-prototype.svg`,
-    alt: "Prototype maglev vehicle testing at TU/e facilities",
-    description:
-      "Conduct rigorous engineering research and build functional prototypes at TU/e to validate the technical feasibility, safety, and performance of retrofittable maglev technology.",
+    id: "OPS",
+    teamName: "Operations & Outreach",
+    badge: "OPS",
+    badgeColor: "badge-ie",
+    accentColor: "hsl(160, 60%, 45%)", // Teal
+    icon: Users,
+    lead: "Tigran Bagdasaryan",
+    memberCount: 2,
     status: "active",
-    details: [
-      "Build and test functional prototype vehicle",
-      "Conduct track compatibility testing",
-      "Validate safety standards and regulations"
-    ],
-    outcome: "Demonstrator vehicle proving technical feasibility at TU/e facilities"
-  },
-  {
-    number: "04",
-    title: "Railway Network Analysis Tool",
-    icon: Map,
-    image: `${import.meta.env.BASE_URL}images/objective-network.svg`,
-    alt: "Interactive web platform for European rail network analysis",
+    tagline: "Connecting Vision to Reality",
     description:
-      "Develop an interactive web-based platform that enables stakeholders to investigate costs, benefits, and deployment feasibility of hybrid maglev technology across various European rail network configurations.",
-    status: "active",
-    details: [
-      "Interactive cost and benefit modeling system",
-      "Route optimization and feasibility analysis",
-      "Visual exploration of deployment scenarios"
+      "The operations team keeps the project on track (pun intended). We handle project coordination, stakeholder communications, recruitment, and public relations to ensure our technical achievements reach the right audiences.",
+    responsibilities: [
+      "Project timeline & milestone management",
+      "Stakeholder & sponsor relations",
+      "Team recruitment & onboarding",
+      "Social media & content creation",
+      "Event coordination & presentations"
     ],
-    outcome: "Web platform for exploring hybrid maglev deployment across Europe"
+    currentFocus: "Expanding the team through targeted recruitment at TU/e, building partnerships with rail industry stakeholders, and developing our public presence through the website and social media channels.",
+    tools: ["Notion", "Figma", "Social Media", "Analytics"],
   },
 ];
 
@@ -696,121 +724,245 @@ const InteractiveComparison = () => {
   );
 };
 
-const GoalCard = ({
-  goal,
+const TeamObjectiveCard = ({
+  team,
   index,
 }: {
-  goal: (typeof goals)[0];
+  team: (typeof teamObjectives)[0];
   index: number;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const Icon = goal.icon;
+  const Icon = team.icon;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative group h-full"
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="relative group"
     >
-      <div className="h-full rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-hmr/30 group-hover:bg-card/70 transition-all duration-300 card-lift">
-        {/* Hero Image Section */}
-        <div className="relative h-48 md:h-56 overflow-hidden">
-          <img
-            src={goal.image}
-            alt={goal.alt}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-          {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
-
-          {/* Objective number overlay */}
-          <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-hmr/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
-            <span className="font-mono-tech text-sm font-bold text-primary-foreground">
-              {goal.number}
-            </span>
-          </div>
-        </div>
-
-        {/* Content Section */}
-        <div className="p-6 md:p-8">
-          {/* Header with Icon and Status */}
-          <div className="flex items-center justify-between mb-4">
-          {/* Icon */}
-          <div className="relative w-14 h-14">
-            <div className="absolute inset-0 rounded-xl bg-gradient-hmr opacity-20 blur-md" />
-            <div className="relative w-full h-full rounded-xl bg-gradient-hmr flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <Icon className="w-7 h-7 text-primary-foreground" />
+      <div className="rounded-2xl bg-card/40 backdrop-blur-sm border border-border/50 overflow-hidden group-hover:border-hmr/30 transition-all duration-500">
+        {/* Top Header Bar */}
+        <div
+          className="px-6 py-4 border-b border-border/30 flex items-center justify-between"
+          style={{ background: `linear-gradient(135deg, ${team.accentColor}08, transparent)` }}
+        >
+          <div className="flex items-center gap-4">
+            {/* Badge */}
+            <div
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono-tech font-bold tracking-wider text-white ${team.badgeColor}`}
+            >
+              {team.badge}
             </div>
-          </div>
-
-          {/* Status indicator */}
-          <div className="flex items-center gap-2">
-            <span
-              className={`w-2 h-2 rounded-full ${
-                goal.status === "active" ? "bg-hmr animate-pulse" : "bg-muted"
-              }`}
-            />
-            <span className="font-mono-tech text-[10px] tracking-[0.15em] text-muted-foreground uppercase">
-              {goal.status === "active" ? "In Progress" : "Pending"}
-            </span>
-          </div>
-        </div>
-
-        <h3 className="font-heading text-2xl font-semibold mb-3 relative">
-          {/* Base text (visible when not hovered) */}
-          <span className="transition-opacity duration-300 group-hover:opacity-0">
-            {goal.title}
-          </span>
-          {/* Gradient text (visible when hovered) */}
-          <span className="absolute inset-0 text-gradient-hmr opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            {goal.title}
-          </span>
-        </h3>
-
-        <p className="text-muted-foreground leading-relaxed mb-6">
-          {goal.description}
-        </p>
-
-        {/* Key Focus Areas */}
-        <div className="mb-6">
-          <h4 className="font-mono-tech text-xs tracking-[0.15em] text-hmr-light uppercase mb-3">
-            Key Focus Areas
-          </h4>
-          <ul className="space-y-2">
-            {goal.details.map((detail, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: index * 0.1 + i * 0.1 + 0.3 }}
-                className="flex items-start gap-3 text-sm text-foreground/80"
-              >
-                <CheckCircle2 className="w-4 h-4 text-hmr shrink-0 mt-0.5" />
-                <span>{detail}</span>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Expected Outcome */}
-        <div className="rounded-lg bg-secondary/50 border border-hmr/20 p-4">
-          <div className="flex items-start gap-3">
-            <Target className="w-5 h-5 text-hmr shrink-0 mt-0.5" />
+            {/* Team Name */}
             <div>
-              <p className="font-mono-tech text-[10px] tracking-[0.15em] text-hmr-light uppercase mb-1">
-                Expected Outcome
-              </p>
-              <p className="text-sm text-foreground/90 leading-relaxed">
-                {goal.outcome}
+              <h3 className="font-heading text-xl md:text-2xl font-semibold">
+                {team.teamName}
+              </h3>
+              <p className="font-mono-tech text-xs text-muted-foreground tracking-wide">
+                {team.tagline}
               </p>
             </div>
           </div>
+
+          {/* Status & Stats */}
+          <div className="hidden sm:flex items-center gap-6">
+            <div className="text-right">
+              <p className="font-mono-tech text-xs text-muted-foreground">LEAD</p>
+              <p className="font-heading text-sm font-medium">{team.lead}</p>
+            </div>
+            <div className="w-px h-8 bg-border/50" />
+            <div className="text-right">
+              <p className="font-mono-tech text-xs text-muted-foreground">MEMBERS</p>
+              <p className="font-heading text-sm font-medium">{team.memberCount}</p>
+            </div>
+            <div className="w-px h-8 bg-border/50" />
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-2.5 h-2.5 rounded-full ${
+                  team.status === "active" ? "bg-emerald-500 animate-pulse" : "bg-muted"
+                }`}
+              />
+              <span className="font-mono-tech text-xs text-muted-foreground uppercase tracking-wider">
+                {team.status === "active" ? "Active" : "Pending"}
+              </span>
+            </div>
+          </div>
         </div>
+
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-[300px_1fr]">
+          {/* Photo Placeholder */}
+          <div className="relative">
+            <div className="aspect-[4/3] lg:aspect-auto lg:h-[280px] relative overflow-hidden">
+              {/* Placeholder Background with Pattern */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: `linear-gradient(135deg, ${team.accentColor}15, ${team.accentColor}05)`,
+                }}
+              />
+
+              {/* Grid Pattern Overlay */}
+              <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(${team.accentColor}20 1px, transparent 1px),
+                    linear-gradient(90deg, ${team.accentColor}20 1px, transparent 1px)
+                  `,
+                  backgroundSize: '24px 24px',
+                }}
+              />
+
+              {/* Diagonal Lines */}
+              <svg className="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
+                <defs>
+                  <pattern id={`diag-${team.id}`} patternUnits="userSpaceOnUse" width="40" height="40">
+                    <path d="M-10,10 l20,-20 M0,40 l40,-40 M30,50 l20,-20"
+                      style={{ stroke: team.accentColor, strokeWidth: 1 }} />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill={`url(#diag-${team.id})`} />
+              </svg>
+
+              {/* Center Content - Camera Icon & Text */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="relative"
+                >
+                  {/* Glowing ring */}
+                  <div
+                    className="absolute inset-0 rounded-full blur-xl opacity-30"
+                    style={{ background: team.accentColor }}
+                  />
+                  <div
+                    className="relative w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center"
+                    style={{ borderColor: `${team.accentColor}60` }}
+                  >
+                    <Camera className="w-8 h-8" style={{ color: team.accentColor }} />
+                  </div>
+                </motion.div>
+                <p className="mt-4 font-mono-tech text-xs tracking-widest uppercase" style={{ color: `${team.accentColor}99` }}>
+                  Photo Coming Soon
+                </p>
+              </div>
+
+              {/* Corner Decorations */}
+              <div
+                className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2"
+                style={{ borderColor: `${team.accentColor}40` }}
+              />
+              <div
+                className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2"
+                style={{ borderColor: `${team.accentColor}40` }}
+              />
+
+              {/* Team Icon Watermark */}
+              <div className="absolute bottom-4 left-4">
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
+                  style={{ background: `${team.accentColor}20` }}
+                >
+                  <Icon className="w-5 h-5" style={{ color: team.accentColor }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className="p-6 lg:p-8">
+            {/* Mobile Stats */}
+            <div className="flex sm:hidden items-center gap-4 mb-4 pb-4 border-b border-border/30">
+              <div>
+                <p className="font-mono-tech text-[10px] text-muted-foreground">LEAD</p>
+                <p className="font-heading text-sm font-medium">{team.lead}</p>
+              </div>
+              <div className="w-px h-6 bg-border/50" />
+              <div>
+                <p className="font-mono-tech text-[10px] text-muted-foreground">MEMBERS</p>
+                <p className="font-heading text-sm font-medium">{team.memberCount}</p>
+              </div>
+              <div className="flex items-center gap-1.5 ml-auto">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="font-mono-tech text-[10px] text-muted-foreground uppercase">Active</span>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              {team.description}
+            </p>
+
+            {/* Two Column Layout for Responsibilities & Focus */}
+            <div className="grid md:grid-cols-2 gap-6 mb-6">
+              {/* Responsibilities */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Briefcase className="w-4 h-4" style={{ color: team.accentColor }} />
+                  <h4 className="font-mono-tech text-xs tracking-[0.15em] uppercase" style={{ color: team.accentColor }}>
+                    Responsibilities
+                  </h4>
+                </div>
+                <ul className="space-y-2">
+                  {team.responsibilities.slice(0, 4).map((item, i) => (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      transition={{ delay: index * 0.1 + i * 0.05 + 0.3 }}
+                      className="flex items-start gap-2 text-sm text-foreground/80"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: team.accentColor }} />
+                      <span>{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Current Focus */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Crosshair className="w-4 h-4" style={{ color: team.accentColor }} />
+                  <h4 className="font-mono-tech text-xs tracking-[0.15em] uppercase" style={{ color: team.accentColor }}>
+                    Current Focus
+                  </h4>
+                </div>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  {team.currentFocus}
+                </p>
+              </div>
+            </div>
+
+            {/* Tools/Tech Stack */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-mono-tech text-[10px] text-muted-foreground tracking-wider uppercase mr-2">
+                Tools:
+              </span>
+              {team.tools.map((tool, i) => (
+                <motion.span
+                  key={tool}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.5 + i * 0.05 }}
+                  className="px-2.5 py-1 rounded-md text-xs font-mono-tech border"
+                  style={{
+                    borderColor: `${team.accentColor}30`,
+                    background: `${team.accentColor}10`,
+                    color: team.accentColor
+                  }}
+                >
+                  {tool}
+                </motion.span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -852,23 +1004,36 @@ const MissionSection = () => {
           <InteractiveComparison />
         </div>
 
-        {/* Goals section */}
-        <div className="max-w-4xl mx-auto">
+        {/* Team Objectives Section */}
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-3 mb-8"
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10"
           >
-            <CheckCircle2 className="w-5 h-5 text-hmr" />
-            <h3 className="font-heading text-2xl font-semibold">
-              Engineering Objectives
-            </h3>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-hmr/10 border border-hmr/20 flex items-center justify-center">
+                <Users className="w-5 h-5 text-hmr" />
+              </div>
+              <div>
+                <h3 className="font-heading text-2xl font-semibold">
+                  Engineering Teams
+                </h3>
+                <p className="font-mono-tech text-xs text-muted-foreground tracking-wide">
+                  What each team is working on
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono-tech text-xs">{teamObjectives.length} Active Teams</span>
+            </div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-            {goals.map((goal, i) => (
-              <GoalCard key={goal.number} goal={goal} index={i} />
+          <div className="space-y-6">
+            {teamObjectives.map((team, i) => (
+              <TeamObjectiveCard key={team.id} team={team} index={i} />
             ))}
           </div>
         </div>
