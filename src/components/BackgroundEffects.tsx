@@ -1,12 +1,6 @@
-import EuropeNetwork from './EuropeNetwork';
-
-// Main background effects component
+// Main background effects component (placeholder for future effects)
 export const BackgroundEffects = () => {
-  // return (
-  //   <div className="fixed inset-0 z-0 bg-background overflow-hidden">
-  //     <EuropeNetwork />
-  //   </div>
-  // );
+  return null;
 };
 
 export default BackgroundEffects;
