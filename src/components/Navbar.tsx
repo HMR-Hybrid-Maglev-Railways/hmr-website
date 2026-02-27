@@ -5,8 +5,8 @@ const navLinks = [
   { label: "How It Works", href: "#hybrid-maglev" },
   { label: "Vision", href: "#vision" },
   { label: "Mission", href: "#mission" },
-  { label: "Technology", href: "#technology" },
   { label: "Team", href: "#team" },
+  { label: "Join Us", href: "#recruitment" },
 ];
 
 const Navbar = () => {
@@ -91,7 +91,7 @@ const Navbar = () => {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <button
-              onClick={() => scrollTo("#join")}
+              onClick={() => scrollTo("#recruitment")}
               className="group relative px-5 py-2.5 text-sm font-medium rounded-lg overflow-hidden"
             >
               <span className="absolute inset-0 bg-gradient-hmr transition-opacity group-hover:opacity-90" />
@@ -186,7 +186,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                onClick={() => scrollTo("#join")}
+                onClick={() => scrollTo("#recruitment")}
                 className="mt-12 px-8 py-4 rounded-xl bg-gradient-hmr text-primary-foreground font-heading font-semibold text-lg glow-blue"
               >
                 Join the Team

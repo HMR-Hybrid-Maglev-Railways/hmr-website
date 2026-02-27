@@ -75,9 +75,9 @@ const transportModes: {
   {
     name: "Bus",
     icon: Bus,
-    color: "rgb(107, 114, 128)",
-    bgColor: "bg-gray-500",
-    lightColor: "rgb(156, 163, 175)"
+    color: "rgb(20, 184, 166)",
+    bgColor: "bg-teal-500",
+    lightColor: "rgb(94, 234, 212)"
   },
 ];
 
@@ -153,12 +153,13 @@ const normalizeValue = (value: number, metric: MetricData) => {
   const values = Object.values(metric.values);
   const max = Math.max(...values);
   const min = Math.min(...values);
+  const BUFFER = 10; // Minimum 10% for worst performer so it's visible
 
   if (metric.inverted) {
     // For inverted metrics, lower is better, so invert the scale
-    return ((max - value) / (max - min)) * 100;
+    return BUFFER + ((max - value) / (max - min)) * (100 - BUFFER);
   }
-  return (value / max) * 100;
+  return BUFFER + (value / max) * (100 - BUFFER);
 };
 
 // Helper to get winner for a metric
@@ -652,8 +653,8 @@ const InteractiveComparison = () => {
                       {transportModes.map((mode) => {
                         const value = metric.values[mode.name];
                         const percentage = metric.inverted
-                          ? ((maxValue - value) / maxValue) * 100
-                          : (value / maxValue) * 100;
+                          ? 10 + ((maxValue - value) / maxValue) * 90
+                          : 10 + (value / maxValue) * 90;
                         const isWinner = mode.name === winner;
 
                         return (

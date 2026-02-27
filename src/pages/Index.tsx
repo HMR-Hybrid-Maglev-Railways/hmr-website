@@ -4,7 +4,8 @@ import HybridMaglevSection from "@/components/HybridMaglevSection";
 import VisionSection from "@/components/VisionSection";
 import MissionSection from "@/components/MissionSection";
 import TeamSection from "@/components/TeamSection";
-import JoinSection from "@/components/JoinSection";
+import RecruitmentSection from "@/components/RecruitmentSection";
+import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import BackgroundEffects from "@/components/BackgroundEffects";
 
@@ -22,7 +23,8 @@ const Index = () => {
         <VisionSection />
         <MissionSection />
         <TeamSection />
-        <JoinSection />
+        <RecruitmentSection />
+        <ContactSection />
         <Footer />
       </div>
     </main>
