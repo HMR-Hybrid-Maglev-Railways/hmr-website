@@ -28,7 +28,6 @@ const disciplines = [
       "Perform stress and fatigue analysis",
       "Develop prototypes using TU/e facilities",
     ],
-    requirements: "2nd year+ Bachelor or Master student in Mechanical Engineering",
   },
   {
     icon: Zap,
@@ -42,7 +41,6 @@ const disciplines = [
       "Implement control algorithms",
       "Develop embedded software for vehicle control",
     ],
-    requirements: "2nd year+ Bachelor or Master student in Electrical Engineering",
   },
   {
     icon: Atom,
@@ -56,7 +54,6 @@ const disciplines = [
       "Optimize levitation gap control",
       "Conduct electromagnetic simulations",
     ],
-    requirements: "2nd year+ Bachelor or Master student in Applied Physics",
   },
 ];
 
@@ -155,14 +152,9 @@ const RecruitmentSection = () => {
                     <d.icon className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-heading text-lg font-semibold">
-                        {d.label}
-                      </h3>
-                      <span className="px-2 py-0.5 rounded-full bg-secondary text-[10px] font-mono-tech tracking-wider text-muted-foreground">
-                        {d.tag}
-                      </span>
-                    </div>
+                    <h3 className="font-heading text-lg font-semibold">
+                      {d.label}
+                    </h3>
                   </div>
                 </div>
 
@@ -196,14 +188,6 @@ const RecruitmentSection = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
-
-                {/* Requirements */}
-                <div className="mt-auto pt-3 border-t border-border/30">
-                  <p className="text-xs font-mono-tech text-foreground/70 flex items-start gap-1">
-                    <GraduationCap className="w-3 h-3 shrink-0" />
-                    {d.requirements}
-                  </p>
                 </div>
               </div>
             </motion.div>

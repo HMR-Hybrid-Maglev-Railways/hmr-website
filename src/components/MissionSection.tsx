@@ -110,9 +110,9 @@ const teamObjectives = [
     teamName: "Electrical Engineering",
     badge: "EE",
     badgeColor: "badge-ee",
-    accentColor: "hsl(205, 90%, 60%)", // Blue
+    accentColor: "#eab308", // Yellow
     icon: Zap,
-    lead: "Ahmed Elsaid",
+    lead: "Lars Hilkens",
     memberCount: 3,
     status: "active",
     tagline: "Powering the Future of Rail",
@@ -133,12 +133,12 @@ const teamObjectives = [
     teamName: "Data Science & Software",
     badge: "DS",
     badgeColor: "badge-ds",
-    accentColor: "hsl(280, 70%, 60%)", // Purple
+    accentColor: "#06b6d4", // Cyan
     icon: Atom,
     lead: "Kirill Chekmenev",
     memberCount: 3,
     status: "active",
-    tagline: "Mapping the Network Revolution",
+    tagline: "Using Data to Prove Feasibility",
     description:
       "Our data science team builds the analytical backbone of the project. We're developing the Railway Network Analysis Tool—an interactive platform that models deployment scenarios, costs, and benefits across the European rail network.",
     responsibilities: [
@@ -148,8 +148,8 @@ const teamObjectives = [
       "Simulation of deployment scenarios",
       "Data collection & infrastructure mapping"
     ],
-    currentFocus: "Building an interactive web application that allows stakeholders to explore hybrid maglev deployment scenarios. Implementing route optimization algorithms and visualizing network connectivity improvements.",
-    tools: ["Python", "React", "D3.js", "Graph Databases"],
+    currentFocus: "Building an interactive web application that allows stakeholders to explore hybrid maglev deployment scenarios based on publicaly available open-source databases.",
+    tools: ["Python", "Data Analysis", "OpenStreetMap", "Software Development"],
   },
   {
     id: "OPS",
@@ -158,21 +158,21 @@ const teamObjectives = [
     badgeColor: "badge-ie",
     accentColor: "hsl(160, 60%, 45%)", // Teal
     icon: Users,
-    lead: "Tigran Bagdasaryan",
-    memberCount: 2,
+    lead: "Kirill Chekmenev",
+    memberCount: 3,
     status: "active",
     tagline: "Connecting Vision to Reality",
     description:
       "The operations team keeps the project on track (pun intended). We handle project coordination, stakeholder communications, recruitment, and public relations to ensure our technical achievements reach the right audiences.",
     responsibilities: [
-      "Project timeline & milestone management",
       "Stakeholder & sponsor relations",
       "Team recruitment & onboarding",
       "Social media & content creation",
-      "Event coordination & presentations"
+      "Event coordination & presentations",
+      "Internal events organizing",
     ],
-    currentFocus: "Expanding the team through targeted recruitment at TU/e, building partnerships with rail industry stakeholders, and developing our public presence through the website and social media channels.",
-    tools: ["Notion", "Figma", "Social Media", "Analytics"],
+    currentFocus: "Expanding the team through targeted recruitment at TU/e, building partnerships with rail industry stakeholders, and making our engineers' lives better.",
+    tools: ["Public/External Relations", "Social Media", "Stakeholder Interactions"],
   },
 ];
 
@@ -1020,9 +1020,6 @@ const MissionSection = () => {
                 <h3 className="font-heading text-2xl font-semibold">
                   Engineering Teams
                 </h3>
-                <p className="font-mono-tech text-xs text-muted-foreground tracking-wide">
-                  What each team is working on
-                </p>
               </div>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">

@@ -136,7 +136,7 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <button
-            onClick={() => scrollTo("#join")}
+            onClick={() => scrollTo("#recruitment")}
             className="group relative px-8 py-4 rounded-xl overflow-hidden"
           >
             <span className="absolute inset-0 bg-gradient-hmr" />

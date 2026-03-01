@@ -83,7 +83,7 @@ const PhaseCard = ({
         }`}
       >
         <span className="font-mono-tech text-[10px] tracking-[0.15em]">
-          PHASE_{index + 1}
+          PHASE {index + 1}
         </span>
       </div>
 
