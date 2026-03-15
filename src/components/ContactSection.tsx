@@ -40,7 +40,7 @@ const ContactSection = () => {
         </motion.div>
 
         {/* Contact Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Apply Now Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -80,12 +80,7 @@ const ContactSection = () => {
                   className="group flex items-center justify-between w-full px-6 py-4 rounded-xl bg-gradient-hmr text-primary-foreground font-heading font-semibold hover:opacity-90 transition-opacity"
                 >
                   <span>Apply Now</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono-tech text-sm font-normal opacity-80">
-                      Application Form
-                    </span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
             </div>
@@ -120,15 +115,15 @@ const ContactSection = () => {
 
               <a
                 href="mailto:board.hmr@gmail.com"
-                className="group flex items-center justify-between w-full px-6 py-4 rounded-xl border border-border bg-secondary/30 text-foreground font-heading font-semibold hover:border-hmr/30 hover:bg-secondary/50 transition-all"
+                className="group flex items-center justify-between w-full px-6 py-4 rounded-xl border border-border bg-secondary/30 text-foreground hover:border-hmr/30 hover:bg-secondary/50 transition-all"
               >
-                <span>Get in Touch</span>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col">
+                  <span className="font-heading font-semibold">Get in Touch</span>
                   <span className="font-mono-tech text-sm font-normal text-foreground/70">
                     board.hmr@gmail.com
                   </span>
-                  <ArrowRight className="w-5 h-5 text-foreground/70 group-hover:translate-x-1 group-hover:text-foreground transition-all" />
                 </div>
+                <ArrowRight className="w-5 h-5 text-foreground/70 group-hover:translate-x-1 group-hover:text-foreground transition-all" />
               </a>
             </div>
           </motion.div>
@@ -139,6 +134,7 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            className="sm:col-span-2 lg:col-span-1"
           >
             <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border p-8 h-full flex flex-col">
               <div className="flex items-center gap-4 mb-6">

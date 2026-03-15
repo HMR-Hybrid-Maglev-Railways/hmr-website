@@ -178,14 +178,6 @@ const Footer = () => {
                     Sponsorship
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="mailto:press@hmr-tue.nl"
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                  >
-                    Press Inquiries
-                  </a>
-                </li>
               </ul>
 
               {/* TU/e badge */}

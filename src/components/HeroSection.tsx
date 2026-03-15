@@ -87,7 +87,7 @@ const HeroSection = () => {
           <span className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-hmr/20 bg-secondary/30 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-hmr animate-pulse" />
             <span className="font-mono-tech text-xs md:text-sm tracking-[0.15em] text-hmr-light uppercase">
-              TU/e Student Team
+              Hybrid Maglev Railways
             </span>
           </span>
         </motion.div>

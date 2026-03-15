@@ -5,7 +5,7 @@ import { Gauge, Zap, Wind } from "lucide-react";
 const phases = [
   {
     title: "Conventional Rolling",
-    speedLabel: "0-80 km/h",
+    speedLabel: "0-150 km/h",
     speedValue: 80,
     mode: "WHEEL_CONTACT",
     description:
@@ -20,7 +20,7 @@ const phases = [
   },
   {
     title: "Hybrid Transition",
-    speedLabel: "80-200 km/h",
+    speedLabel: "150-200 km/h",
     speedValue: 200,
     mode: "MAGNETIC_ASSIST",
     description:

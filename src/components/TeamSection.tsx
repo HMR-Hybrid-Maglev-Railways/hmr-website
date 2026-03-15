@@ -4,82 +4,85 @@ import { useState } from "react";
 
 type Discipline = "all" | "ME" | "EE" | "DS" | "IE";
 
+const photo = (name: string) =>
+  `${import.meta.env.BASE_URL}team_photos/personal/${name}.jpg`;
+
 const teamMembers = [
   {
     name: "Lars Hilkens",
     role: "Team Lead",
     discipline: "ME" as const,
-    image: null,
+    image: photo("lars"),
     linkedin: "https://www.linkedin.com/in/lars-hilkens/",
   },
   {
     name: "Kirill Chekmenev",
     role: "Project Lead",
     discipline: "DS" as const,
-    image: null,
+    image: photo("kirill"),
     linkedin: "https://www.linkedin.com/in/kirill-chekmenev/",
   },
   {
     name: "Andreas Christoforou",
     role: "Engineer",
     discipline: "ME" as const,
-    image: null,
+    image: photo("andreas"),
     linkedin: "https://www.linkedin.com/in/andreas-christoforou-39698033a/",
   },
   {
     name: "José Ledesma Martin",
     role: "Engineer",
     discipline: "ME" as const,
-    image: null,
+    image: photo("jose"),
     linkedin: "https://www.linkedin.com/in/jose-luis-ledesma-martin-1360b832b/",
   },
   {
     name: "Gustavs Grecihins",
     role: "Engineer",
     discipline: "ME" as const,
-    image: null,
+    image: photo("gustavs"),
     linkedin: "https://www.linkedin.com/in/gustavs-gre%C4%8Dihins-b37553342/",
   },
   {
     name: "Ahmed Elsaid",
     role: "Engineer",
     discipline: "EE" as const,
-    image: null,
+    image: photo("ahmed"),
     linkedin: "https://www.linkedin.com/in/ahmed-elsaid-4815b8292/",
   },
   {
     name: "Nabeel Shaikh",
     role: "Engineer",
     discipline: "EE" as const,
-    image: null,
+    image: photo("nabeel"),
     linkedin: "https://www.linkedin.com/in/nabeel-shaikh-a51413363/",
   },
   {
     name: "Yuexi Yang",
     role: "Data Analyst",
     discipline: "DS" as const,
-    image: null,
+    image: photo("yuexi"),
     linkedin: "https://www.linkedin.com/in/yuexi-yang-636114333/",
   },
   {
     name: "Zofia Bilewicz",
     role: "Data Analyst",
     discipline: "DS" as const,
-    image: null,
+    image: photo("zofia"),
     linkedin: "https://www.linkedin.com/in/zofia-bilewicz-09536b25a/",
   },
   {
     name: "Tigran Bagdasaryan",
     role: "PR Manager",
     discipline: "IE" as const,
-    image: null,
+    image: photo("tigran"),
     linkedin: "https://www.linkedin.com/in/tigran-bagdasaryan-52207133b/",
   },
   {
     name: "Alisa Morozova",
     role: "Social Media Manager / Engineer",
     discipline: "EE" as const,
-    image: null,
+    image: null as string | null,
     linkedin: "https://www.linkedin.com/in/alisa-morozova-2b2b87210/",
   },
 ];
@@ -134,33 +137,32 @@ const TeamMemberCard = ({
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="group"
     >
-      <div className="team-card rounded-2xl p-6 h-full">
-        {/* Avatar */}
-        <div className="relative mb-5">
-          <div className="w-20 h-20 mx-auto relative">
-            {/* Hex border */}
-            <div className="absolute inset-0 hex-avatar bg-gradient-hmr" />
-            <div className="absolute inset-[2px] hex-avatar bg-secondary flex items-center justify-center overflow-hidden">
-              {member.image ? (
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="font-heading text-2xl font-bold text-gradient-hmr">
-                  {member.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </span>
-              )}
+      <div className="team-card rounded-2xl overflow-hidden h-full flex flex-col">
+        {/* Photo / Avatar */}
+        <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+          {member.image ? (
+            <img
+              src={member.image}
+              alt={member.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary via-card to-secondary">
+              <span className="font-heading text-5xl font-bold text-gradient-hmr">
+                {member.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </span>
             </div>
-          </div>
+          )}
+
+          {/* Gradient overlay at bottom for text readability */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
 
           {/* Discipline badge */}
           <div
-            className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full text-[10px] font-mono-tech tracking-wider text-white ${
+            className={`absolute top-3 right-3 px-2 py-0.5 rounded-full text-[10px] font-mono-tech tracking-wider text-white backdrop-blur-sm ${
               disciplineColors[member.discipline]
             }`}
           >
@@ -169,13 +171,11 @@ const TeamMemberCard = ({
         </div>
 
         {/* Info */}
-        <div className="text-center">
+        <div className="p-5 flex flex-col flex-1">
           <h3 className="font-heading text-lg font-semibold mb-1 relative">
-            {/* Base text (visible when not hovered) */}
             <span className="transition-opacity duration-300 group-hover:opacity-0">
               {member.name}
             </span>
-            {/* Gradient text (visible when hovered) */}
             <span className="absolute inset-0 text-gradient-hmr opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               {member.name}
             </span>
@@ -187,7 +187,7 @@ const TeamMemberCard = ({
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-hmr/30 transition-colors text-sm"
+            className="mt-auto inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-hmr/30 transition-colors text-sm w-fit"
           >
             <Linkedin className="w-4 h-4" />
             <span className="font-mono-tech text-xs">Connect</span>
