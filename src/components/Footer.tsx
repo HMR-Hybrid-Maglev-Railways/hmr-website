@@ -5,9 +5,9 @@ const quickLinks = [
   { label: "How It Works", href: "#hybrid-maglev" },
   { label: "Vision", href: "#vision" },
   { label: "Mission", href: "#mission" },
-  { label: "Technology", href: "#technology" },
   { label: "Team", href: "#team" },
-  { label: "Join Us", href: "#join" },
+  { label: "Join Us", href: "#recruitment" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 const socialLinks = [

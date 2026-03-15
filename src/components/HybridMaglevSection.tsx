@@ -10,7 +10,7 @@ const phases = [
     mode: "WHEEL_CONTACT",
     description:
       "The train starts like any other service, riding on steel wheels while using existing track geometry and signaling.",
-    image: `${import.meta.env.BASE_URL}images/hybrid-stage-rolling.svg`,
+    image: `${import.meta.env.BASE_URL}images/hmr_rolling.png`,
     alt: "Train rolling on steel wheels on a standard rail line",
     specs: [
       { label: "Mode", value: "Steel on Steel" },
@@ -25,7 +25,7 @@ const phases = [
     mode: "MAGNETIC_ASSIST",
     description:
       "As speed builds, magnetic propulsion activates. Guidance magnets begin to lift the chassis while wheels maintain stability.",
-    image: `${import.meta.env.BASE_URL}images/hybrid-stage-hybrid.svg`,
+    image: `${import.meta.env.BASE_URL}images/hmr_hybrid.png`,
     alt: "Train partially levitating as magnets begin to lift it above the rails",
     specs: [
       { label: "Mode", value: "Hybrid Lift" },
@@ -40,7 +40,7 @@ const phases = [
     mode: "FULL_MAGLEV",
     description:
       "At cruising speed the train is fully levitated with no rolling contact, enabling plane-like velocities with minimal friction.",
-    image: `${import.meta.env.BASE_URL}images/hybrid-stage-levitation.svg`,
+    image: `${import.meta.env.BASE_URL}images/hmr_levitate.png`,
     alt: "Train fully levitating above a guideway at very high speed",
     specs: [
       { label: "Mode", value: "Full Maglev" },

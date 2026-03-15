@@ -236,7 +236,7 @@ const RecruitmentSection = () => {
               <Calendar className="w-4 h-4 text-hmr shrink-0 mt-0.5" />
               <div>
                 <span className="font-semibold text-foreground">Duration:</span>
-                <span> Minimum 1 academic year commitment (September-August)</span>
+                <span> Minimum half an academic year commitment</span>
               </div>
             </div>
           </div>

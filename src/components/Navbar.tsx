@@ -52,13 +52,17 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           {/* Logo */}
-          <div className="relative flex items-center gap-3">
+          <button
+            onClick={() => scrollTo("#hero")}
+            className="relative flex items-center gap-3 focus:outline-none"
+            aria-label="Back to top"
+          >
             <img
               src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
               alt="HMR Logo"
               className="h-16 md:h-16 w-auto"
             />
-          </div>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
