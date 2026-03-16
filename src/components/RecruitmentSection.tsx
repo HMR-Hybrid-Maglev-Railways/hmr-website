@@ -6,7 +6,7 @@ import {
   Rocket,
   CheckCircle,
   TrendingUp,
-  Users,
+  Sprout,
   Info,
   Clock,
   GraduationCap,
@@ -80,7 +80,7 @@ const benefitCategories = [
   },
   {
     category: "Personal Growth",
-    icon: Users,
+    icon: Sprout,
     items: [
       "Develop leadership and project management skills",
       "Work in a passionate, mission-driven team environment",

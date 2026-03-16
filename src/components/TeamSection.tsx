@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Users, Linkedin, Wrench, Zap, Atom } from "lucide-react";
+import { Users, Linkedin, Wrench, Zap, Database, Megaphone } from "lucide-react";
 import { useState } from "react";
 
 type Discipline = "all" | "ME" | "EE" | "DS" | "IE";
@@ -104,13 +104,13 @@ const disciplines = [
   {
     id: "DS" as const,
     label: "Data Science",
-    icon: Atom,
+    icon: Database,
     count: teamMembers.filter((m) => m.discipline === "DS").length,
   },
   {
     id: "IE" as const,
     label: "Industrial Eng.",
-    icon: Users,
+    icon: Megaphone,
     count: teamMembers.filter((m) => m.discipline === "IE").length,
   },
 ];

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Target, CheckCircle2, Zap, Wrench, Atom, Camera, Plane, Bus, Train, Gauge, Users, Leaf, Clock, Crosshair, Briefcase } from "lucide-react";
+import { Target, CheckCircle2, Zap, Wrench, Atom, Database, Camera, Plane, Bus, Train, Gauge, Users, Leaf, Clock, Crosshair, Briefcase } from "lucide-react";
 
 type TransportMode = "Plane" | "Bus" | "Maglev";
 
@@ -93,6 +93,7 @@ const teamObjectives = [
     memberCount: 7,
     status: "active",
     tagline: "Designing, Building, and Testing the Hybrid Maglev System",
+    photo: "technical_1.jpg",
     description:
       "Our engineering team combines mechanical and electrical expertise to bring the hybrid maglev concept from theory to reality. From electromagnetic suspension design and power electronics to hands-on prototyping and computational simulation, we cover the full spectrum of disciplines needed to make frictionless rail travel work.",
     responsibilities: [
@@ -152,7 +153,7 @@ const teamObjectives = [
     badge: "DS",
     badgeColor: "badge-ds",
     accentColor: "#06b6d4", // Cyan
-    icon: Atom,
+    icon: Database,
     lead: "Kirill Chekmenev",
     memberCount: 3,
     status: "active",
@@ -724,6 +725,18 @@ const TeamObjectiveCard = ({
           </div>
         </div>
 
+        {/* Full-width photo banner for subsection teams */}
+        {'subsections' in team && team.subsections && 'photo' in team && team.photo && (
+          <div className="relative w-full aspect-[16/6] overflow-hidden">
+            <img
+              src={`${import.meta.env.BASE_URL}team_photos/team/${team.photo}`}
+              alt={team.teamName}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
+          </div>
+        )}
+
         {/* Main Content Grid */}
         <div className={'subsections' in team && team.subsections ? '' : 'grid lg:grid-cols-[300px_1fr]'}>
           {/* Photo Placeholder */}
@@ -837,98 +850,48 @@ const TeamObjectiveCard = ({
                 {team.subsections.map((sub, si) => (
                   <div
                     key={sub.title}
-                    className="rounded-xl border border-border/50 overflow-hidden bg-secondary/20"
+                    className="rounded-xl border border-border/50 overflow-hidden bg-secondary/20 p-5"
                   >
-                    <div className="grid lg:grid-cols-[220px_1fr]">
-                      {/* Photo */}
-                      <div className="relative hidden lg:block">
-                        <div className="h-full min-h-[180px] relative overflow-hidden">
-                          {sub.photo ? (
-                            <img
-                              src={`${import.meta.env.BASE_URL}team_photos/team/${sub.photo}`}
-                              alt={sub.title}
-                              className="absolute inset-0 w-full h-full object-cover"
-                            />
-                          ) : (
-                            <>
-                              <div
-                                className="absolute inset-0"
-                                style={{
-                                  background: `linear-gradient(135deg, ${team.accentColor}15, ${team.accentColor}05)`,
-                                }}
-                              />
-                              <div
-                                className="absolute inset-0 opacity-30"
-                                style={{
-                                  backgroundImage: `
-                                    linear-gradient(${team.accentColor}20 1px, transparent 1px),
-                                    linear-gradient(90deg, ${team.accentColor}20 1px, transparent 1px)
-                                  `,
-                                  backgroundSize: '20px 20px',
-                                }}
-                              />
-                              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                <div
-                                  className="w-14 h-14 rounded-full border-2 border-dashed flex items-center justify-center"
-                                  style={{ borderColor: `${team.accentColor}50` }}
-                                >
-                                  <Camera className="w-6 h-6" style={{ color: `${team.accentColor}80` }} />
-                                </div>
-                              </div>
-                            </>
-                          )}
+                    <div className="flex items-center gap-2 mb-4">
+                      <Briefcase className="w-4 h-4" style={{ color: team.accentColor }} />
+                      <h4 className="font-heading text-base font-semibold" style={{ color: team.accentColor }}>
+                        {sub.title}
+                      </h4>
+                    </div>
 
-                          <div
-                            className="absolute bottom-3 right-3 w-6 h-6 border-r-2 border-b-2"
-                            style={{ borderColor: `${team.accentColor}30` }}
-                          />
-                        </div>
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      {/* Responsibilities */}
+                      <div>
+                        <p className="font-mono-tech text-[10px] tracking-[0.15em] uppercase text-muted-foreground mb-2">
+                          Responsibilities
+                        </p>
+                        <ul className="space-y-1.5">
+                          {sub.responsibilities.map((item, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={isInView ? { opacity: 1, x: 0 } : {}}
+                              transition={{ delay: index * 0.1 + si * 0.08 + i * 0.04 + 0.3 }}
+                              className="flex items-start gap-2 text-sm text-foreground/80"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: team.accentColor }} />
+                              <span>{item}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
                       </div>
 
-                      {/* Content */}
-                      <div className="p-5">
-                        <div className="flex items-center gap-2 mb-4">
-                          <Briefcase className="w-4 h-4" style={{ color: team.accentColor }} />
-                          <h4 className="font-heading text-base font-semibold" style={{ color: team.accentColor }}>
-                            {sub.title}
-                          </h4>
+                      {/* Current Goals */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Crosshair className="w-3.5 h-3.5" style={{ color: team.accentColor }} />
+                          <p className="font-mono-tech text-[10px] tracking-[0.15em] uppercase text-muted-foreground">
+                            Current Goals
+                          </p>
                         </div>
-
-                        <div className="grid sm:grid-cols-2 gap-5">
-                          {/* Responsibilities */}
-                          <div>
-                            <p className="font-mono-tech text-[10px] tracking-[0.15em] uppercase text-muted-foreground mb-2">
-                              Responsibilities
-                            </p>
-                            <ul className="space-y-1.5">
-                              {sub.responsibilities.map((item, i) => (
-                                <motion.li
-                                  key={i}
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                                  transition={{ delay: index * 0.1 + si * 0.08 + i * 0.04 + 0.3 }}
-                                  className="flex items-start gap-2 text-sm text-foreground/80"
-                                >
-                                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: team.accentColor }} />
-                                  <span>{item}</span>
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          {/* Current Goals */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-2">
-                              <Crosshair className="w-3.5 h-3.5" style={{ color: team.accentColor }} />
-                              <p className="font-mono-tech text-[10px] tracking-[0.15em] uppercase text-muted-foreground">
-                                Current Goals
-                              </p>
-                            </div>
-                            <p className="text-sm text-foreground/80 leading-relaxed">
-                              {sub.currentGoals}
-                            </p>
-                          </div>
-                        </div>
+                        <p className="text-sm text-foreground/80 leading-relaxed">
+                          {sub.currentGoals}
+                        </p>
                       </div>
                     </div>
                   </div>

@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import {
-  Wind,
-  Zap,
-  Building2,
+  Timer,
+  Waves,
+  Leaf,
+  Network,
   Globe,
   ChevronLeft,
   ChevronRight,
@@ -11,28 +12,28 @@ import { useState, useCallback, useEffect, useRef } from "react";
 
 const cards = [
   {
-    icon: Wind,
+    icon: Timer,
     title: "Flying on the Rail",
     description:
       "Imagine boarding a train in Amsterdam and arriving in Paris in under an hour — without ever leaving the ground. Magnetic levitation eliminates physical contact between the train and the track, virtually removing friction from the equation. The result is a system that can sustain cruising speeds above 500 km/h, cutting journey times between major European cities by half compared to today's fastest services.",
     stat: { value: "50%", label: "Travel Time Reduction" },
   },
   {
-    icon: Wind,
+    icon: Waves,
     title: "Smooth Journey",
     description:
       "Without wheels striking rails, the ride becomes remarkably quiet and stable — no clatter, no vibration, no lateral sway. Passengers experience the smoothness of a glider, free from the turbulence and oscillations of conventional high-speed rail. Noise output drops by up to 80% at equivalent speeds, making the system far less disruptive to communities along the route and dramatically more comfortable for those on board.",
     stat: { value: "80%", label: "Noise Reduction" },
   },
   {
-    icon: Zap,
+    icon: Leaf,
     title: "Speed Meets Sustainability",
     description:
-      "By delivering door-to-door travel times that compete with short-haul aviation, maglev rail naturally shifts passengers away from the most carbon-intensive mode of transport. The system runs on electric propulsion designed to integrate with renewable energy grids, achieving up to 95% lower CO₂ emissions per passenger-kilometer than flying. At scale, this shift could eliminate millions of tonnes of aviation emissions annually across Europe.",
+      "By delivering door-to-door travel times that better than short-haul aviation, maglev rail naturally shifts passengers away from the most carbon-intensive mode of transport. The system runs on electric propulsion designed to integrate with renewable energy grids, achieving up to 95% lower CO₂ emissions per passenger-kilometer than flying with potential to zero emission. At scale, this shift could eliminate millions of tonnes of aviation emissions annually across Europe.",
     stat: { value: "95%", label: "Lower Emissions" },
   },
   {
-    icon: Building2,
+    icon: Network,
     title: "Smooth Infrastructure Integration",
     description:
       "Europe's rail network represents over half a trillion euros of built infrastructure — stations, bridges, tunnels, and right-of-way corridors developed over more than a century. Rather than starting from scratch, our hybrid approach retrofits existing steel rail to support both conventional and maglev operations on the same tracks. This preserves the enormous value already in the ground while unlocking next-generation speeds on routes that matter most.",
