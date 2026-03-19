@@ -80,6 +80,8 @@ const Footer = () => {
               src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
               alt="HMR Logo"
               className="h-16 w-auto mb-5"
+              width={64}
+              height={64}
             />
             <p className="text-muted-foreground leading-relaxed max-w-sm mb-6 text-sm">
               A TU/e engineering team developing retrofittable hybrid maglev
@@ -154,10 +156,10 @@ const Footer = () => {
         {/* Bottom strip */}
         <div className="h-px bg-gradient-to-r from-transparent via-hmr/15 to-transparent mb-5" />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} HMR — Hybrid Maglev Railways. All rights reserved.
           </p>
-          <span className="font-mono-tech text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase">
+          <span className="font-mono-tech text-[10px] tracking-[0.3em] text-muted-foreground uppercase">
             TU/e · Eindhoven · Netherlands
           </span>
         </div>

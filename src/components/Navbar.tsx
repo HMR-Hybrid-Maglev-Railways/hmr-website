@@ -61,6 +61,8 @@ const Navbar = () => {
               src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
               alt="HMR Logo"
               className="h-16 md:h-16 w-auto"
+              width={64}
+              height={64}
             />
           </button>
 

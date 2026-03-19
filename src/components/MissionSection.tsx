@@ -93,7 +93,7 @@ const teamObjectives = [
     memberCount: 7,
     status: "active",
     tagline: "Designing, Building, and Testing the Hybrid Maglev System",
-    photo: "technical_1.jpg",
+    photo: "technical_1.webp",
     description:
       "Our engineering team combines mechanical and electrical expertise to bring the hybrid maglev concept from theory to reality. From electromagnetic suspension design and power electronics to hands-on prototyping and computational simulation, we cover the full spectrum of disciplines needed to make frictionless rail travel work.",
     responsibilities: [
@@ -107,7 +107,7 @@ const teamObjectives = [
     subsections: [
       {
         title: "Prototyping",
-        photo: "technical_1.jpg",
+        photo: "technical_1.webp",
         responsibilities: [
           "Translate abstract physics concepts into physical test setups",
           "Gain hands-on experience with microcontrollers, sensors, and 3D-printed/machined parts",
@@ -117,7 +117,7 @@ const teamObjectives = [
       },
       {
         title: "Propulsion Design",
-        photo: "technical_1.jpg",
+        photo: "technical_1.webp",
         responsibilities: [
           "Design and develop a linear propulsion system",
           "Model how the train behaves as it is moving along the track",
@@ -127,7 +127,7 @@ const teamObjectives = [
       },
       {
         title: "Levitation Design",
-        photo: "technical_1.jpg",
+        photo: "technical_1.webp",
         responsibilities: [
           "Manage forces and unstable dynamics to keep the train floating above the track",
           "Design the electromagnetic systems necessary to keep trains suspended safely above the track",
@@ -137,7 +137,7 @@ const teamObjectives = [
       },
       {
         title: "Theoretical & Numerical Modelling",
-        photo: "technical_1.jpg",
+        photo: "technical_1.webp",
         responsibilities: [
           "Transform the system dynamics into computational simulations",
           "Model the complex kinematics of the train interacting with electromagnetic fields",
@@ -167,7 +167,7 @@ const teamObjectives = [
       "Simulation of deployment scenarios",
       "Data collection & infrastructure mapping"
     ],
-    photo: "rna_cringe_2.jpg",
+    photo: "rna_cringe_2.webp",
     currentFocus: "Building an interactive web application that allows stakeholders to explore hybrid maglev deployment scenarios based on publicaly available open-source databases.",
     tools: ["Python", "Data Analysis", "OpenStreetMap", "Software Development"],
   },
@@ -191,7 +191,7 @@ const teamObjectives = [
       "Event coordination & presentations",
       "Internal events organizing",
     ],
-    photo: "pr_3.jpg",
+    photo: "pr_3.webp",
     currentFocus: "Expanding the team through targeted recruitment at TU/e, building partnerships with rail industry stakeholders, and making our engineers' lives better.",
     tools: ["Public/External Relations", "Social Media", "Stakeholder Interactions"],
   },
@@ -732,6 +732,7 @@ const TeamObjectiveCard = ({
               src={`${import.meta.env.BASE_URL}team_photos/team/${team.photo}`}
               alt={team.teamName}
               className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
           </div>
@@ -747,6 +748,7 @@ const TeamObjectiveCard = ({
                   src={`${import.meta.env.BASE_URL}team_photos/team/${team.photo}`}
                   alt={team.teamName}
                   className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
             ) : (

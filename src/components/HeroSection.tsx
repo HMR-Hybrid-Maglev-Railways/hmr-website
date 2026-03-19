@@ -73,7 +73,7 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center pt-30 md:pt-0">
         {/* Subtitle */}
         <motion.div
           initial={{ opacity: 0 }}

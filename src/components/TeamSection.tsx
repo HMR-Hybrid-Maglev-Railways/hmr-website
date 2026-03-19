@@ -5,7 +5,7 @@ import { useState } from "react";
 type Discipline = "all" | "ME" | "EE" | "DS" | "IE";
 
 const photo = (name: string) =>
-  `${import.meta.env.BASE_URL}team_photos/personal/${name}.jpg`;
+  `${import.meta.env.BASE_URL}team_photos/personal/${name}.webp`;
 
 const teamMembers = [
   {
@@ -145,6 +145,7 @@ const TeamMemberCard = ({
               src={member.image}
               alt={member.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary via-card to-secondary">
@@ -187,6 +188,7 @@ const TeamMemberCard = ({
             href={member.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Connect with ${member.name} on LinkedIn`}
             className="mt-auto inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/50 text-muted-foreground hover:text-foreground hover:border-hmr/30 transition-colors text-sm w-fit"
           >
             <Linkedin className="w-4 h-4" />

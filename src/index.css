@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Fira+Code:wght@400;500;600&display=swap');
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
 
 @tailwind base;
 @tailwind components;
@@ -22,7 +24,7 @@
     --secondary-foreground: 210 40% 93%;
 
     --muted: 220 40% 14%;
-    --muted-foreground: 215 20% 55%;
+    --muted-foreground: 215 20% 68%;
 
     --accent: 215 80% 50%;
     --accent-foreground: 210 40% 98%;
