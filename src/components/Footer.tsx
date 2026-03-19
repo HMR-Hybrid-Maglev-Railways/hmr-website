@@ -1,13 +1,19 @@
 import { motion } from "framer-motion";
 import { Linkedin, Instagram, Mail, MapPin, ExternalLink } from "lucide-react";
+import { scrollTo } from "@/lib/utils";
 
-const quickLinks = [
-  { label: "How It Works", href: "#hybrid-maglev" },
-  { label: "Vision", href: "#vision" },
-  { label: "Mission", href: "#mission" },
-  { label: "Team", href: "#team" },
-  { label: "Join Us", href: "#recruitment" },
-  { label: "Contact Us", href: "#contact" },
+const linksColA = [
+  { label: "How It Works", href: "#hybrid-maglev", type: "scroll" as const },
+  { label: "Vision", href: "#vision", type: "scroll" as const },
+  { label: "Mission", href: "#mission", type: "scroll" as const },
+  { label: "Team", href: "#team", type: "scroll" as const },
+];
+
+const linksColB = [
+  { label: "Join Us", href: "#recruitment", type: "scroll" as const },
+  { label: "Contact Us", href: "#contact", type: "scroll" as const },
+  { label: "TU/e Website", href: "https://www.tue.nl", type: "external" as const },
+  { label: "Sponsorship", href: "mailto:board.hmr@gmail.com", type: "link" as const },
 ];
 
 const socialLinks = [
@@ -16,218 +22,144 @@ const socialLinks = [
   { icon: Mail, href: "mailto:board.hmr@gmail.com", label: "Email" },
 ];
 
-const Footer = () => {
-  const scrollTo = (href: string) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
+const LinkItem = ({
+  item,
+  scrollTo,
+}: {
+  item: (typeof linksColA)[0] | (typeof linksColB)[0];
+  scrollTo: (href: string) => void;
+}) => {
+  const className =
+    "group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200";
+  const arrow = (
+    <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-hmr text-xs">
+      →
+    </span>
+  );
 
+  if (item.type === "scroll") {
+    return (
+      <button onClick={() => scrollTo(item.href)} className={className}>
+        {arrow}
+        {item.label}
+      </button>
+    );
+  }
   return (
-    <footer className="relative overflow-hidden">
-      {/* Top wave divider */}
-      <div className="absolute top-0 left-0 right-0 h-px">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-hmr/50 to-transparent" />
-      </div>
+    <a
+      href={item.href}
+      target={item.type === "external" ? "_blank" : undefined}
+      rel={item.type === "external" ? "noopener noreferrer" : undefined}
+      className={className}
+    >
+      {arrow}
+      {item.label}
+      {item.type === "external" && <ExternalLink className="w-3 h-3 opacity-50" />}
+    </a>
+  );
+};
 
-      {/* Animated wave */}
-      <div className="absolute top-0 left-0 right-0 overflow-hidden">
-        <svg
-          viewBox="0 0 1200 40"
-          className="w-full h-10 fill-none"
-          preserveAspectRatio="none"
-        >
-          <motion.path
-            d="M0 20 Q 150 0 300 20 Q 450 40 600 20 Q 750 0 900 20 Q 1050 40 1200 20 V 40 H 0 Z"
-            fill="hsl(var(--card))"
-            initial={{ d: "M0 20 Q 150 0 300 20 Q 450 40 600 20 Q 750 0 900 20 Q 1050 40 1200 20 V 40 H 0 Z" }}
-            animate={{
-              d: [
-                "M0 20 Q 150 0 300 20 Q 450 40 600 20 Q 750 0 900 20 Q 1050 40 1200 20 V 40 H 0 Z",
-                "M0 20 Q 150 40 300 20 Q 450 0 600 20 Q 750 40 900 20 Q 1050 0 1200 20 V 40 H 0 Z",
-                "M0 20 Q 150 0 300 20 Q 450 40 600 20 Q 750 0 900 20 Q 1050 40 1200 20 V 40 H 0 Z",
-              ],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </svg>
-      </div>
+const Footer = () => {
+  return (
+    <footer className="relative overflow-hidden bg-background">
+      {/* Top separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-hmr/40 to-transparent" />
 
-      <div className="bg-card pt-20 pb-8">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Main footer content */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            {/* Brand column */}
-            <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-6"
-              >
-                <img
-                  src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
-                  alt="HMR Logo"
-                  className="h-36 w-auto mb-4"
-                />
-                <p className="text-muted-foreground leading-relaxed max-w-md">
-                  A TU/e student team engineering the future of rail
-                  transportation through hybrid maglev technology.
-                </p>
-              </motion.div>
+      {/* Footer nav grid */}
+      <div className="max-w-7xl mx-auto px-6 pt-14 pb-10">
+        <div className="grid md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
 
-              {/* Location */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="flex items-start gap-3 mb-6"
-              >
-                <MapPin className="w-5 h-5 text-hmr shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm text-foreground">
-                    Eindhoven University of Technology
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    De Zaale, 5612 AZ Eindhoven, Netherlands
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Social links */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="flex gap-3"
-              >
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-lg border border-border bg-secondary/30 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-hmr/30 transition-all"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Quick links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <h4 className="font-heading text-lg font-semibold mb-4">
-                Quick Links
-              </h4>
-              <ul className="space-y-3">
-                {quickLinks.map((link) => (
-                  <li key={link.href}>
-                    <button
-                      onClick={() => scrollTo(link.href)}
-                      className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Partners / Resources */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <h4 className="font-heading text-lg font-semibold mb-4">
-                Resources
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="https://www.tue.nl"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
-                  >
-                    TU/e Website
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:board.hmr@gmail.com"
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                  >
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:board.hmr@gmail.com"
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                  >
-                    Sponsorship
-                  </a>
-                </li>
-              </ul>
-
-              {/* TU/e badge */}
-              <div className="mt-6 p-4 rounded-xl border border-border bg-secondary/20">
-                <p className="font-mono-tech text-[10px] text-muted-foreground tracking-wider mb-2">
-                  AFFILIATED WITH
-                </p>
-                <p className="font-heading font-semibold text-sm">
-                  Eindhoven University of Technology
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Bottom bar */}
-          <div className="pt-8 border-t border-border">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              {/* Copyright */}
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} HMR — Hybrid Maglev Railways. All
-                rights reserved.
-              </p>
-
-              {/* Status badge */}
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/50 bg-secondary/30">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-mono-tech text-xs text-muted-foreground">
-                    Systems Operational
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Decorative bottom element */}
+          {/* Brand column */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-8 flex justify-center"
+            transition={{ duration: 0.5 }}
           >
-            <div className="flex items-center gap-2 text-muted-foreground/50">
-              <div className="w-8 h-px bg-gradient-to-r from-transparent to-border" />
-              <span className="font-mono-tech text-[10px] tracking-[0.3em]">
-                ENGINEERING THE FUTURE
-              </span>
-              <div className="w-8 h-px bg-gradient-to-l from-transparent to-border" />
+            <img
+              src={`${import.meta.env.BASE_URL}logo/hmr_logo.svg`}
+              alt="HMR Logo"
+              className="h-16 w-auto mb-5"
+            />
+            <p className="text-muted-foreground leading-relaxed max-w-sm mb-6 text-sm">
+              A TU/e engineering team developing retrofittable hybrid maglev
+              technology for Europe's existing rail network.
+            </p>
+
+            {/* Location */}
+            <div className="flex items-start gap-2.5 mb-6">
+              <MapPin className="w-4 h-4 text-hmr shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-foreground/80">Eindhoven University of Technology</p>
+                <p className="text-xs text-muted-foreground">De Zaale, 5612 AZ Eindhoven, Netherlands</p>
+              </div>
+            </div>
+
+            {/* Social icons */}
+            <div className="flex gap-2.5">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="w-9 h-9 rounded-lg border border-border bg-secondary/20 flex items-center justify-center text-muted-foreground hover:text-hmr-light hover:border-hmr/40 hover:shadow-[0_0_14px_hsl(var(--hmr-glow)/0.35)] transition-all duration-200"
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </motion.div>
+
+          {/* Links column A */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <p className="font-mono-tech text-[10px] tracking-[0.18em] text-muted-foreground uppercase mb-5">
+              Explore
+            </p>
+            <ul className="space-y-3">
+              {linksColA.map((link) => (
+                <li key={link.href}>
+                  <LinkItem item={link} scrollTo={scrollTo} />
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Links column B */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
+            <p className="font-mono-tech text-[10px] tracking-[0.18em] text-muted-foreground uppercase mb-5">
+              Connect
+            </p>
+            <ul className="space-y-3">
+              {linksColB.map((link) => (
+                <li key={link.label}>
+                  <LinkItem item={link} scrollTo={scrollTo} />
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+
+        {/* Bottom strip */}
+        <div className="h-px bg-gradient-to-r from-transparent via-hmr/15 to-transparent mb-5" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-muted-foreground/60">
+            © {new Date().getFullYear()} HMR — Hybrid Maglev Railways. All rights reserved.
+          </p>
+          <span className="font-mono-tech text-[10px] tracking-[0.3em] text-muted-foreground/40 uppercase">
+            TU/e · Eindhoven · Netherlands
+          </span>
         </div>
       </div>
     </footer>

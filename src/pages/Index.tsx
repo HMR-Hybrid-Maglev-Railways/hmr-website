@@ -7,15 +7,10 @@ import TeamSection from "@/components/TeamSection";
 import RecruitmentSection from "@/components/RecruitmentSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import BackgroundEffects from "@/components/BackgroundEffects";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-background overflow-x-hidden relative">
-      {/* High-tech electromagnetic field and European network background */}
-      <BackgroundEffects />
-
-      {/* Content sections */}
       <div className="relative z-10">
         <Navbar />
         <HeroSection />

@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Gauge, Zap, Wind } from "lucide-react";
 
 const phases = [
@@ -216,18 +216,9 @@ const ProgressLine = ({ activeIndex }: { activeIndex: number }) => {
 
 const HybridMaglevSection = () => {
   const [activePhase, setActivePhase] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   return (
     <section
-      ref={sectionRef}
       id="hybrid-maglev"
       className="py-32 relative overflow-hidden"
     >

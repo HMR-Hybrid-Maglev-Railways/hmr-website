@@ -7,6 +7,7 @@ import {
   Linkedin,
   Instagram,
   Send,
+  CheckCircle,
 } from "lucide-react";
 
 const ContactSection = () => {
@@ -108,9 +109,9 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                Interested in supporting the future of rail? We're open to
-                partnerships with companies aligned with our vision.
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Align your brand with the future of sustainable rail. We offer
+                meaningful partnership tiers for companies that share our vision.
               </p>
 
               <a

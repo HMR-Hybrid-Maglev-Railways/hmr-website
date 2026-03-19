@@ -249,10 +249,10 @@ const RecruitmentSection = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <p className="font-mono-tech text-xs text-muted-foreground tracking-wider mb-6 flex items-center gap-3">
+          <div className="font-mono-tech text-xs text-muted-foreground tracking-wider mb-6 flex items-center gap-3">
             WHAT YOU'LL GAIN
             <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
-          </p>
+          </div>
           <div className="grid md:grid-cols-3 gap-6">
             {benefitCategories.map((category, catIdx) => (
               <motion.div

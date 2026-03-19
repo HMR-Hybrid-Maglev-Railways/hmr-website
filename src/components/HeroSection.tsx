@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import { scrollTo } from "@/lib/utils";
 
 const SpeedCounter = () => {
   const [speed, setSpeed] = useState(0);
@@ -69,10 +70,6 @@ const TypewriterText = ({ text, delay = 0 }: { text: string; delay?: number }) =
 };
 
 const HeroSection = () => {
-  const scrollTo = (href: string) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
@@ -111,8 +108,9 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Hybrid Maglev Railways is a TU/e student team focusing on bringing
-          fast, sustainable, and implementable maglev technology to EU rails
+          A TU/e engineering team developing retrofittable maglev technology
+          that runs on Europe's existing rail network — no new infrastructure,
+          just a step change in speed and sustainability.
         </motion.p>
 
         {/* Speed counter */}
@@ -155,10 +153,10 @@ const HeroSection = () => {
           </button>
 
           <button
-            onClick={() => scrollTo("#hybrid-maglev")}
+            onClick={() => scrollTo("#contact")}
             className="group px-8 py-4 rounded-xl border border-border bg-card/30 backdrop-blur-sm text-foreground font-heading font-semibold text-base hover:bg-secondary/50 hover:border-hmr/30 transition-all flex items-center justify-center gap-2"
           >
-            <span>See How It Works</span>
+            <span>Partner With Us</span>
             <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
           </button>
         </motion.div>

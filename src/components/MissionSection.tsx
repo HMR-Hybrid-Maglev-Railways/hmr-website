@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Target, CheckCircle2, Zap, Wrench, Atom, Database, Camera, Plane, Bus, Train, Gauge, Users, Leaf, Clock, Crosshair, Briefcase } from "lucide-react";
+import { Target, CheckCircle2, Wrench, Database, Camera, Plane, Bus, Train, Gauge, Users, Leaf, Clock, Crosshair, Briefcase } from "lucide-react";
 
 type TransportMode = "Plane" | "Bus" | "Maglev";
 
@@ -121,7 +121,7 @@ const teamObjectives = [
         responsibilities: [
           "Design and develop a linear propulsion system",
           "Model how the train behaves as it is moving along the track",
-          "Simulate a control system that can accurately control the train's movement",
+          "Develop a control system that can accurately control the train's movement",
         ],
         currentGoals: "Finalizing the linear motor topology and running coupled electromagnetic-mechanical simulations to validate thrust output against vehicle mass and drag profiles.",
       },
