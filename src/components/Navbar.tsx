@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { scrollTo } from "@/lib/utils";
 
 const navLinks = [
   { label: "How It Works", href: "#hybrid-maglev" },
@@ -32,10 +33,9 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollTo = (href: string) => {
+  const handleNav = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    scrollTo(href);
   };
 
   return (
@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => scrollTo("#hero")}
+            onClick={() => handleNav("#hero")}
             className="relative flex items-center gap-3 focus:outline-none"
             aria-label="Back to top"
           >
@@ -73,7 +73,7 @@ const Navbar = () => {
               return (
                 <button
                   key={link.href}
-                  onClick={() => scrollTo(link.href)}
+                  onClick={() => handleNav(link.href)}
                   className={`relative px-4 py-2 text-sm transition-colors ${
                     isActive
                       ? "text-foreground"
@@ -97,7 +97,7 @@ const Navbar = () => {
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <button
-              onClick={() => scrollTo("#contact")}
+              onClick={() => handleNav("#contact")}
               className="group relative px-5 py-2.5 text-sm font-medium rounded-lg overflow-hidden"
             >
               <span className="absolute inset-0 bg-gradient-hmr transition-opacity group-hover:opacity-90" />
@@ -175,7 +175,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ delay: 0.1 + i * 0.05 }}
-                    onClick={() => scrollTo(link.href)}
+                    onClick={() => handleNav(link.href)}
                     className={`px-6 py-3 text-2xl font-heading font-medium transition-colors ${
                       activeSection === link.href.slice(1)
                         ? "text-gradient-hmr"
@@ -192,7 +192,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                onClick={() => scrollTo("#contact")}
+                onClick={() => handleNav("#contact")}
                 className="mt-12 px-8 py-4 rounded-xl bg-gradient-hmr text-primary-foreground font-heading font-semibold text-lg glow-blue"
               >
                 Contact Us

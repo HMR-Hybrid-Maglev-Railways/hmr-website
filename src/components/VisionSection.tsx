@@ -164,7 +164,7 @@ const TrackNavigator = ({
 };
 
 const VisionSection = () => {
-  const [[activeIndex, direction], setPage] = useState([0, 0]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(0);
@@ -187,10 +187,9 @@ const VisionSection = () => {
   const navigate = useCallback(
     (newIndex: number) => {
       if (newIndex < 0 || newIndex >= cards.length) return;
-      const dir = newIndex > activeIndex ? 1 : -1;
-      setPage([newIndex, dir]);
+      setActiveIndex(newIndex);
     },
-    [activeIndex],
+    [],
   );
 
   // Keyboard navigation
