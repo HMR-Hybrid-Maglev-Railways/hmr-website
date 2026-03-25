@@ -145,9 +145,9 @@ const TrackNavigator = ({
                 )}
               </div>
 
-              {/* Label */}
+              {/* Label — hidden on small screens */}
               <span
-                className={`font-mono-tech text-[10px] tracking-wider text-center max-w-[80px] leading-tight transition-colors duration-300 ${
+                className={`hidden sm:block font-mono-tech text-[10px] tracking-wider text-center max-w-[80px] leading-tight transition-colors duration-300 ${
                   isActive
                     ? "text-hmr-light"
                     : "text-muted-foreground/50 group-hover:text-muted-foreground"
@@ -246,7 +246,7 @@ const VisionSection = () => {
     <section
       id="vision"
       ref={sectionRef}
-      className="py-32 relative overflow-hidden"
+      className="py-16 md:py-32 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}

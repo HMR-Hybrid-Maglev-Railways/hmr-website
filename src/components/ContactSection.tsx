@@ -12,7 +12,7 @@ import {
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
+    <section id="contact" className="py-16 md:py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div

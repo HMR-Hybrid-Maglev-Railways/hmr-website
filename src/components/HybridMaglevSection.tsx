@@ -68,7 +68,7 @@ const PhaseCard = ({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
       onClick={onClick}
-      className={`group relative rounded-2xl cursor-pointer transition-all duration-500 min-h-[520px] md:min-h-[560px] ${
+      className={`group relative rounded-2xl cursor-pointer transition-all duration-500 ${
         isActive
           ? "bg-card tech-card-glow scale-[1.02]"
           : "bg-card/50 hover:bg-card/80"
@@ -158,7 +158,7 @@ const PhaseCard = ({
             opacity: isActive ? 1 : 0,
           }}
           transition={{ duration: 0.3 }}
-          className={`${isActive ? "block" : "invisible"}`}
+          className={`${isActive ? "block" : "hidden"}`}
         >
           <div className="grid grid-cols-3 gap-2 pt-4 border-t border-border">
             {phase.specs.map((spec) => (
@@ -220,7 +220,7 @@ const HybridMaglevSection = () => {
   return (
     <section
       id="hybrid-maglev"
-      className="py-32 relative overflow-hidden"
+      className="py-16 md:py-32 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}

@@ -971,7 +971,7 @@ const TeamObjectiveCard = ({
 
 const MissionSection = () => {
   return (
-    <section id="mission" className="py-32 relative overflow-hidden">
+    <section id="mission" className="py-16 md:py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div

@@ -73,7 +73,7 @@ const HeroSection = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center pt-30 md:pt-0">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center pt-28 md:pt-36">
         {/* Subtitle */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -160,30 +160,30 @@ const HeroSection = () => {
             <ChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
           </button>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.button
-        onClick={() => scrollTo("#hybrid-maglev")}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
-        aria-label="Scroll down"
-      >
-        <span className="font-mono-tech text-[10px] tracking-[0.2em] uppercase opacity-60">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="w-6 h-10 rounded-full border border-border flex items-start justify-center p-2 group-hover:border-hmr/50 transition-colors"
+        {/* Scroll indicator */}
+        <motion.button
+          onClick={() => scrollTo("#hybrid-maglev")}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="mt-12 mb-6 mx-auto flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+          aria-label="Scroll down"
         >
+          <span className="font-mono-tech text-[10px] tracking-[0.2em] uppercase opacity-60">Scroll</span>
           <motion.div
-            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-1 h-2 rounded-full bg-hmr"
-          />
-        </motion.div>
-      </motion.button>
+            className="w-6 h-10 rounded-full border border-border flex items-start justify-center p-2 group-hover:border-hmr/50 transition-colors"
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-1 h-2 rounded-full bg-hmr"
+            />
+          </motion.div>
+        </motion.button>
+      </div>
     </section>
   );
 };

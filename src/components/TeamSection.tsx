@@ -209,7 +209,7 @@ const TeamSection = () => {
       : teamMembers.filter((m) => m.discipline === activeFilter);
 
   return (
-    <section id="team" className="py-32 relative overflow-hidden">
+    <section id="team" className="py-16 md:py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative">
         {/* Header */}
         <motion.div
