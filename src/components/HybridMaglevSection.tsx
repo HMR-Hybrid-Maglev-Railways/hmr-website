@@ -35,8 +35,8 @@ const phases = [
   },
   {
     title: "Full Levitation",
-    speedLabel: "200-800 km/h",
-    speedValue: 800,
+    speedLabel: "200-600 km/h",
+    speedValue: 600,
     mode: "FULL_MAGLEV",
     description:
       "At cruising speed the train is fully levitated with no rolling contact, enabling plane-like velocities with minimal friction.",

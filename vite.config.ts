@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
-  base: "/glide-on-rails/", // GitHub repository name
+  base: "/",
   server: {
     host: "::",
     port: 8080,
